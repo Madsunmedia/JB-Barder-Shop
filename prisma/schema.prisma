@@ -12,6 +12,7 @@ model User {
   email         String?         @unique
   emailVerified DateTime?
   image         String?
+  password      String?         // Hashed password
   role          Role            @default(CUSTOMER)
   appointments  Appointment[]
   reviews       Review[]
@@ -73,6 +74,18 @@ enum ReviewStatus {
   PENDING
   APPROVED
   REJECTED
+}
+
+model Settings {
+  id                String   @id @default("global")
+  businessName      String   @default("JB Barbershop")
+  phone             String   @default("+1 403 929 7321")
+  email             String   @default("ijbbarbershop@gmail.com")
+  address           String   @default("410 13 Street North, Lethbridge, AB")
+  minAdvanceHours   Int      @default(2)
+  hours             Json?    // Stores Mon-Sun open/close times
+  blockedDates      Json?    // Array of ISO strings
+  updatedAt         DateTime @updatedAt
 }
 
 model Gallery {

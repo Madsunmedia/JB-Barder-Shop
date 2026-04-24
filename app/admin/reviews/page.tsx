@@ -1,103 +1,115 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Check, X, Star, Clock, Filter } from "lucide-react";
+import { motion } from "framer-motion";
+import { useState } from "react";
+import { 
+  CheckCircle2, 
+  XCircle, 
+  Star, 
+  MessageSquare, 
+  Search,
+  Filter,
+  Eye,
+  EyeOff,
+  Trash2
+} from "lucide-react";
 
-export default function AdminReviewsPage() {
-  const [reviews, setReviews] = useState<any[]>([]);
-  const [statusFilter, setStatusFilter] = useState("PENDING");
-
-  useEffect(() => {
-    fetchReviews();
-  }, [statusFilter]);
-
-  const fetchReviews = async () => {
-    const res = await fetch(`/api/reviews?status=${statusFilter}`);
-    const data = await res.json();
-    setReviews(data);
-  };
-
-  const handleUpdate = async (id: string, newStatus: string) => {
-    try {
-      const res = await fetch(`/api/reviews/${id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status: newStatus }),
-      });
-      if (res.ok) {
-        setReviews(reviews.filter(r => r.id !== id));
-      }
-    } catch (error) {
-      console.error("Error updating review:", error);
-    }
-  };
+export default function ReviewsAdminPage() {
+  const [activeTab, setActiveTab] = useState<"pending" | "approved">("pending");
 
   return (
-    <div className="min-h-screen bg-black-primary text-warm-white p-12">
-      <div className="max-w-6xl mx-auto space-y-12">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
-          <div className="space-y-2">
-            <h1 className="text-5xl font-accent text-gold uppercase">Review Moderation</h1>
-            <p className="text-warm-white/60 font-body italic">Manage what clients are saying about JB Barbershop.</p>
-          </div>
-
-          <div className="flex items-center gap-4 bg-charcoal p-2 rounded-xl border border-white/10">
-            {["PENDING", "APPROVED", "REJECTED"].map((status) => (
-              <button
-                key={status}
-                onClick={() => setStatusFilter(status)}
-                className={`px-6 py-2 rounded-lg font-accent text-sm tracking-widest transition-all ${
-                  statusFilter === status ? "bg-gold text-black" : "text-warm-white/50 hover:text-warm-white"
-                }`}
-              >
-                {status}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {reviews.length === 0 ? (
-            <div className="col-span-full py-20 text-center glass rounded-3xl border-dashed border-gold/20">
-               <p className="text-gold font-accent text-2xl uppercase opacity-30">No {statusFilter.toLowerCase()} reviews found</p>
-            </div>
-          ) : (
-            reviews.map((review) => (
-              <div key={review.id} className="glass p-8 rounded-2xl border border-gold/10 flex flex-col justify-between gap-6">
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex gap-1 text-gold">
-                      {[...Array(review.rating)].map((_, i) => <Star key={i} size={14} fill="currentColor" />)}
-                    </div>
-                    <span className="text-[10px] text-warm-white/40 font-mono">{new Date(review.createdAt).toLocaleDateString()}</span>
-                  </div>
-                  <p className="text-warm-white/80 font-heading italic">&quot;{review.comment}&quot;</p>
-                  <p className="text-gold font-accent uppercase text-sm tracking-widest">— {review.name}</p>
-                </div>
-
-                <div className="flex gap-4">
-                  {review.status !== "APPROVED" && (
-                    <button
-                      onClick={() => handleUpdate(review.id, "APPROVED")}
-                      className="flex-1 py-3 bg-green-900/40 text-green-400 border border-green-500/30 rounded-xl hover:bg-green-500/20 transition-all flex items-center justify-center gap-2"
-                    >
-                      <Check size={16} /> Approve
-                    </button>
-                  )}
-                  {review.status !== "REJECTED" && (
-                    <button
-                      onClick={() => handleUpdate(review.id, "REJECTED")}
-                      className="flex-1 py-3 bg-red-900/40 text-red-400 border border-red-500/30 rounded-xl hover:bg-red-500/20 transition-all flex items-center justify-center gap-2"
-                    >
-                      <X size={16} /> Reject
-                    </button>
-                  )}
-                </div>
-              </div>
-            ))
-          )}
-        </div>
+    <div className="space-y-10">
+      
+      {/* Header */}
+      <div className="flex justify-between items-center">
+         <div>
+            <h2 className="text-3xl font-accent text-gold uppercase tracking-tighter">Review Moderation</h2>
+            <p className="text-warm-white/40 text-xs font-mono mt-2">Manage customer feedback and testimonials.</p>
+         </div>
+         <div className="flex bg-black/40 p-1 rounded-2xl border border-white/5">
+            <button 
+              onClick={() => setActiveTab("pending")}
+              className={`px-6 py-2 rounded-xl text-[10px] font-accent uppercase tracking-widest transition-all ${activeTab === "pending" ? "bg-gold text-black" : "text-warm-white/40 hover:text-gold"}`}
+            >
+              Pending (4)
+            </button>
+            <button 
+              onClick={() => setActiveTab("approved")}
+              className={`px-6 py-2 rounded-xl text-[10px] font-accent uppercase tracking-widest transition-all ${activeTab === "approved" ? "bg-gold text-black" : "text-warm-white/40 hover:text-gold"}`}
+            >
+              Approved (19)
+            </button>
+         </div>
       </div>
+
+      {/* List */}
+      <div className="space-y-6">
+         {activeTab === "pending" ? (
+           <>
+             <ReviewModerationCard name="Ayush Verma" rating={5} comment="The guys are really good at their work as well as in communication. Very friendly and affordable prices!!" date="2 hours ago" />
+             <ReviewModerationCard name="Kamaldeep Singh" rating={5} comment="They are best in Lethbridge so far whatever I have seen. Too good 👍🏻" date="5 hours ago" />
+             <ReviewModerationCard name="Shelley Boreen" rating={4} comment="Masterful barbers, though the wait was a bit long even with an appointment." date="Yesterday" />
+           </>
+         ) : (
+           <>
+             <ReviewModerationCard approved name="Dilpreet Singh" rating={5} comment="Clean, welcoming, and professional work and appointments on time." date="3 days ago" />
+             <ReviewModerationCard approved name="Robert Gilbertson" rating={5} comment="Took his time when asking me what I wanted and it turned out great." date="1 week ago" />
+           </>
+         )}
+      </div>
+
     </div>
+  );
+}
+
+function ReviewModerationCard({ name, rating, comment, date, approved }: any) {
+  return (
+    <motion.div 
+      initial={{ opacity: 0, x: -20 }}
+      animate={{ opacity: 1, x: 0 }}
+      className="glass p-8 rounded-3xl border border-white/5 flex flex-col md:flex-row gap-8 items-start hover:border-gold/20 transition-all group"
+    >
+       <div className="flex-1 space-y-4">
+          <div className="flex items-center justify-between">
+             <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-gold/10 flex items-center justify-center text-gold font-accent text-xl uppercase border border-gold/20">
+                   {name[0]}
+                </div>
+                <div>
+                   <h4 className="text-lg font-accent text-warm-white uppercase tracking-wider">{name}</h4>
+                   <p className="text-[10px] font-mono text-warm-white/20 uppercase">{date}</p>
+                </div>
+             </div>
+             <div className="flex gap-1">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} size={14} className={i < rating ? "text-gold fill-gold" : "text-warm-white/10"} />
+                ))}
+             </div>
+          </div>
+          <p className="text-sm text-warm-white/60 font-body leading-relaxed italic">&quot;{comment}&quot;</p>
+       </div>
+
+       <div className="flex md:flex-col gap-3 justify-end shrink-0">
+          {approved ? (
+            <>
+               <button className="flex items-center gap-3 px-6 py-3 rounded-xl bg-white/5 text-warm-white/60 hover:text-gold transition-all text-[10px] font-accent uppercase tracking-widest border border-white/10">
+                  <EyeOff size={16} /> Hide
+               </button>
+               <button className="flex items-center gap-3 px-6 py-3 rounded-xl bg-red-500/5 text-red-500/60 hover:text-red-500 transition-all text-[10px] font-accent uppercase tracking-widest border border-red-500/10">
+                  <Trash2 size={16} /> Delete
+               </button>
+            </>
+          ) : (
+            <>
+               <button className="flex items-center gap-3 px-8 py-3 rounded-xl bg-green-500 text-black hover:scale-105 transition-all text-[10px] font-accent uppercase tracking-widest shadow-[0_10px_20px_rgba(34,197,94,0.2)]">
+                  <CheckCircle2 size={16} /> Approve
+               </button>
+               <button className="flex items-center gap-3 px-8 py-3 rounded-xl bg-black border border-red-500/20 text-red-500 hover:bg-red-500/5 transition-all text-[10px] font-accent uppercase tracking-widest">
+                  <XCircle size={16} /> Reject
+               </button>
+            </>
+          )}
+       </div>
+    </motion.div>
   );
 }
