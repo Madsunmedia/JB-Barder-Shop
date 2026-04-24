@@ -7,6 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero/Hero";
 import ServicesSection from "@/components/Services/ServicesSection";
+import TeamSection from "@/components/Team/TeamSection";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -50,6 +51,9 @@ export default function Home() {
 
       {/* Services Section */}
       <ServicesSection />
+
+      {/* Team Section */}
+      <TeamSection />
 
       {/* Reviews Preview Section */}
       <section id="reviews" className="py-40 bg-charcoal">
