@@ -54,3 +54,26 @@
 .animate-float {
   animation: float 6s ease-in-out infinite;
 }
+
+/* Star Background */
+.stars-bg {
+  background-image: radial-gradient(1px 1px at 10px 10px, #C9A84C, transparent),
+                    radial-gradient(1px 1px at 40px 50px, #C9A84C, transparent),
+                    radial-gradient(1px 1px at 70px 20px, #C9A84C, transparent),
+                    radial-gradient(1px 1px at 120px 80px, #C9A84C, transparent),
+                    radial-gradient(1px 1px at 150px 30px, #C9A84C, transparent);
+  background-size: 200px 200px;
+  opacity: 0.1;
+}
+
+/* Shimmer Animation */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.shimmer {
+  background: linear-gradient(90deg, transparent, rgba(201,168,76,0.05), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 3s infinite;
+}

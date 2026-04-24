@@ -8,6 +8,7 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero/Hero";
 import ServicesSection from "@/components/Services/ServicesSection";
 import TeamSection from "@/components/Team/TeamSection";
+import ReviewsSection from "@/components/Reviews/ReviewsSection";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -55,25 +56,8 @@ export default function Home() {
       {/* Team Section */}
       <TeamSection />
 
-      {/* Reviews Preview Section */}
-      <section id="reviews" className="py-40 bg-charcoal">
-        <div className="max-w-7xl mx-auto px-6 text-center">
-           <h2 className="text-5xl font-accent text-gold mb-20 uppercase tracking-widest">Client Testimonials</h2>
-           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-              {[1, 2, 3].map((_, i) => (
-                <div key={i} className="space-y-6">
-                   <div className="flex justify-center gap-1 text-gold">
-                      {[...Array(5)].map((_, j) => <Star key={j} size={16} fill="currentColor" />)}
-                   </div>
-                   <p className="text-lg italic text-warm-white/80">
-                      &quot;Best barbershop in Lethbridge! The attention to detail is unmatched.&quot;
-                   </p>
-                   <p className="text-gold font-accent tracking-widest">— Alex M.</p>
-                </div>
-              ))}
-           </div>
-        </div>
-      </section>
+      {/* Reviews Section */}
+      <ReviewsSection />
 
       {/* Contact Section Placeholder */}
       <section id="contact" className="py-20 text-center bg-black">
