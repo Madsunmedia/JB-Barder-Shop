@@ -9,6 +9,8 @@ import Hero from "@/components/Hero/Hero";
 import ServicesSection from "@/components/Services/ServicesSection";
 import TeamSection from "@/components/Team/TeamSection";
 import ReviewsSection from "@/components/Reviews/ReviewsSection";
+import ContactSection from "@/components/Contact/ContactSection";
+import Footer from "@/components/Footer";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -59,10 +61,11 @@ export default function Home() {
       {/* Reviews Section */}
       <ReviewsSection />
 
-      {/* Contact Section Placeholder */}
-      <section id="contact" className="py-20 text-center bg-black">
-         <p className="text-warm-white/40 font-mono">© 2026 JB BARBERSHOP · LETHBRIDGE, ALBERTA</p>
-      </section>
+      {/* Contact Section */}
+      <ContactSection />
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }

@@ -84,6 +84,12 @@ model Gallery {
   updatedAt DateTime @updatedAt
 }
 
+model NewsletterSubscriber {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  createdAt DateTime @default(now())
+}
+
 enum Role {
   CUSTOMER
   BARBER
