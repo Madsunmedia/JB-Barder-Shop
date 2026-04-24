@@ -92,14 +92,14 @@ export default function BookingWizard() {
               {currentStep === 0 && (
                 <Step1_Services 
                   selected={bookingData.service} 
-                  onSelect={(s) => setBookingData({ ...bookingData, service: s })} 
+                  onSelect={(s: any) => setBookingData({ ...bookingData, service: s })} 
                   onNext={nextStep} 
                 />
               )}
               {currentStep === 1 && (
                 <Step2_Barbers 
                   selected={bookingData.barber} 
-                  onSelect={(b) => setBookingData({ ...bookingData, barber: b })} 
+                  onSelect={(b: any) => setBookingData({ ...bookingData, barber: b })} 
                   onNext={nextStep} 
                   onBack={prevStep}
                 />
@@ -107,7 +107,7 @@ export default function BookingWizard() {
               {currentStep === 2 && (
                 <Step3_Calendar 
                   data={bookingData}
-                  onSelect={(date, time) => setBookingData({ ...bookingData, date, time })}
+                  onSelect={(date: any, time: any) => setBookingData({ ...bookingData, date, time })}
                   onNext={nextStep}
                   onBack={prevStep}
                 />
@@ -115,7 +115,7 @@ export default function BookingWizard() {
               {currentStep === 3 && (
                 <Step4_Details 
                   data={bookingData}
-                  onChange={(details) => setBookingData({ ...bookingData, details })}
+                  onChange={(details: any) => setBookingData({ ...bookingData, details })}
                   onConfirm={() => setIsConfirmed(true)}
                   onBack={prevStep}
                 />
