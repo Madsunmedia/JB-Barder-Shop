@@ -1,0 +1,33 @@
+import BookingWizard from "@/components/Booking/BookingWizard";
+import Navbar from "@/components/Navbar";
+
+export default function BookingPage() {
+  return (
+    <main className="min-h-screen bg-black pt-32 pb-40 overflow-hidden relative">
+      <Navbar />
+      
+      {/* 3D Animated Grid Background */}
+      <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
+        <div 
+          className="absolute inset-0 bg-[linear-gradient(to_right,#C9A84C_1px,transparent_1px),linear-gradient(to_bottom,#C9A84C_1px,transparent_1px)] bg-[size:60px_60px]"
+          style={{ 
+            transform: 'perspective(1000px) rotateX(60deg) translateY(-100px)',
+            transformOrigin: 'top'
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
+      </div>
+
+      <div className="relative z-10 max-w-7xl mx-auto px-6">
+        <header className="mb-16 text-center lg:text-left space-y-4">
+           <span className="text-gold font-accent text-xl tracking-[0.4em] uppercase">Experience</span>
+           <h1 className="text-7xl md:text-9xl font-accent text-gold uppercase leading-tight">
+             Reserve <br /> Your Seat
+           </h1>
+        </header>
+
+        <BookingWizard />
+      </div>
+    </main>
+  );
+}

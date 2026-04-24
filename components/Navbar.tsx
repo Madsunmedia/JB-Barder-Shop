@@ -62,8 +62,7 @@ export default function Navbar() {
               <span className="text-sm font-mono">+1 403 929 7321</span>
             </a>
             <Link
-              href="https://jbbarbershopdsoo.setmore.com/book"
-              target="_blank"
+              href="/book"
               className="px-6 py-2 bg-gold text-black font-accent text-lg rounded-full shadow-[0_0_15px_rgba(201,168,76,0.4)] hover:shadow-[0_0_25px_rgba(201,168,76,0.6)] hover:scale-105 transition-all duration-300"
             >
               BOOK NOW
@@ -114,16 +113,19 @@ export default function Navbar() {
               </motion.div>
             ))}
 
-            <motion.a
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6 }}
-              href="https://jbbarbershopdsoo.setmore.com/book"
-              target="_blank"
-              className="mt-8 px-10 py-4 bg-gold text-black font-accent text-2xl rounded-full"
             >
-              BOOK NOW
-            </motion.a>
+              <Link
+                href="/book"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="mt-8 px-10 py-4 bg-gold text-black font-accent text-2xl rounded-full block"
+              >
+                BOOK NOW
+              </Link>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
