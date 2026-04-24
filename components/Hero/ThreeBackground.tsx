@@ -33,6 +33,7 @@ function FloatingShape({ position, rotation, scale, type }: any) {
 
 export default function ThreeBackground() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const groupRef = useRef<THREE.Group>(null!);
 
   const handleMouseMove = (event: React.MouseEvent) => {
     setMousePos({
@@ -47,16 +48,37 @@ export default function ThreeBackground() {
         <PerspectiveCamera makeDefault position={[0, 0, 5]} />
         <ambientLight intensity={0.5} />
         
-        <group 
-          rotation={[mousePos.y * 0.1, mousePos.x * 0.1, 0]}
-          transition={{ type: "spring", stiffness: 100, damping: 30 }}
-        >
-          <FloatingShape position={[-2, 1, 0]} rotation={[0.5, 0.5, 0]} scale={1.2} type="torus" />
-          <FloatingShape position={[2, -1, 0]} rotation={[1, 0.2, 0.5]} scale={1.5} type="box" />
-          <FloatingShape position={[-1, -2, 0]} rotation={[0.2, 1, 0.8]} scale={1} type="octahedron" />
-          <FloatingShape position={[2, 2, -2]} rotation={[0.5, 0.5, 0.5]} scale={0.8} type="box" />
-        </group>
+        <MovingGroup mousePos={mousePos} />
       </Canvas>
     </div>
+  );
+}
+
+function MovingGroup({ mousePos }: { mousePos: { x: number, y: number } }) {
+  const groupRef = useRef<THREE.Group>(null!);
+
+  useFrame((state) => {
+    const targetRotationX = mousePos.y * 0.1;
+    const targetRotationY = mousePos.x * 0.1;
+    
+    groupRef.current.rotation.x = THREE.MathUtils.lerp(
+      groupRef.current.rotation.x,
+      targetRotationX,
+      0.05
+    );
+    groupRef.current.rotation.y = THREE.MathUtils.lerp(
+      groupRef.current.rotation.y,
+      targetRotationY,
+      0.05
+    );
+  });
+
+  return (
+    <group ref={groupRef}>
+      <FloatingShape position={[-2, 1, 0]} rotation={[0.5, 0.5, 0]} scale={1.2} type="torus" />
+      <FloatingShape position={[2, -1, 0]} rotation={[1, 0.2, 0.5]} scale={1.5} type="box" />
+      <FloatingShape position={[-1, -2, 0]} rotation={[0.2, 1, 0.8]} scale={1} type="octahedron" />
+      <FloatingShape position={[2, 2, -2]} rotation={[0.5, 0.5, 0.5]} scale={0.8} type="box" />
+    </group>
   );
 }
