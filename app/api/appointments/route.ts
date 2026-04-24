@@ -2,30 +2,29 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST(req: Request) {
   try {
     const { serviceId, clientName, phone, email, date, time } = await req.json();
 
     // 1. Save to DB
-    // Note: In a real app, we would look up the service and barber properly
     const appointment = await prisma.appointment.create({
       data: {
-        userId: "guest", // Placeholder for guest users
+        userId: "guest",
         serviceId: serviceId,
-        barberId: "any", // Placeholder
+        barberId: "any",
         startTime: new Date(`${date}T${time}`),
-        endTime: new Date(`${date}T${time}`), // Should calculate based on service duration
+        endTime: new Date(`${date}T${time}`),
         status: "PENDING",
       },
     });
 
-    // 2. Send Emails via Resend
+    // 2. Send Emails via Resend (Only if API key is present)
     if (process.env.RESEND_API_KEY) {
+      const resend = new Resend(process.env.RESEND_API_KEY);
+      
       // Confirm to Client
       await resend.emails.send({
-        from: "JB Barbershop <appointments@resend.dev>", // Replace with verified domain
+        from: "JB Barbershop <appointments@resend.dev>",
         to: [email],
         subject: "Appointment Confirmed - JB Barbershop",
         html: `<p>Hi ${clientName}, your appointment for ${date} at ${time} is confirmed!</p>`,
