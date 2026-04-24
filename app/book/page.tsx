@@ -1,5 +1,11 @@
 import BookingWizard from "@/components/Booking/BookingWizard";
 import Navbar from "@/components/Navbar";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Book Appointment | JB Barbershop",
+  description: "Secure your spot at Lethbridge's premier barbershop. Masterful skin fades, beard grooming, and luxury service at your convenience.",
+};
 
 export default function BookingPage() {
   return (

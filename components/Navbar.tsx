@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { Phone, Menu, X } from "lucide-react";
+import { track } from "@vercel/analytics";
 
 const NAV_LINKS = [
   { name: "Services", href: "/#services" },
@@ -63,6 +64,7 @@ export default function Navbar() {
             </a>
             <Link
               href="/book"
+              onClick={() => track('book_now_click', { location: 'navbar_desktop' })}
               className="px-6 py-2 bg-gold text-black font-accent text-lg rounded-full shadow-[0_0_15px_rgba(201,168,76,0.4)] hover:shadow-[0_0_25px_rgba(201,168,76,0.6)] hover:scale-105 transition-all duration-300"
             >
               BOOK NOW
@@ -124,7 +126,10 @@ export default function Navbar() {
             >
               <Link
                 href="/book"
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  track('book_now_click', { location: 'navbar_mobile' });
+                }}
                 className="mt-8 px-10 py-4 bg-gold text-black font-accent text-2xl rounded-full block"
               >
                 BOOK NOW

@@ -1,5 +1,11 @@
 import GalleryGrid from "@/components/Gallery/GalleryGrid";
 import Navbar from "@/components/Navbar";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Gallery | JB Barbershop",
+  description: "A showcase of premium men's grooming, flawless skin fades, and master beard sculpts at JB Barbershop Lethbridge.",
+};
 
 const INITIAL_IMAGES = [
   { id: "1", url: "https://images.setmore.com/files/img/fHojFxrwtQlT/a052e4b5-2857-401c-8c59-7fc5ffede608.jpeg", tag: "SKIN FADE" },

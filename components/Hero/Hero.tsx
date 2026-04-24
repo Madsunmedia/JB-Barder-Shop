@@ -1,10 +1,15 @@
 "use client";
 
 import { motion } from "framer-motion";
-import ThreeBackground from "./ThreeBackground";
+import dynamic from "next/dynamic";
 import Ticker from "../Ticker";
 import Link from "next/link";
 import { Star } from "lucide-react";
+
+const ThreeBackground = dynamic(() => import("./ThreeBackground"), { 
+  ssr: false,
+  loading: () => <div className="absolute inset-0 bg-black" />
+});
 
 export default function Hero() {
   const headline = "LOOK SHARP.";
