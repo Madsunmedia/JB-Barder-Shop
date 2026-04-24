@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Instagram, Send, MapPin, Phone, Mail } from "lucide-react";
+import { Send, MapPin, Phone, Mail } from "lucide-react";
 import { useState } from "react";
 
 export default function Footer() {
@@ -51,7 +51,7 @@ export default function Footer() {
               Premium men&apos;s grooming in Lethbridge. Masterful cuts, clean fades, and a dedication to the craft.
             </p>
             <div className="flex gap-4">
-               <SocialIcon icon={<Instagram size={20} />} href="https://instagram.com/ijbbarbershop" />
+               <SocialIcon icon={<InstagramIcon />} href="https://instagram.com/ijbbarbershop" />
                <SocialIcon icon={<div className="font-accent text-lg">T</div>} href="#" />
             </div>
           </div>
@@ -130,6 +130,25 @@ function SocialIcon({ icon, href }: any) {
     >
       {icon}
     </a>
+  );
+}
+
+function InstagramIcon() {
+  return (
+    <svg 
+      width="20" 
+      height="20" 
+      viewBox="0 0 24 24" 
+      fill="none" 
+      stroke="currentColor" 
+      strokeWidth="2" 
+      strokeLinecap="round" 
+      strokeLinejoin="round"
+    >
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+    </svg>
   );
 }
 
