@@ -77,3 +77,21 @@
   background-size: 200% 100%;
   animation: shimmer 3s infinite;
 }
+
+/* Accessibility & Polish */
+:focus-visible {
+  outline: 2px solid #C9A84C !important;
+  outline-offset: 4px !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-delay: -1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    background-attachment: initial !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+  }
+}

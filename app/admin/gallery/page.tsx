@@ -11,6 +11,7 @@ import {
   Search,
   Filter
 } from "lucide-react";
+import Image from "next/image";
 
 export default function GalleryAdminPage() {
   const [dragActive, setDragActive] = useState(false);
@@ -81,7 +82,12 @@ function GalleryItem({ url, tag }: any) {
       whileInView={{ opacity: 1, scale: 1 }}
       className="group relative aspect-[3/4] rounded-2xl overflow-hidden border border-white/5 bg-white/[0.02]"
     >
-       <img src={url} alt="Gallery" className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" />
+       <Image 
+         src={url} 
+         alt="Gallery" 
+         fill
+         className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" 
+       />
        
        {/* Overlays */}
        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
