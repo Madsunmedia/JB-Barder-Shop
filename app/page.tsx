@@ -6,6 +6,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero/Hero";
+import ServicesSection from "@/components/Services/ServicesSection";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -47,49 +48,8 @@ export default function Home() {
         <Hero />
       </motion.div>
 
-      {/* Services Content Section (Revealed on Scroll) */}
-      <section id="services" className="relative z-20 min-h-screen bg-black-primary px-6 py-40">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row gap-20 items-start">
-            <div className="flex-1 space-y-12">
-              <motion.span 
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                className="text-gold font-accent text-xl tracking-[0.3em] uppercase"
-              >
-                Our Expertise
-              </motion.span>
-              <h2 className="text-6xl md:text-8xl font-accent text-gold leading-tight uppercase">
-                THE ART OF <br /> MODERN GROOMING
-              </h2>
-              <p className="text-xl text-warm-white/60 font-body leading-relaxed max-w-xl">
-                Located in Lethbridge, Alberta, JB Barbershop is dedicated to the craft of men&apos;s grooming. 
-                We combine traditional techniques with modern style to give you a sharp, confident look.
-              </p>
-            </div>
-            
-            <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
-              {[
-                { name: "SKIN FADE", price: "$35" },
-                { name: "BEARD TRIM", price: "$20" },
-                { name: "HOT TOWEL SHAVE", price: "$40" },
-                { name: "FULL SERVICE", price: "$80" },
-              ].map((service, i) => (
-                <motion.div
-                  key={service.name}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                  className="p-8 glass rounded-2xl border border-gold/10 hover:border-gold/40 transition-colors duration-500 group"
-                >
-                  <h3 className="text-2xl font-accent text-gold group-hover:scale-105 transition-transform">{service.name}</h3>
-                  <p className="text-gold/50 font-mono mt-2">{service.price}</p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Services Section */}
+      <ServicesSection />
 
       {/* Reviews Preview Section */}
       <section id="reviews" className="py-40 bg-charcoal">
