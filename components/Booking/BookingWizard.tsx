@@ -36,7 +36,7 @@ export default function BookingWizard() {
       rotateY: 0,
       opacity: 1,
       scale: 1,
-      transition: { duration: 0.6, type: "spring", stiffness: 200, damping: 25 }
+      transition: { duration: 0.6, type: "spring" as const, stiffness: 200, damping: 25 }
     },
     exit: (direction: number) => ({
       rotateY: direction > 0 ? -90 : 90,
