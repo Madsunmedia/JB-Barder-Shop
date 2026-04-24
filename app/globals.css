@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+@theme {
+  /* Colors */
+  --color-gold: #c9a84c;
+  --color-black-primary: #0a0a0a;
+  --color-charcoal: #1a1a1a;
+  --color-smoke: #2d2d2d;
+  --color-warm-white: #f5f0e8;
+
+  /* Typography */
+  --font-body: var(--font-inter), ui-sans-serif, system-ui;
+  --font-heading: var(--font-playfair), ui-serif, Georgia;
+  --font-accent: var(--font-bebas), impact, sans-serif;
+}
+
+:root {
+  --background: #0a0a0a;
+  --foreground: #f5f0e8;
+}
+
+@layer base {
+  body {
+    @apply bg-black-primary text-warm-white font-body antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading tracking-tight;
+  }
+}
+
+/* Glassmorphism utility */
+.glass {
+  @apply bg-charcoal/40 backdrop-blur-md border border-white/10;
+}
