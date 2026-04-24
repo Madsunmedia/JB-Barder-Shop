@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
-import Services from "@/components/Services/Services";
+import Services from "@/components/Services/ServicesSection";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
