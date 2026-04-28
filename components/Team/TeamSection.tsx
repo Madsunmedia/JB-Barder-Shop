@@ -1,18 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import BarberCard from "./BarberCard";
-
-const TEAM = [
-  {
-    name: "Jeet",
-    title: "Head Barber · Fade Specialist",
-    bio: "Jeet brings years of precision craftsmanship to every cut. Praised by clients across Lethbridge for his flawless skin fades and immaculate beard work — his attention to detail is second to none.",
-    image: "https://images.unsplash.com/photo-1621605815841-aa33c5cc70a9?q=80&w=2070&auto=format&fit=crop",
-    specialties: ["Skin Fades", "Beard Sculpting", "Facials", "Hot Towel Shave"],
-    quote: "Every client deserves to leave looking and feeling their best.",
-  },
-];
+import Link from "next/link";
+import Image from "next/image";
+import { ArrowRight } from "lucide-react";
 
 export default function TeamSection() {
   return (
@@ -25,17 +16,43 @@ export default function TeamSection() {
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#C9A84C_1px,transparent_1px),linear-gradient(to_bottom,#C9A84C_1px,transparent_1px)] bg-[size:48px_48px]" />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-5 md:px-10">
-        {/* Section Header */}
-        <div className="mb-12 md:mb-16 space-y-3">
-          <motion.span
-            initial={{ opacity: 0, x: -10 }}
+      <div className="relative z-10 max-w-7xl mx-auto px-5 md:px-10 flex flex-col md:flex-row items-center gap-12 md:gap-20">
+        
+        {/* Left: Image Teaser */}
+        <div className="w-full md:w-1/2 relative">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="text-gold font-accent text-sm tracking-[0.3em] uppercase"
+            transition={{ duration: 0.6 }}
+            className="relative aspect-[4/5] w-full max-w-md mx-auto md:mx-0 rounded-3xl overflow-hidden border border-white/10"
+          >
+            <Image
+              src="https://images.unsplash.com/photo-1621605815841-aa33c5cc70a9?q=80&w=2070&auto=format&fit=crop"
+              alt="Jeet - Master Barber"
+              fill
+              className="object-cover object-top"
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+            <div className="absolute bottom-6 left-6">
+              <p className="text-gold font-accent text-xl uppercase">Jeet</p>
+              <p className="text-warm-white/60 font-mono text-xs uppercase tracking-widest">Head Barber</p>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Right: Text Content */}
+        <div className="w-full md:w-1/2 space-y-6 text-center md:text-left">
+          <motion.span
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="inline-block text-gold font-accent text-sm tracking-[0.3em] uppercase"
           >
             The Craft
           </motion.span>
+          
           <motion.h2
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -43,25 +60,36 @@ export default function TeamSection() {
             transition={{ delay: 0.1 }}
             className="text-4xl md:text-6xl font-accent text-warm-white uppercase leading-tight"
           >
-            Meet the <span className="text-gold">Team</span>
+            Masters of <br />
+            <span className="text-gold">Grooming</span>
           </motion.h2>
+
           <motion.p
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-warm-white/40 text-sm md:text-base font-body max-w-lg"
+            className="text-warm-white/50 text-base md:text-lg font-body max-w-lg mx-auto md:mx-0 leading-relaxed"
           >
-            Skilled barbers who take pride in every cut, fade, and finish. Your look is personal — we treat it that way.
+            We blend the timeless traditions of classic barbering with modern techniques to deliver flawless results every single time. Your look is personal — we treat it that way.
           </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+            className="pt-4"
+          >
+            <Link
+              href="/team"
+              className="inline-flex items-center gap-2 min-h-[44px] px-8 py-3 bg-white/5 border border-white/10 text-warm-white font-accent text-sm uppercase tracking-wider rounded-full hover:bg-gold hover:border-gold hover:text-black active:scale-95 transition-all duration-300"
+            >
+              Read Our Story & Meet the Team <ArrowRight size={14} />
+            </Link>
+          </motion.div>
         </div>
 
-        {/* Team Cards */}
-        <div className="space-y-8">
-          {TEAM.map((barber) => (
-            <BarberCard key={barber.name} barber={barber} />
-          ))}
-        </div>
       </div>
     </section>
   );

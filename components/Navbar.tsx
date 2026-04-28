@@ -8,9 +8,9 @@ import { Phone, Menu, X, Scissors } from "lucide-react";
 import { track } from "@vercel/analytics";
 
 const NAV_LINKS = [
-  { name: "Services", href: "/#services" },
+  { name: "Services", href: "/services" },
   { name: "Gallery", href: "/gallery" },
-  { name: "Team", href: "/#team" },
+  { name: "Team", href: "/team" },
   { name: "Reviews", href: "/#reviews" },
   { name: "Contact", href: "/#contact" },
 ];
