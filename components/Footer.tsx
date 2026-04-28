@@ -1,16 +1,42 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Link from "next/link";
-import { Send, MapPin, Phone, Mail } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, Send, ArrowRight } from "lucide-react";
 import { useState } from "react";
+
+function InstagramIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+    </svg>
+  );
+}
+
+const QUICK_LINKS = [
+  { label: "Services", href: "/#services" },
+  { label: "Gallery", href: "/gallery" },
+  { label: "Our Team", href: "/#team" },
+  { label: "Reviews", href: "/#reviews" },
+  { label: "Contact", href: "/#contact" },
+  { label: "Book Appointment", href: "/book" },
+];
+
+const HOURS = [
+  { days: "Monday – Saturday", time: "9:00 AM – 8:00 PM" },
+  { days: "Sunday", time: "9:00 AM – 7:00 PM" },
+];
 
 export default function Footer() {
   const [email, setEmail] = useState("");
   const [isSubscribed, setIsSubscribed] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!email) return;
+    setIsLoading(true);
     try {
       const res = await fetch("/api/newsletter", {
         method: "POST",
@@ -23,140 +49,194 @@ export default function Footer() {
       }
     } catch (error) {
       console.error("Newsletter error:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <footer className="relative bg-[#050505] pt-40 pb-12 overflow-hidden">
-      {/* 3D Perspective Shelf Effect Container */}
-      <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-black to-transparent" />
-      
-      {/* Giant Watermark Logo */}
-      <div className="absolute top-20 left-1/2 -translate-x-1/2 w-full text-center pointer-events-none select-none overflow-hidden">
-        <h2 className="text-[10rem] md:text-[20rem] font-accent text-warm-white opacity-[0.05] leading-none uppercase whitespace-nowrap">
+    <footer className="relative bg-[#080808] border-t border-white/5 overflow-hidden">
+      {/* Subtle top gradient fade */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/30 to-transparent" />
+
+      {/* Watermark */}
+      <div
+        aria-hidden="true"
+        className="absolute bottom-0 left-1/2 -translate-x-1/2 pointer-events-none select-none overflow-hidden w-full text-center"
+      >
+        <p className="text-[clamp(4rem,18vw,14rem)] font-accent text-white/[0.025] leading-none uppercase whitespace-nowrap translate-y-[20%]">
           JB BARBERSHOP
-        </h2>
+        </p>
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-24">
-          
-          {/* Brand & Social */}
-          <div className="space-y-8">
-            <Link href="/" className="flex items-baseline gap-1 group">
-              <span className="text-4xl font-accent text-gold tracking-tighter">JB</span>
-              <span className="text-2xl font-heading text-warm-white">Barbershop</span>
+      <div className="relative z-10 max-w-7xl mx-auto px-5 md:px-10 pt-16 md:pt-20 pb-10">
+
+        {/* ── Top Grid ── */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-12 mb-14">
+
+          {/* Col 1 — Brand */}
+          <div className="sm:col-span-2 lg:col-span-1 space-y-5">
+            <Link href="/" className="inline-flex items-baseline gap-1 group" aria-label="JB Barbershop Home">
+              <span className="text-3xl font-accent text-gold tracking-tighter">JB</span>
+              <span className="text-xl font-heading text-warm-white group-hover:text-gold transition-colors duration-300">
+                Barbershop
+              </span>
             </Link>
-            <p className="text-warm-white/40 font-body text-sm leading-relaxed">
-              Premium men&apos;s grooming in Lethbridge. Masterful cuts, clean fades, and a dedication to the craft.
+            <p className="text-warm-white/40 text-sm leading-relaxed max-w-[260px]">
+              Premium men&apos;s grooming in Lethbridge. Expert fades, clean lines, and a dedication to the craft since day one.
             </p>
-            <div className="flex gap-4">
-               <SocialIcon icon={<InstagramIcon />} href="https://instagram.com/ijbbarbershop" />
+            {/* Social */}
+            <div className="flex items-center gap-3 pt-1">
+              <a
+                href="https://instagram.com/ijbbarbershop"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="JB Barbershop on Instagram"
+                className="flex items-center justify-center w-10 h-10 rounded-full border border-white/10 text-warm-white/50 hover:text-gold hover:border-gold/40 transition-all duration-300 hover:scale-110"
+              >
+                <InstagramIcon />
+              </a>
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div className="space-y-8">
-            <h4 className="text-gold font-accent uppercase tracking-widest text-lg">Quick Links</h4>
+          {/* Col 2 — Quick Links */}
+          <div className="space-y-5">
+            <h3 className="text-gold font-accent uppercase tracking-[0.2em] text-sm">
+              Quick Links
+            </h3>
+            <ul className="space-y-3">
+              {QUICK_LINKS.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    className="group flex items-center gap-2 text-warm-white/50 hover:text-gold text-sm font-body transition-colors duration-200"
+                  >
+                    <ArrowRight
+                      size={12}
+                      className="opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0 transition-all duration-200 text-gold"
+                      aria-hidden="true"
+                    />
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Col 3 — Visit Us */}
+          <div className="space-y-5">
+            <h3 className="text-gold font-accent uppercase tracking-[0.2em] text-sm">
+              Visit Us
+            </h3>
             <ul className="space-y-4">
-              <FooterLink href="/#services">Services</FooterLink>
-              <FooterLink href="/gallery">Gallery</FooterLink>
-              <FooterLink href="/book">Book Now</FooterLink>
-              <FooterLink href="/#team">Our Team</FooterLink>
-              <FooterLink href="/#contact">Contact</FooterLink>
+              <li>
+                <a
+                  href="https://maps.google.com/?q=410+13+Street+North+Lethbridge+Alberta"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-start gap-3 text-warm-white/50 hover:text-gold transition-colors text-sm group"
+                  aria-label="Open address in Google Maps"
+                >
+                  <MapPin
+                    size={15}
+                    className="text-gold/70 shrink-0 mt-0.5 group-hover:text-gold transition-colors"
+                    aria-hidden="true"
+                  />
+                  <span className="leading-relaxed">
+                    410 13 Street North<br />
+                    Lethbridge, Alberta T1H 2S2
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="tel:+14039297321"
+                  className="flex items-center gap-3 text-warm-white/50 hover:text-gold transition-colors text-sm group"
+                  aria-label="Call +1 403 929 7321"
+                >
+                  <Phone size={15} className="text-gold/70 shrink-0 group-hover:text-gold transition-colors" aria-hidden="true" />
+                  <span className="font-mono">+1 403 929 7321</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="mailto:ijbbarbershop@gmail.com"
+                  className="flex items-center gap-3 text-warm-white/50 hover:text-gold transition-colors text-sm group"
+                  aria-label="Email ijbbarbershop@gmail.com"
+                >
+                  <Mail size={15} className="text-gold/70 shrink-0 group-hover:text-gold transition-colors" aria-hidden="true" />
+                  <span className="break-all">ijbbarbershop@gmail.com</span>
+                </a>
+              </li>
             </ul>
           </div>
 
-          {/* Shop Info */}
-          <div className="space-y-8">
-            <h4 className="text-gold font-accent uppercase tracking-widest text-lg">Visit Us</h4>
-            <ul className="space-y-6">
-              <li className="flex items-start gap-4 text-warm-white/60 text-sm">
-                <MapPin size={18} className="text-gold shrink-0" />
-                <span>410 13 Street North, Lethbridge, Alberta T1H 2S2</span>
-              </li>
-              <li className="flex items-center gap-4 text-warm-white/60 text-sm">
-                <Phone size={18} className="text-gold shrink-0" />
-                <span>+1 403 929 7321</span>
-              </li>
-              <li className="flex items-center gap-4 text-warm-white/60 text-sm">
-                <Mail size={18} className="text-gold shrink-0" />
-                <span>ijbbarbershop@gmail.com</span>
-              </li>
+          {/* Col 4 — Hours + Newsletter */}
+          <div className="space-y-5">
+            <h3 className="text-gold font-accent uppercase tracking-[0.2em] text-sm">
+              Hours
+            </h3>
+            <ul className="space-y-3">
+              {HOURS.map(({ days, time }) => (
+                <li key={days} className="flex items-start gap-2.5">
+                  <Clock size={14} className="text-gold/60 shrink-0 mt-0.5" aria-hidden="true" />
+                  <div>
+                    <p className="text-warm-white/70 text-xs font-mono uppercase tracking-wider leading-snug">{days}</p>
+                    <p className="text-warm-white/40 text-xs font-mono">{time}</p>
+                  </div>
+                </li>
+              ))}
             </ul>
-          </div>
 
-          {/* Newsletter */}
-          <div className="space-y-8">
-            <h4 className="text-gold font-accent uppercase tracking-widest text-lg">Newsletter</h4>
-            <p className="text-warm-white/40 font-body text-sm">Get grooming tips & promos delivered to your inbox.</p>
-            <form onSubmit={handleSubscribe} className="space-y-4">
-               <div className="relative">
-                  <input 
+            {/* Newsletter */}
+            <div className="pt-2 space-y-3">
+              <p className="text-warm-white/30 text-xs leading-relaxed">
+                Get grooming tips &amp; promos in your inbox.
+              </p>
+              {isSubscribed ? (
+                <p className="text-gold text-xs font-mono uppercase tracking-widest animate-pulse">
+                  ✓ You&apos;re on the list!
+                </p>
+              ) : (
+                <form onSubmit={handleSubscribe} className="flex gap-2">
+                  <input
                     required
                     type="email"
-                    placeholder="Email Address"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full bg-black border border-white/10 rounded-xl py-4 px-6 text-warm-white focus:border-gold outline-none transition-colors"
+                    placeholder="your@email.com"
+                    aria-label="Email address for newsletter"
+                    className="flex-1 min-w-0 bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-warm-white text-sm placeholder:text-white/20 focus:border-gold focus:outline-none transition-colors"
                   />
-                  <button type="submit" className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-gold text-black rounded-lg flex items-center justify-center hover:scale-105 transition-transform">
-                     <Send size={18} />
+                  <button
+                    type="submit"
+                    disabled={isLoading}
+                    aria-label="Subscribe to newsletter"
+                    className="flex-shrink-0 w-10 h-10 bg-gold text-black rounded-xl flex items-center justify-center hover:scale-105 active:scale-95 transition-transform disabled:opacity-50"
+                  >
+                    <Send size={14} aria-hidden="true" />
                   </button>
-               </div>
-               {isSubscribed && <p className="text-gold text-xs font-mono uppercase animate-pulse">Welcome to the inner circle!</p>}
-            </form>
+                </form>
+              )}
+            </div>
           </div>
-
         </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-mono text-warm-white/20 uppercase tracking-[0.2em]">
-           <p>© 2026 JB Barbershop · All Rights Reserved</p>
-           <p>Built with ❤️ in Lethbridge</p>
+        {/* ── Divider ── */}
+        <div className="border-t border-white/5" />
+
+        {/* ── Bottom Bar ── */}
+        <div className="pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-[11px] font-mono text-warm-white/20 uppercase tracking-[0.15em]">
+          <p>© {new Date().getFullYear()} JB Barbershop · All Rights Reserved</p>
+          <p className="hidden sm:block">Built with ♥ in Lethbridge, Alberta</p>
+          <Link
+            href="/book"
+            className="text-gold/50 hover:text-gold transition-colors"
+          >
+            Book Now →
+          </Link>
         </div>
       </div>
     </footer>
-  );
-}
-
-function SocialIcon({ icon, href }: any) {
-  return (
-    <a 
-      href={href} 
-      target="_blank" 
-      className="w-12 h-12 rounded-full border border-gold/30 flex items-center justify-center text-gold hover:bg-gold hover:text-black hover:scale-110 transition-all duration-300"
-    >
-      {icon}
-    </a>
-  );
-}
-
-function InstagramIcon() {
-  return (
-    <svg 
-      width="20" 
-      height="20" 
-      viewBox="0 0 24 24" 
-      fill="none" 
-      stroke="currentColor" 
-      strokeWidth="2" 
-      strokeLinecap="round" 
-      strokeLinejoin="round"
-    >
-      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
-    </svg>
-  );
-}
-
-function FooterLink({ href, children }: any) {
-  return (
-    <li>
-      <Link href={href} className="text-warm-white/40 hover:text-gold transition-colors text-sm font-body">
-        {children}
-      </Link>
-    </li>
   );
 }

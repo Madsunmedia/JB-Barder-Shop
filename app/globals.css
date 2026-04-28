@@ -95,3 +95,62 @@
     transition-delay: 0s !important;
   }
 }
+
+/* ─── Global Layout Utilities ─── */
+
+/* Prevents horizontal overflow site-wide */
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+/* Standard page container */
+.page-container {
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.25rem;  /* 20px */
+  padding-right: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .page-container {
+    padding-left: 2.5rem;  /* 40px */
+    padding-right: 2.5rem;
+  }
+}
+
+/* Standard section vertical rhythm */
+.section-pad {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+@media (min-width: 768px) {
+  .section-pad {
+    padding-top: 8rem;
+    padding-bottom: 8rem;
+  }
+}
+
+/* Glassmorphism card utility */
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Fast tap response — eliminates 300ms delay on mobile */
+a, button, [role="button"] {
+  touch-action: manipulation;
+}
+
+/* Minimum touch target */
+a, button {
+  min-height: 44px;
+}
+
+nav a, .nav-link {
+  min-height: unset;
+}
