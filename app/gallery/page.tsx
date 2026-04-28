@@ -1,6 +1,7 @@
 import GalleryGrid from "@/components/Gallery/GalleryGrid";
 import Navbar from "@/components/Navbar";
 import { Metadata } from "next";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Gallery | JB Barbershop",
@@ -20,9 +21,9 @@ const INITIAL_IMAGES = [
 
 export default function GalleryPage() {
   return (
-    <main className="min-h-screen bg-black pt-32 pb-40">
+    <div className="min-h-screen bg-black">
       <Navbar />
-      
+
       {/* Background Text Effect */}
       <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none select-none z-0">
         <h1 className="text-[15rem] md:text-[30rem] font-accent text-warm-white opacity-[0.04] uppercase leading-none whitespace-nowrap">
@@ -30,7 +31,7 @@ export default function GalleryPage() {
         </h1>
       </div>
 
-      <div className="relative z-10 max-w-[1600px] mx-auto px-6">
+      <div className="relative z-10 max-w-[1600px] mx-auto px-6 pt-32 pb-40">
         <header className="mb-20 space-y-4">
           <span className="text-gold font-accent text-xl tracking-[0.4em] uppercase">Portfolio</span>
           <h2 className="text-7xl md:text-9xl font-accent text-gold uppercase leading-tight">
@@ -41,10 +42,7 @@ export default function GalleryPage() {
         <GalleryGrid images={INITIAL_IMAGES} />
       </div>
 
-      {/* Footer hint */}
-      <div className="mt-40 text-center text-warm-white/20 font-mono text-sm tracking-[0.5em] uppercase">
-        © JB BARBERSHOP GALLERY
-      </div>
-    </main>
+      <Footer />
+    </div>
   );
 }

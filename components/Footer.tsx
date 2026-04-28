@@ -52,7 +52,6 @@ export default function Footer() {
             </p>
             <div className="flex gap-4">
                <SocialIcon icon={<InstagramIcon />} href="https://instagram.com/ijbbarbershop" />
-               <SocialIcon icon={<div className="font-accent text-lg">T</div>} href="#" />
             </div>
           </div>
 
@@ -113,7 +112,7 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-mono text-warm-white/20 uppercase tracking-[0.2em]">
-           <p>© 2025 JB Barbershop · All Rights Reserved</p>
+           <p>© 2026 JB Barbershop · All Rights Reserved</p>
            <p>Built with ❤️ in Lethbridge</p>
         </div>
       </div>

@@ -91,7 +91,7 @@ export default function Navbar() {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed inset-0 z-[110] bg-black-primary flex flex-col items-center justify-center gap-8 p-12"
+            className="fixed inset-0 z-[110] bg-black flex flex-col items-center justify-center gap-8 p-12"
           >
             <button
               className="absolute top-8 right-8 text-warm-white"

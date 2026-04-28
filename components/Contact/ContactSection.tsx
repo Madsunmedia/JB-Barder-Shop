@@ -8,9 +8,15 @@ export default function ContactSection() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    service: "",
+    message: "",
+  });
 
   useEffect(() => {
-    // Live "Open/Closed" logic for Lethbridge (Mountain Time)
     const checkStatus = () => {
       const now = new Date();
       const mtTime = new Intl.DateTimeFormat("en-US", {
@@ -21,11 +27,11 @@ export default function ContactSection() {
       }).formatToParts(now);
       
       const hour = parseInt(mtTime.find(p => p.type === "hour")?.value || "0");
-      const day = now.getDay(); // 0 is Sunday
+      const day = now.getDay();
 
-      if (day === 0) { // Sunday
+      if (day === 0) {
         setIsOpen(hour >= 9 && hour < 19);
-      } else { // Mon-Sat
+      } else {
         setIsOpen(hour >= 9 && hour < 20);
       }
     };
@@ -37,11 +43,21 @@ export default function ContactSection() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      if (res.ok) {
+        setIsSuccess(true);
+        setFormData({ name: "", email: "", phone: "", service: "", message: "" });
+      }
+    } catch (error) {
+      console.error("Contact error:", error);
+    } finally {
       setIsSubmitting(false);
-      setIsSuccess(true);
-    }, 1500);
+    }
   };
 
   return (
@@ -77,11 +93,11 @@ export default function ContactSection() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="text-[10px] font-accent text-gold uppercase tracking-widest">Full Name</label>
-                    <input required className="w-full bg-black/40 border border-white/10 rounded-xl py-4 px-6 text-warm-white focus:border-gold outline-none transition-colors" />
+                    <input required value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full bg-black/40 border border-white/10 rounded-xl py-4 px-6 text-warm-white focus:border-gold outline-none transition-colors" />
                   </div>
                   <div className="space-y-2">
                     <label className="text-[10px] font-accent text-gold uppercase tracking-widest">Email Address</label>
-                    <input required type="email" className="w-full bg-black/40 border border-white/10 rounded-xl py-4 px-6 text-warm-white focus:border-gold outline-none transition-colors" />
+                    <input required type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className="w-full bg-black/40 border border-white/10 rounded-xl py-4 px-6 text-warm-white focus:border-gold outline-none transition-colors" />
                   </div>
                 </div>
                 <div className="space-y-2">
@@ -95,7 +111,7 @@ export default function ContactSection() {
                 </div>
                 <div className="space-y-2">
                   <label className="text-[10px] font-accent text-gold uppercase tracking-widest">Your Message</label>
-                  <textarea rows={4} className="w-full bg-black/40 border border-white/10 rounded-xl py-4 px-6 text-warm-white focus:border-gold outline-none transition-colors resize-none" />
+                  <textarea rows={4} value={formData.message} onChange={e => setFormData({...formData, message: e.target.value})} className="w-full bg-black/40 border border-white/10 rounded-xl py-4 px-6 text-warm-white focus:border-gold outline-none transition-colors resize-none" />
                 </div>
                 <button 
                   disabled={isSubmitting}
