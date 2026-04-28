@@ -25,6 +25,7 @@ const bebas = Bebas_Neue({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://jbbarbershop.ca"),
   title: "JB Barbershop | Premium Men's Grooming in Lethbridge, Alberta",
   description: "Top-rated barbershop in Lethbridge. Expert skin fades, beard trims, hot towel shaves & facials. Book online 24/7. ⭐ 5.0 rating.",
   keywords: "barbershop lethbridge, skin fade lethbridge, men's haircut alberta, beard trim lethbridge, JB barbershop, Lethbridge grooming",

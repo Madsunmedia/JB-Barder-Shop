@@ -2,6 +2,7 @@ import BookingWizard from "@/components/Booking/BookingWizard";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Metadata } from "next";
+import { CalendarCheck } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Book Appointment | JB Barbershop",
@@ -10,31 +11,34 @@ export const metadata: Metadata = {
 
 export default function BookingPage() {
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-[#050505] flex flex-col overflow-hidden">
       <Navbar />
       
-      {/* 3D Animated Grid Background */}
-      <div className="fixed inset-0 z-0 opacity-20 pointer-events-none">
+      {/* Background Effect */}
+      <div className="fixed inset-0 z-0 opacity-[0.03] pointer-events-none">
         <div 
-          className="absolute inset-0 bg-[linear-gradient(to_right,#C9A84C_1px,transparent_1px),linear-gradient(to_bottom,#C9A84C_1px,transparent_1px)] bg-[size:60px_60px]"
-          style={{ 
-            transform: 'perspective(1000px) rotateX(60deg) translateY(-100px)',
-            transformOrigin: 'top'
-          }}
+          className="absolute inset-0 bg-[linear-gradient(to_right,#C9A84C_1px,transparent_1px),linear-gradient(to_bottom,#C9A84C_1px,transparent_1px)] bg-[size:48px_48px]"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,#050505_0%,transparent_100%)]" />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-40">
-        <header className="mb-16 text-center lg:text-left space-y-4">
-           <span className="text-gold font-accent text-xl tracking-[0.4em] uppercase">Experience</span>
-           <h1 className="text-7xl md:text-9xl font-accent text-gold uppercase leading-tight">
-             Reserve <br /> Your Seat
-           </h1>
-        </header>
+      <main className="flex-grow relative z-10 w-full pt-32 pb-32">
+        <div className="max-w-7xl mx-auto px-5 md:px-10">
+          
+          <header className="mb-12 md:mb-16 text-center md:text-left space-y-4">
+             <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-gold/20 bg-gold/5 text-gold text-xs font-mono uppercase tracking-[0.25em] mx-auto md:mx-0">
+               <CalendarCheck size={12} />
+               Experience
+             </span>
+             <h1 className="text-5xl md:text-7xl lg:text-8xl font-accent text-warm-white uppercase leading-[0.9] tracking-tight">
+               Reserve <br className="hidden md:block" />
+               <span className="text-gold">Your Seat</span>
+             </h1>
+          </header>
 
-        <BookingWizard />
-      </div>
+          <BookingWizard />
+        </div>
+      </main>
 
       <Footer />
     </div>
