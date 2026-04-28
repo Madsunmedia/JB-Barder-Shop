@@ -1,8 +1,8 @@
 "use client";
 
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { useState, useEffect } from "react";
-import { Clock } from "lucide-react";
+import { motion } from "framer-motion";
+import { Clock, ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 interface Service {
   id: string;
@@ -12,91 +12,51 @@ interface Service {
   category: string;
 }
 
-export default function ServiceCard({ service, onBook }: { service: Service, onBook: (s: Service) => void }) {
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  const mouseXSpring = useSpring(x);
-  const mouseYSpring = useSpring(y);
-
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["17.5deg", "-17.5deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-17.5deg", "17.5deg"]);
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    const rect = (e.target as HTMLElement).getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-    const xPct = mouseX / width - 0.5;
-    const yPct = mouseY / height - 0.5;
-    x.set(xPct);
-    y.set(yPct);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
-  // Price Counter Animation
-  const [count, setCount] = useState(0);
-  useEffect(() => {
-    let start = 0;
-    const end = service.price;
-    const duration = 1000;
-    const increment = end / (duration / 16);
-    
-    const timer = setInterval(() => {
-      start += increment;
-      if (start >= end) {
-        setCount(end);
-        clearInterval(timer);
-      } else {
-        setCount(Math.floor(start));
-      }
-    }, 16);
-
-    return () => clearInterval(timer);
-  }, [service.price]);
-
+export default function ServiceCard({
+  service,
+  onBook,
+}: {
+  service: Service;
+  onBook: (s: Service) => void;
+}) {
   return (
     <motion.div
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        rotateY,
-        rotateX,
-        transformStyle: "preserve-3d",
-      }}
-      className="relative h-64 w-full glass border-t-4 border-gold p-8 rounded-2xl flex flex-col justify-between group overflow-hidden cursor-pointer"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="group relative flex flex-col justify-between bg-white/[0.03] border border-white/8 hover:border-gold/30 rounded-2xl p-6 transition-all duration-300 hover:bg-white/[0.05]"
     >
-      <div style={{ transform: "translateZ(50px)" }} className="space-y-4">
-        <div className="flex items-center gap-2 px-3 py-1 bg-gold/10 rounded-full w-fit">
-          <Clock size={14} className="text-gold" />
-          <span className="text-xs font-mono text-gold uppercase">{service.duration}</span>
+      {/* Top row: duration badge */}
+      <div className="flex items-center justify-between mb-4">
+        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-gold/10 border border-gold/20 rounded-full text-gold text-[10px] font-mono uppercase tracking-wider">
+          <Clock size={10} aria-hidden="true" />
+          {service.duration}
+        </span>
+        <span className="text-warm-white/20 text-xs font-mono uppercase tracking-wider">
+          {service.category}
+        </span>
+      </div>
+
+      {/* Service name */}
+      <h3 className="text-xl font-accent text-warm-white uppercase leading-snug group-hover:text-gold transition-colors duration-300 mb-4">
+        {service.name}
+      </h3>
+
+      {/* Price + CTA row */}
+      <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/5">
+        <div className="flex items-baseline gap-0.5">
+          <span className="text-gold text-lg font-accent">$</span>
+          <span className="text-warm-white text-2xl font-accent">{service.price}</span>
         </div>
-        <h3 className="text-2xl font-accent text-warm-white leading-tight uppercase group-hover:text-gold transition-colors">
-          {service.name}
-        </h3>
+        <button
+          onClick={() => onBook(service)}
+          className="flex items-center gap-1.5 min-h-[36px] px-4 py-1.5 bg-gold/10 border border-gold/20 text-gold text-xs font-accent uppercase tracking-wider rounded-full hover:bg-gold hover:text-black active:scale-95 transition-all duration-300"
+        >
+          Book
+          <ArrowRight size={12} aria-hidden="true" />
+        </button>
       </div>
-
-      <div style={{ transform: "translateZ(75px)" }} className="flex items-baseline gap-1">
-        <span className="text-gold font-accent text-4xl">$</span>
-        <span className="text-warm-white font-accent text-5xl">{count}</span>
-      </div>
-
-      {/* Hover Slide-up Button */}
-      <motion.button
-        onClick={() => onBook(service)}
-        initial={{ y: 100 }}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        animate={{ y: 0 }}
-        className="absolute inset-x-0 bottom-0 py-4 bg-gold text-black font-accent text-xl uppercase opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-full group-hover:translate-y-0"
-      >
-        Book This
-      </motion.button>
     </motion.div>
   );
 }

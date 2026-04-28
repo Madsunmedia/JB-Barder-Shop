@@ -1,8 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import { track } from "@vercel/analytics";
 
 interface Barber {
   name: string;
@@ -14,63 +16,65 @@ interface Barber {
 }
 
 export default function BarberCard({ barber }: { barber: Barber }) {
-  const [isFlipped, setIsFlipped] = useState(false);
-
   return (
-    <div 
-      className="relative w-full h-[500px] cursor-pointer perspective-1000 group"
-      onMouseEnter={() => setIsFlipped(true)}
-      onMouseLeave={() => setIsFlipped(false)}
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6 }}
+      className="group relative flex flex-col md:flex-row gap-0 rounded-3xl overflow-hidden border border-white/8 bg-white/[0.02] hover:border-gold/25 transition-colors duration-300"
     >
-      <motion.div
-        animate={{ rotateY: isFlipped ? 180 : 0 }}
-        transition={{ duration: 0.6, type: "spring", stiffness: 260, damping: 20 }}
-        className="relative w-full h-full transform-style-3d shadow-xl rounded-2xl overflow-hidden animate-float"
-      >
-        {/* Front */}
-        <div className="absolute inset-0 backface-hidden">
-          <Image
-            src={barber.image}
-            alt={barber.name}
-            fill
-            className="object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
-          <div className="absolute bottom-8 left-8">
-            <h3 className="text-4xl font-accent text-gold uppercase">{barber.name}</h3>
-            <p className="text-warm-white/70 font-heading italic">{barber.title}</p>
-          </div>
+      {/* Image */}
+      <div className="relative w-full md:w-[300px] aspect-[4/3] md:aspect-auto md:min-h-[420px] flex-shrink-0 overflow-hidden">
+        <Image
+          src={barber.image}
+          alt={`${barber.name} — ${barber.title}`}
+          fill
+          className="object-cover object-top group-hover:scale-105 transition-transform duration-700"
+          sizes="(max-width: 768px) 100vw, 300px"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-black/60 via-transparent to-transparent" />
+      </div>
+
+      {/* Content */}
+      <div className="flex flex-col justify-center p-7 md:p-10 gap-5">
+        <div>
+          <p className="text-gold text-xs font-mono uppercase tracking-[0.25em] mb-1">{barber.title}</p>
+          <h3 className="text-4xl md:text-5xl font-accent text-warm-white uppercase">{barber.name}</h3>
         </div>
 
-        {/* Back */}
-        <div className="absolute inset-0 backface-hidden rotate-y-180 bg-charcoal p-10 flex flex-col justify-center gap-6 border border-gold/20">
-          <div className="space-y-4">
-            <h3 className="text-3xl font-accent text-gold uppercase">{barber.name}</h3>
-            <p className="text-warm-white/80 font-body leading-relaxed">{barber.bio}</p>
-          </div>
+        <p className="text-warm-white/60 font-body text-sm leading-relaxed max-w-md">
+          {barber.bio}
+        </p>
 
-          <div className="space-y-4">
-            <p className="text-xs font-accent text-gold/50 uppercase tracking-widest">Specialties</p>
-            <div className="flex flex-wrap gap-2">
-              {barber.specialties.map((spec) => (
-                <span key={spec} className="px-3 py-1 bg-gold/10 text-gold text-xs rounded-full border border-gold/20 uppercase font-mono">
-                  {spec}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          {barber.quote && (
-            <div className="mt-4 pt-4 border-t border-white/10 italic text-warm-white/60 font-heading text-sm">
-              &quot;{barber.quote}&quot;
-            </div>
-          )}
-
-          <button className="mt-4 w-full py-3 bg-gold text-black font-accent text-lg uppercase rounded-lg hover:scale-105 transition-transform">
-            Book with {barber.name}
-          </button>
+        {/* Specialties */}
+        <div className="flex flex-wrap gap-2">
+          {barber.specialties.map((spec) => (
+            <span
+              key={spec}
+              className="px-3 py-1 bg-gold/8 border border-gold/20 text-gold text-xs rounded-full font-mono uppercase tracking-wider"
+            >
+              {spec}
+            </span>
+          ))}
         </div>
-      </motion.div>
-    </div>
+
+        {barber.quote && (
+          <blockquote className="border-l-2 border-gold/30 pl-4 text-warm-white/40 font-heading italic text-sm">
+            &ldquo;{barber.quote}&rdquo;
+          </blockquote>
+        )}
+
+        <Link
+          href="/book"
+          onClick={() => track("book_now_click", { location: "team_card" })}
+          className="mt-2 self-start inline-flex items-center gap-2 min-h-[44px] px-6 py-2.5 bg-gold text-black font-accent text-sm uppercase tracking-wider rounded-full hover:shadow-[0_0_20px_rgba(201,168,76,0.4)] hover:scale-105 active:scale-95 transition-all duration-300"
+        >
+          Book with {barber.name}
+          <ArrowRight size={14} aria-hidden="true" />
+        </Link>
+      </div>
+    </motion.div>
   );
 }
