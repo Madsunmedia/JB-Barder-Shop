@@ -11,13 +11,15 @@ import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <div className="relative bg-black">
+    <div className="relative bg-[#050505] flex flex-col min-h-screen overflow-hidden">
       <Navbar />
-      <Hero />
-      <ServicesSection />
-      <TeamSection />
-      <ReviewsSection />
-      <ContactSection />
+      <main className="flex-grow">
+        <Hero />
+        <ServicesSection />
+        <TeamSection />
+        <ReviewsSection />
+        <ContactSection />
+      </main>
       <Footer />
     </div>
   );
