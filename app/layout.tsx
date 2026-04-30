@@ -26,9 +26,9 @@ const bebas = Bebas_Neue({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://jbbarbershop.ca"),
-  title: "JB Barbershop | Premium Men's Grooming in Lethbridge, Alberta",
-  description: "Top-rated barbershop in Lethbridge. Expert skin fades, beard trims, hot towel shaves & facials. Book online 24/7. ⭐ 5.0 rating.",
-  keywords: "barbershop lethbridge, skin fade lethbridge, men's haircut alberta, beard trim lethbridge, JB barbershop, Lethbridge grooming",
+  title: "Men’s Haircuts & Beard Trims in Lethbridge | JB Barbershop",
+  description: "Premium men’s grooming in Lethbridge, Alberta. Book skin fades, regular cuts, beard trims, and hot towel shaves at JB Barbershop.",
+  keywords: "mens haircuts in Lethbridge, barbershop near me, mens barber near me, beard trim near me, skin fade Lethbridge, best barbershop near me, haircut for men, nearest barber shop, JB barbershop",
   authors: [{ name: "JB Barbershop Team" }],
   openGraph: {
     title: "JB Barbershop | Lethbridge's Finest Grooming",
@@ -60,15 +60,16 @@ export default function RootLayout({
     "image": "https://jbbarbershop.ca/logo.png",
     "@id": "https://jbbarbershop.ca",
     "url": "https://jbbarbershop.ca",
-    "telephone": "+14039297321",
+    "telephone": "+14039425332",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "410 13 Street North",
+      "streetAddress": "714 4 Ave S",
       "addressLocality": "Lethbridge",
       "addressRegion": "AB",
-      "postalCode": "T1H 2S2",
+      "postalCode": "T1J 0N8",
       "addressCountry": "CA"
     },
+    "areaServed": "Lethbridge",
     "geo": {
       "@type": "GeoCoordinates",
       "latitude": 49.6956,

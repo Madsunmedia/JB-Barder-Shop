@@ -115,3 +115,39 @@ enum AppointmentStatus {
   CANCELLED
   COMPLETED
 }
+
+enum BookingStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  RESCHEDULE_REQUESTED
+  CANCELLED
+  COMPLETED
+}
+
+model Booking {
+  id                 String           @id @default(cuid())
+  fullName           String
+  phoneNumber        String
+  serviceSelected    String
+  barberSelected     String?
+  dateSelected       DateTime
+  timeSelected       String
+  status             BookingStatus    @default(PENDING)
+  adminNotes         String?          @db.Text
+  customerNotes      String?          @db.Text
+  source             String?          
+  notificationStatus String?          
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+  messages           BookingMessage[]
+}
+
+model BookingMessage {
+  id        String   @id @default(cuid())
+  bookingId String
+  booking   Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  sender    String   // "ADMIN" | "CUSTOMER" | "SYSTEM"
+  content   String   @db.Text
+  createdAt DateTime @default(now())
+}

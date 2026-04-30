@@ -38,7 +38,8 @@ export default function Hero() {
         </motion.div>
 
         {/* Main Headline */}
-        <h1 className="font-accent uppercase leading-[0.9] tracking-tight mb-6">
+        <h1 className="sr-only">Lethbridge Men’s Barbershop for Haircuts, Skin Fades &amp; Beard Trims</h1>
+        <div aria-hidden="true" className="font-accent uppercase leading-[0.9] tracking-tight mb-6">
           {["LOOK", "SHARP."].map((word, wi) => (
             <span key={wi} className="block overflow-hidden">
               {word.split("").map((letter, li) => (
@@ -58,7 +59,7 @@ export default function Hero() {
               ))}
             </span>
           ))}
-        </h1>
+        </div>
 
         {/* Supporting text */}
         <motion.p
@@ -67,8 +68,8 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.9 }}
           className="text-warm-white/60 font-body text-base md:text-lg leading-relaxed max-w-xl mx-auto mb-10"
         >
-          Expert skin fades, beard sculpts &amp; luxury grooming — crafted with precision at
-          410 13 St N, Lethbridge.
+          Premium mens haircuts in Lethbridge. We specialize in precision skin fades, detailed beard trims, and luxury grooming at
+          714 4 Ave S.
         </motion.p>
 
         {/* CTA Buttons */}
@@ -83,14 +84,14 @@ export default function Hero() {
             onClick={() => track("book_now_click", { location: "hero_primary" })}
             className="w-full sm:w-auto min-h-[52px] px-8 py-3.5 bg-gold text-black font-accent text-lg rounded-full shadow-[0_0_20px_rgba(201,168,76,0.35)] hover:shadow-[0_0_36px_rgba(201,168,76,0.6)] hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center"
           >
-            Book Appointment
+            Book Now
           </Link>
           <a
             href="tel:+14039297321"
             className="w-full sm:w-auto min-h-[52px] px-8 py-3.5 border border-gold/40 text-gold font-accent text-lg rounded-full hover:bg-gold/10 active:scale-95 transition-all duration-300 flex items-center justify-center gap-2"
           >
             <Phone size={16} aria-hidden="true" />
-            +1 403 929 7321
+            +1 403 942 5332
           </a>
         </motion.div>
 
