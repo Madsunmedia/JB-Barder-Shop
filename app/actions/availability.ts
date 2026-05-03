@@ -114,6 +114,6 @@ export async function fetchAvailability(dateStr: string, barberSelected?: string
     return { success: true, availableSlots };
   } catch (error) {
     console.error("Failed to fetch availability:", error);
-    return { success: false, error: "Failed to fetch availability" };
+    return { success: false, error: error instanceof Error ? error.message : "Unknown error" };
   }
 }

@@ -28,6 +28,8 @@ export default function Step3_Calendar({ data, onSelect, onNext, onBack }: any) 
           setAvailableSlots(res.availableSlots);
         } else {
           setAvailableSlots([]);
+          console.error("Availability error:", res.error);
+          alert("Error fetching availability: " + res.error);
         }
       });
     }
