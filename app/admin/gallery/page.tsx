@@ -6,7 +6,8 @@ import {
   Upload, X, Pencil, Trash2, Check, Loader2,
   Link as LinkIcon, Image as ImageIcon, Plus
 } from "lucide-react";
-import { getAllMedia, createMediaItem, updateMediaItem, deleteMediaItem, SECTIONS } from "@/app/actions/media";
+import { getAllMedia, createMediaItem, updateMediaItem, deleteMediaItem } from "@/app/actions/media";
+import { SECTIONS } from "@/lib/media-sections";
 
 export default function GalleryAdminPage() {
   const [items, setItems] = useState<any[]>([]);

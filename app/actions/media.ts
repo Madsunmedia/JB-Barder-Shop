@@ -2,8 +2,6 @@
 
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-// SECTIONS is in lib/media-sections.ts (cannot be exported from a "use server" file)
-export { SECTIONS } from "@/lib/media-sections";
 
 export async function getMediaBySection(section: string) {
   try {
