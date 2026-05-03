@@ -80,7 +80,7 @@ export default function AdminLogin() {
                    placeholder="ADMIN EMAIL"
                    value={email}
                    onChange={(e) => setEmail(e.target.value)}
-                   className="w-full bg-black/40 border border-white/10 rounded-2xl py-5 pl-12 pr-6 text-warm-white text-[10px] font-accent uppercase tracking-widest outline-none focus:border-gold transition-all"
+                   className="w-full bg-black/40 border border-white/10 rounded-2xl py-5 pl-12 pr-6 text-warm-white text-sm outline-none focus:border-gold transition-all"
                  />
               </div>
 
@@ -92,7 +92,7 @@ export default function AdminLogin() {
                    placeholder="PASSWORD"
                    value={password}
                    onChange={(e) => setPassword(e.target.value)}
-                   className="w-full bg-black/40 border border-white/10 rounded-2xl py-5 pl-12 pr-12 text-warm-white text-[10px] font-accent uppercase tracking-widest outline-none focus:border-gold transition-all"
+                   className="w-full bg-black/40 border border-white/10 rounded-2xl py-5 pl-12 pr-12 text-warm-white text-sm outline-none focus:border-gold transition-all"
                  />
                  <button
                    type="button"
