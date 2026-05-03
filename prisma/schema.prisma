@@ -151,3 +151,23 @@ model BookingMessage {
   content   String   @db.Text
   createdAt DateTime @default(now())
 }
+
+enum AvailabilityType {
+  FULL_DAY
+  DATE_RANGE
+  PARTIAL
+  RECURRING
+}
+
+model AvailabilityBlock {
+  id        String           @id @default(cuid())
+  name      String
+  type      AvailabilityType
+  startDate DateTime?
+  endDate   DateTime?
+  startTime String?
+  endTime   String?
+  dayOfWeek Int?
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+}

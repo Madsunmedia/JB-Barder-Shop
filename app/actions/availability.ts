@@ -16,19 +16,43 @@ export async function fetchAvailability(dateStr: string, barberSelected?: string
   try {
     const targetDate = new Date(dateStr);
     
-    // Set to start and end of the requested day (local or UTC depending on how you store it)
     const startOfDay = new Date(targetDate);
     startOfDay.setHours(0, 0, 0, 0);
     
     const endOfDay = new Date(targetDate);
     endOfDay.setHours(23, 59, 59, 999);
 
+    const dayOfWeek = targetDate.getDay();
+
+    // 1. Fetch Availability Blocks
+    const blocks = await prisma.availabilityBlock.findMany();
+
+    // 2. Check for Full Day closures
+    const isFullDayClosed = blocks.some(b => {
+      if (b.type === "FULL_DAY" && b.startDate) {
+        return b.startDate.toISOString().split("T")[0] === dateStr;
+      }
+      if (b.type === "DATE_RANGE" && b.startDate && b.endDate) {
+        const start = new Date(b.startDate); start.setHours(0,0,0,0);
+        const end = new Date(b.endDate); end.setHours(23,59,59,999);
+        return targetDate >= start && targetDate <= end;
+      }
+      if (b.type === "RECURRING" && b.dayOfWeek === dayOfWeek && !b.startTime && !b.endTime) {
+        return true;
+      }
+      return false;
+    });
+
+    if (isFullDayClosed) {
+      return { success: true, availableSlots: [] };
+    }
+
+    // 3. Find existing bookings
     const whereClause: any = {
       dateSelected: {
         gte: startOfDay,
         lte: endOfDay,
       },
-      // Exclude cancelled and rejected bookings from blocking availability
       status: {
         notIn: ["CANCELLED", "REJECTED"],
       },
@@ -47,8 +71,37 @@ export async function fetchAvailability(dateStr: string, barberSelected?: string
 
     const bookedTimes = new Set(existingBookings.map((b) => b.timeSelected));
 
-    // Filter out standard hours that are already booked
-    const availableSlots = STANDARD_HOURS.filter((time) => !bookedTimes.has(time));
+    // 4. Find partial blocks
+    const partialBlocks = blocks.filter(b => {
+      if (b.type === "PARTIAL" && b.startDate && b.startTime && b.endTime) {
+         return b.startDate.toISOString().split("T")[0] === dateStr;
+      }
+      if (b.type === "RECURRING" && b.dayOfWeek === dayOfWeek && b.startTime && b.endTime) {
+         return true;
+      }
+      return false;
+    });
+
+    const isSlotBlockedByPartial = (slotTime: string) => {
+       return partialBlocks.some(b => {
+          return slotTime >= b.startTime! && slotTime < b.endTime!;
+       });
+    };
+
+    // Filter out standard hours
+    const availableSlots = STANDARD_HOURS.filter((time) => {
+      if (bookedTimes.has(time)) return false;
+      if (isSlotBlockedByPartial(time)) return false;
+      
+      // If today, filter past times
+      const todayStr = new Date().toISOString().split("T")[0];
+      if (dateStr === todayStr) {
+        const nowTime = new Date().toTimeString().slice(0, 5);
+        if (time <= nowTime) return false;
+      }
+
+      return true;
+    });
 
     return { success: true, availableSlots };
   } catch (error) {
