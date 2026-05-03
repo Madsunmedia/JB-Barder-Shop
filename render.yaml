@@ -17,6 +17,12 @@ services:
           name: jb-barbershop-db
           property: connectionString
       - key: NEXTAUTH_URL
-        sync: false # Set this in your Render dashboard later (e.g. your .onrender.com domain)
+        sync: false # Set this in your Render dashboard (e.g. your .onrender.com domain)
       - key: NEXTAUTH_SECRET
         generateValue: true # Render will automatically generate a secure secret
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false # Set value in Render dashboard: root
+      - key: CLOUDINARY_API_KEY
+        sync: false # Set value in Render dashboard: 712258522452469
+      - key: CLOUDINARY_API_SECRET
+        sync: false # Set value in Render dashboard: HHbXzejyftortSuIszLtwgdOlC8
