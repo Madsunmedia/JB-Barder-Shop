@@ -18,7 +18,10 @@ export default function Step3_Calendar({ data, onSelect, onNext, onBack }: any) 
 
   useEffect(() => {
     if (selectedDate) {
-      const dateStr = selectedDate.toISOString().split("T")[0];
+      const year = selectedDate.getFullYear();
+      const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+      const day = String(selectedDate.getDate()).padStart(2, '0');
+      const dateStr = `${year}-${month}-${day}`;
       const barberId = data.barber?.id;
       fetchAvailability(dateStr, barberId).then(res => {
         if (res.success && res.availableSlots) {

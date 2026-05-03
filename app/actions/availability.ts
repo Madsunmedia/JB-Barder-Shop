@@ -93,10 +93,19 @@ export async function fetchAvailability(dateStr: string, barberSelected?: string
       if (isSlotBlockedByPartial(time)) return false;
       
       // If today, filter past times
-      const todayStr = new Date().toISOString().split("T")[0];
-      if (dateStr === todayStr) {
-        const nowTime = new Date().toTimeString().slice(0, 5);
-        if (time <= nowTime) return false;
+      const now = new Date();
+      const edmontonDateStr = new Intl.DateTimeFormat('en-CA', { 
+        timeZone: 'America/Edmonton', 
+        year: 'numeric', month: '2-digit', day: '2-digit' 
+      }).format(now); // e.g. "2026-05-03"
+      
+      const edmontonTimeStr = new Intl.DateTimeFormat('en-CA', { 
+        timeZone: 'America/Edmonton', 
+        hour: '2-digit', minute: '2-digit', hour12: false 
+      }).format(now); // e.g. "13:08"
+
+      if (dateStr === edmontonDateStr) {
+        if (time <= edmontonTimeStr) return false;
       }
 
       return true;
