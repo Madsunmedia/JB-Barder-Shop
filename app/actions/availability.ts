@@ -1,8 +1,7 @@
 "use server";
 
-import { PrismaClient, BookingStatus } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { BookingStatus } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 
 // This is a basic availability fetcher. It assumes standard operating hours.
 // In a full implementation, you would cross-reference this with a Barber's schedule or Settings block.

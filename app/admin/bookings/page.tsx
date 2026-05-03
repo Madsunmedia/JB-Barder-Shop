@@ -2,6 +2,8 @@ import { listBookings } from "@/app/actions/booking";
 import BookingsClient from "./BookingsClient";
 import { Metadata } from "next";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Bookings | JB Barbershop Admin",
 };

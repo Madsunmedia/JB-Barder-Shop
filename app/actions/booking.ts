@@ -1,9 +1,8 @@
 "use server";
 
-import { PrismaClient, BookingStatus } from "@prisma/client";
+import { BookingStatus } from "@prisma/client";
 import { revalidatePath } from "next/cache";
-
-const prisma = new PrismaClient();
+import { prisma } from "@/lib/prisma";
 
 export async function createBooking(data: {
   fullName: string;
