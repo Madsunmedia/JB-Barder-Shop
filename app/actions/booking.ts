@@ -135,3 +135,45 @@ export async function addBookingMessage(data: {
     return { success: false, error: "Failed to add message" };
   }
 }
+
+export async function getBookingById(id: string) {
+  try {
+    const booking = await prisma.booking.findUnique({
+      where: { id },
+      include: { messages: { orderBy: { createdAt: "asc" } } },
+    });
+    return { success: true, booking };
+  } catch (error) {
+    console.error("Failed to get booking:", error);
+    return { success: false, error: "Failed to fetch booking" };
+  }
+}
+
+export async function updateBookingStatusAndNote(
+  id: string,
+  status: BookingStatus,
+  adminNote?: string
+) {
+  try {
+    const booking = await prisma.booking.update({
+      where: { id },
+      data: {
+        status,
+        ...(adminNote ? { adminNotes: adminNote } : {}),
+      },
+    });
+    // Log a system message for audit trail
+    await prisma.bookingMessage.create({
+      data: {
+        bookingId: id,
+        sender: "SYSTEM",
+        content: `Status changed to ${status}${adminNote ? ` — Note: ${adminNote}` : ""}`,
+      },
+    });
+    revalidatePath("/admin/bookings");
+    return { success: true, booking };
+  } catch (error) {
+    console.error("Failed to update booking status:", error);
+    return { success: false, error: "Failed to update" };
+  }
+}
