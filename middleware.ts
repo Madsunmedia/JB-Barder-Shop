@@ -15,11 +15,16 @@ export default withAuth(
   },
   {
     callbacks: {
-      authorized: ({ token }) => !!token,
+      authorized: ({ req, token }) => {
+        if (req.nextUrl.pathname.startsWith("/admin/login")) {
+          return true;
+        }
+        return !!token;
+      },
     },
   }
 );
 
 export const config = {
-  matcher: ["/admin/((?!login).*)"],
+  matcher: ["/admin/:path*"],
 };
