@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SERVICES_DATA } from "@/lib/services-data";
 import Step1_Services from "./Step1_Services";
@@ -22,6 +22,23 @@ export default function BookingWizard() {
     details: { name: "", phone: "", email: "", notes: "" }
   });
   const [isConfirmed, setIsConfirmed] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const serviceId = params.get("serviceId");
+      if (serviceId) {
+        for (const cat of SERVICES_DATA) {
+          const found = cat.items.find((item: any) => item.id === serviceId);
+          if (found) {
+            setBookingData((prev: any) => ({ ...prev, service: found }));
+            setCurrentStep(1);
+            break;
+          }
+        }
+      }
+    }
+  }, []);
 
   const nextStep = () => setCurrentStep((prev) => Math.min(prev + 1, STEPS.length - 1));
   const prevStep = () => setCurrentStep((prev) => Math.max(prev - 1, 0));
