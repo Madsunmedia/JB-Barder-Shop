@@ -171,3 +171,15 @@ model AvailabilityBlock {
   createdAt DateTime         @default(now())
   updatedAt DateTime         @updatedAt
 }
+
+model MediaItem {
+  id        String   @id @default(cuid())
+  url       String
+  publicId  String?
+  title     String?
+  altText   String?
+  section   String   @default("gallery")
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
