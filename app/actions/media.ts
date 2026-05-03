@@ -2,14 +2,8 @@
 
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-
-export const SECTIONS = [
-  { value: "gallery", label: "Portfolio / Gallery" },
-  { value: "hero", label: "Hero Background" },
-  { value: "services", label: "Service Cards" },
-  { value: "team", label: "Team / Barbers" },
-  { value: "testimonials", label: "Testimonials" },
-];
+// SECTIONS is in lib/media-sections.ts (cannot be exported from a "use server" file)
+export { SECTIONS } from "@/lib/media-sections";
 
 export async function getMediaBySection(section: string) {
   try {
