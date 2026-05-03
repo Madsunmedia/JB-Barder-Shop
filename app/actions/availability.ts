@@ -1,6 +1,5 @@
 "use server";
 
-import { BookingStatus } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 
 // This is a basic availability fetcher. It assumes standard operating hours.
