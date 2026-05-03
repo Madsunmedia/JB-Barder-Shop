@@ -28,13 +28,10 @@ export default function BookingWizard() {
       const params = new URLSearchParams(window.location.search);
       const serviceId = params.get("serviceId");
       if (serviceId) {
-        for (const cat of SERVICES_DATA) {
-          const found = cat.items.find((item: any) => item.id === serviceId);
-          if (found) {
-            setBookingData((prev: any) => ({ ...prev, service: found }));
-            setCurrentStep(1);
-            break;
-          }
+        const found = SERVICES_DATA.find((item: any) => item.id === serviceId);
+        if (found) {
+          setBookingData((prev: any) => ({ ...prev, service: found }));
+          setCurrentStep(1);
         }
       }
     }
