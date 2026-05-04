@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero/Hero";
 import ServicesSection from "@/components/Services/ServicesSection";
+import CategoryMarquee from "@/components/Services/CategoryMarquee";
 import SEOServices from "@/components/Services/SEOServices";
 import TeamSection from "@/components/Team/TeamSection";
 import ReviewsSection from "@/components/Reviews/ReviewsSection";
@@ -17,6 +18,7 @@ export default function Home() {
       <Navbar />
       <main className="flex-grow">
         <Hero />
+        <CategoryMarquee />
         <ServicesSection />
         <SEOServices />
         <TeamSection />
