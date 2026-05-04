@@ -17,15 +17,15 @@ const TEAM = [
   {
     name: "Karan",
     title: "Hair Stylist",
-    bio: "متخصص in trendy hairstyles and precision grooming.",
-    image: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=2070&auto=format&fit=crop",
+    bio: "Specialist in trendy hairstyles and precision grooming.",
+    image: "/karan.jpg",
     specialties: ["Trendy Hairstyles", "Precision Grooming"],
   },
   {
     name: "Jeet Dhaliwal",
     title: "Beard Specialist",
     bio: "Expert in beard shaping and classic barber techniques.",
-    image: "https://images.unsplash.com/photo-1621605815841-aa33c5cc70a9?q=80&w=2070&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=2070&auto=format&fit=crop",
     specialties: ["Beard Shaping", "Classic Barbering"],
     quote: "Every client deserves to leave looking and feeling their absolute best.",
   },

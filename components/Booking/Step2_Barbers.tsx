@@ -6,8 +6,8 @@ import { Check, User } from "lucide-react";
 
 const BARBERS = [
   { id: "jas_grewal", name: "Jas Grewal", title: "Barber", image: "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?q=80&w=2070&auto=format&fit=crop" },
-  { id: "karan", name: "Karan", title: "Hair Stylist", image: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=2070&auto=format&fit=crop" },
-  { id: "jeet_dhaliwal", name: "Jeet Dhaliwal", title: "Beard Specialist", image: "https://images.unsplash.com/photo-1621605815841-aa33c5cc70a9?q=80&w=2070&auto=format&fit=crop" },
+  { id: "karan", name: "Karan", title: "Hair Stylist", image: "/karan.jpg" },
+  { id: "jeet_dhaliwal", name: "Jeet Dhaliwal", title: "Beard Specialist", image: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=2070&auto=format&fit=crop" },
   { id: "any", name: "No Preference", title: "Any Available Barber", image: null }
 ];
 
