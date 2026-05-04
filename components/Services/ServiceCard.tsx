@@ -28,15 +28,15 @@ export default function ServiceCard({
       transition={{ duration: 0.5 }}
       className="group relative flex flex-col justify-between bg-white/[0.03] border border-white/10 hover:border-gold/40 rounded-2xl p-6 transition-all duration-500 overflow-hidden min-h-[220px]"
     >
-      {/* Background Image with Blur & Dark Overlay */}
+      {/* Background Image with Dark Overlay */}
       {service.image && (
         <>
           <div 
-            className="absolute inset-0 bg-cover bg-center opacity-30 group-hover:opacity-50 group-hover:scale-105 transition-all duration-700 ease-out z-0"
+            className="absolute inset-0 bg-cover bg-center opacity-60 group-hover:opacity-80 group-hover:scale-105 transition-all duration-700 ease-out z-0"
             style={{ backgroundImage: `url(${service.image})` }}
             aria-hidden="true"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/80 to-[#050505]/60 backdrop-blur-[2px] z-0" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/70 to-[#050505]/40 z-0" />
         </>
       )}
 
