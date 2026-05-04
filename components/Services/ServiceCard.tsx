@@ -26,14 +26,26 @@ export default function ServiceCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
-      className="group relative flex flex-col justify-between bg-white/[0.03] border border-white/10 hover:border-gold/40 rounded-2xl p-6 transition-all duration-500 overflow-hidden min-h-[220px]"
+      whileHover={{ 
+        y: -10,
+        rotateX: 5,
+        rotateY: -5,
+        transition: { duration: 0.2 }
+      }}
+      className="group relative flex flex-col justify-between bg-white/[0.03] border border-white/10 hover:border-gold/40 rounded-2xl p-6 transition-all duration-500 overflow-hidden min-h-[220px] preserve-3d"
+      style={{ transformStyle: 'preserve-3d' }}
     >
       {/* Background Image with Light Overlay */}
       {service.image && (
         <>
-          <div 
-            className="absolute inset-0 bg-cover bg-center opacity-100 group-hover:scale-105 transition-transform duration-700 ease-out z-0"
-            style={{ backgroundImage: `url(${service.image})` }}
+          <motion.div 
+            className="absolute inset-0 bg-cover bg-center opacity-100 z-0"
+            style={{ 
+              backgroundImage: `url(${service.image})`,
+              translateZ: -10
+            }}
+            whileHover={{ scale: 1.1 }}
+            transition={{ duration: 0.7 }}
             aria-hidden="true"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/40 to-black/10 z-0" />

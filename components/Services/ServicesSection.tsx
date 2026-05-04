@@ -25,9 +25,29 @@ export default function ServicesSection() {
   };
 
   return (
-    <section id="services" className="relative py-20 md:py-32 bg-black overflow-hidden">
-      {/* Subtle background grain */}
+      {/* Subtle background grain and 3D glows */}
       <div className="absolute inset-0 opacity-[0.015] bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIzMDAiIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iMSIvPjwvc3ZnPg==')] pointer-events-none" />
+      
+      <motion.div 
+        animate={{ 
+          scale: [1, 1.2, 1],
+          opacity: [0.1, 0.2, 0.1],
+          x: [0, 50, 0],
+          y: [0, 30, 0]
+        }}
+        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+        className="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-gold/10 rounded-full blur-[120px] pointer-events-none"
+      />
+      <motion.div 
+        animate={{ 
+          scale: [1.2, 1, 1.2],
+          opacity: [0.05, 0.15, 0.05],
+          x: [0, -40, 0],
+          y: [0, -20, 0]
+        }}
+        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        className="absolute bottom-[0%] -right-[10%] w-[50%] h-[50%] bg-gold/5 rounded-full blur-[150px] pointer-events-none"
+      />
 
       <div className="relative z-10 max-w-7xl mx-auto px-5 md:px-10">
         {/* Section Header */}
@@ -73,10 +93,11 @@ export default function ServicesSection() {
           onCategoryChange={setActiveCategory}
         />
 
-        {/* Services Grid */}
+        {/* Services Grid with 3D Perspective */}
         <motion.div
           layout
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
+          style={{ perspective: '1200px' }}
         >
           <AnimatePresence mode="popLayout">
             {filteredServices.map((service) => (
