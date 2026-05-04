@@ -28,7 +28,7 @@ export default function TeamSection() {
             className="relative aspect-[4/5] w-full max-w-md mx-auto md:mx-0 rounded-3xl overflow-hidden border border-white/10"
           >
             <Image
-              src="https://images.unsplash.com/photo-1621605815841-aa33c5cc70a9?q=80&w=2070&auto=format&fit=crop"
+              src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=2070&auto=format&fit=crop"
               alt="Jeet - Master Barber"
               fill
               className="object-cover object-top"
