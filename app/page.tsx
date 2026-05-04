@@ -19,10 +19,10 @@ export default function Home() {
       <main className="flex-grow">
         <Hero />
         <CategoryMarquee />
+        <ReviewsSection />
         <ServicesSection />
         <SEOServices />
         <TeamSection />
-        <ReviewsSection />
         <FAQSection />
         <ContactSection />
       </main>
