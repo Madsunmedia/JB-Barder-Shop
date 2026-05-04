@@ -28,20 +28,7 @@ export default function ReviewsSection() {
     }
   };
 
-  const starVariants: Variants = {
-    hidden: { opacity: 0, scale: 0, rotate: -45 },
-    visible: (i: number) => ({
-      opacity: 1,
-      scale: 1,
-      rotate: 0,
-      transition: {
-        delay: i * 0.1,
-        type: "spring" as const,
-        stiffness: 260,
-        damping: 20
-      }
-    })
-  };
+
 
   return (
     <section id="reviews" className="relative py-20 md:py-32 bg-black overflow-hidden">
@@ -108,25 +95,16 @@ export default function ReviewsSection() {
           viewport={{ once: true, margin: "-50px" }}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
         >
-          {reviews.slice(0, displayCount).map((review, i) => (
+          {reviews.slice(0, displayCount).map((review) => (
             <motion.div
               key={review.id}
               variants={cardVariants}
               className="flex flex-col gap-4 p-6 rounded-2xl border border-white/8 bg-white/[0.02] hover:border-gold/20 transition-colors duration-300 group"
             >
-              {/* Stars with Sequential Animation */}
+              {/* Static Stars for Performance */}
               <div className="flex gap-0.5 text-gold">
                 {[...Array(review.rating)].map((_, si) => (
-                  <motion.div
-                    key={si}
-                    custom={si}
-                    variants={starVariants}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                  >
-                    <Star size={14} fill="currentColor" aria-hidden="true" />
-                  </motion.div>
+                  <Star key={si} size={14} fill="currentColor" aria-hidden="true" />
                 ))}
               </div>
 
