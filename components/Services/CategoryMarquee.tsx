@@ -20,8 +20,8 @@ const TRACK_ITEMS = [...CATEGORIES, ...CATEGORIES];
 
 const Card = ({ text }: { text: string }) => {
   const cardRef = useRef<HTMLDivElement>(null);
-  const [scale, setScale] = useState(0.85);
-  const [opacity, setOpacity] = useState(0.4);
+  const [scale, setScale] = useState(0.5);
+  const [opacity, setOpacity] = useState(0);
   const [zIndex, setZIndex] = useState(0);
 
   useAnimationFrame(() => {
@@ -31,37 +31,40 @@ const Card = ({ text }: { text: string }) => {
     const center = window.innerWidth / 2;
     const cardCenter = rect.left + rect.width / 2;
     
-    // Distance from the exact center of the screen
     const distance = Math.abs(center - cardCenter);
-    const maxDist = window.innerWidth / 2;
+    const maxDist = window.innerWidth / 2.5; // Tighter flash window
     
     const normalizedDist = Math.min(distance / maxDist, 1);
     
-    // Calculate pop-out effect
-    // 1.2 scale at center, 0.85 at edges
-    const newScale = 1.2 - (normalizedDist * 0.35); 
-    const newOpacity = 1 - (normalizedDist * 0.7);
+    // Flash effect: item is only visible and scaled when very close to center
+    // If normalizedDist is 0 (exact center), opacity is 1, scale is 1.15
+    // If normalizedDist is > 0.6, opacity hits 0 quickly (shown and gone)
+    const newScale = 0.8 + (0.35 * (1 - normalizedDist));
     
-    setScale(Math.max(0.85, newScale));
-    setOpacity(Math.max(0.3, newOpacity));
-    // Bring centered item to front
+    let newOpacity = 0;
+    if (normalizedDist < 0.7) {
+      newOpacity = 1 - (normalizedDist * 1.4);
+    }
+    
+    setScale(newScale);
+    setOpacity(Math.max(0, newOpacity));
     setZIndex(normalizedDist < 0.2 ? 10 : 0);
   });
 
   return (
     <div 
       ref={cardRef} 
-      className="flex-shrink-0 w-[240px] md:w-[320px] h-[100px] md:h-[130px] mx-3 flex flex-col items-center justify-center rounded-3xl border border-white/10 bg-white/[0.02] shadow-[0_0_15px_rgba(0,0,0,0.5)] transition-shadow hover:border-gold/30 will-change-transform"
+      className="flex-shrink-0 w-[220px] md:w-[300px] h-[90px] md:h-[120px] mx-6 md:mx-12 flex flex-col items-center justify-center rounded-3xl border border-white/10 bg-[#050505] transition-shadow will-change-transform"
       style={{ 
         transform: `scale(${scale})`, 
         opacity: opacity,
         zIndex: zIndex,
-        boxShadow: scale > 1.05 ? '0 0 30px rgba(201,168,76,0.15)' : 'none',
-        borderColor: scale > 1.05 ? 'rgba(201,168,76,0.4)' : 'rgba(255,255,255,0.05)'
+        boxShadow: opacity > 0.8 ? '0 0 40px rgba(201,168,76,0.2)' : 'none',
+        borderColor: opacity > 0.8 ? 'rgba(201,168,76,0.6)' : 'rgba(255,255,255,0.05)'
       }}
     >
-       <Scissors size={20} className="text-gold/50 mb-3" aria-hidden="true" style={{ opacity: scale > 1.05 ? 1 : 0.5 }} />
-       <span className="text-gold font-accent text-xl md:text-2xl uppercase tracking-widest text-center px-4 leading-tight">
+       <Scissors size={20} className="text-gold mb-2" aria-hidden="true" style={{ opacity: opacity > 0.8 ? 1 : 0.2 }} />
+       <span className="text-warm-white font-accent text-lg md:text-2xl uppercase tracking-[0.15em] text-center px-4 leading-tight">
          {text}
        </span>
     </div>
