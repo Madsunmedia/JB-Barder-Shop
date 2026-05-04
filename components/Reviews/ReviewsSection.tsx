@@ -6,7 +6,7 @@ import { REVIEWS_DATA } from "@/lib/reviews-data";
 import { useState } from "react";
 
 export default function ReviewsSection() {
-  const [displayCount, setDisplayCount] = useState(6);
+  const [displayCount, setDisplayCount] = useState(10);
   const reviews = REVIEWS_DATA;
 
   const containerVariants = {
@@ -109,7 +109,7 @@ export default function ReviewsSection() {
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
         >
           <AnimatePresence mode="popLayout">
-            {reviews.map((review, i) => (
+            {reviews.slice(0, displayCount).map((review, i) => (
               <motion.div
                 key={review.id}
                 variants={cardVariants}
@@ -168,6 +168,18 @@ export default function ReviewsSection() {
 
         {/* Bottom Actions */}
         <div className="mt-12 flex flex-col items-center gap-6">
+          {displayCount < reviews.length && (
+            <motion.button
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              onClick={() => setDisplayCount(reviews.length)}
+              className="px-8 py-3 bg-white/5 hover:bg-white/10 border border-white/10 text-warm-white font-accent text-sm uppercase tracking-widest rounded-full transition-all flex items-center gap-2 group"
+            >
+              Show More Reviews
+              <Star size={14} className="group-hover:rotate-90 transition-transform duration-500" />
+            </motion.button>
+          )}
+
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
