@@ -43,7 +43,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     duration: "45 mins",
     category: "haircut",
     description: "A traditional haircut combo with a precise beard trim, shaping, and straight razor edge-up.",
-    image: "https://images.unsplash.com/photo-1621605815841-aa33c5cc70a9?q=80&w=600&auto=format&fit=crop",
+    image: "/standard-combo.jpg",
   },
   {
     id: "seniors-cut",
@@ -61,7 +61,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     duration: "30 mins",
     category: "kids",
     description: "Sharp and stylish skin fades tailored specifically for the younger gentlemen.",
-    image: "/kids-haircut.jpg",
+    image: "/kids-fade.jpg",
   },
   {
     id: "kids-regular",
