@@ -79,7 +79,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     duration: "15 mins",
     category: "shave",
     description: "A relaxing straight razor face shave featuring hot towels, warm lather, and soothing aftershave balms.",
-    image: "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?q=80&w=600&auto=format&fit=crop",
+    image: "/hot-towel-shave.jpg",
   },
   {
     id: "beard-trim",
