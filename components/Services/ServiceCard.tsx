@@ -28,15 +28,15 @@ export default function ServiceCard({
       transition={{ duration: 0.5 }}
       className="group relative flex flex-col justify-between bg-white/[0.03] border border-white/10 hover:border-gold/40 rounded-2xl p-6 transition-all duration-500 overflow-hidden min-h-[220px]"
     >
-      {/* Background Image with Light Blur & Dark Overlay */}
+      {/* Background Image with Light Overlay */}
       {service.image && (
         <>
           <div 
-            className="absolute inset-0 bg-cover bg-center opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-700 ease-out z-0"
+            className="absolute inset-0 bg-cover bg-center opacity-100 group-hover:scale-105 transition-transform duration-700 ease-out z-0"
             style={{ backgroundImage: `url(${service.image})` }}
             aria-hidden="true"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/70 to-[#050505]/40 backdrop-blur-[1px] z-0" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/40 to-black/10 z-0" />
         </>
       )}
 
@@ -47,16 +47,16 @@ export default function ServiceCard({
             <Clock size={10} aria-hidden="true" />
             {service.duration}
           </span>
-          <span className="text-warm-white/40 text-[10px] font-mono uppercase tracking-widest bg-black/20 px-2 py-0.5 rounded-full backdrop-blur-sm">
+          <span className="text-warm-white/60 text-[10px] font-mono uppercase tracking-widest bg-black/40 px-2 py-0.5 rounded-full backdrop-blur-sm">
             {service.category}
           </span>
         </div>
 
         <div>
-          <h3 className="text-lg md:text-xl font-accent text-warm-white uppercase leading-snug group-hover:text-gold transition-colors duration-300 mb-2 drop-shadow-md">
+          <h3 className="text-lg md:text-xl font-accent text-warm-white uppercase leading-snug group-hover:text-gold transition-colors duration-300 mb-1 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
             {service.name}
           </h3>
-          <div className="flex items-center justify-between mt-6 pt-4 border-t border-white/10">
+          <div className="flex items-center justify-between mt-3 pt-3 border-t border-white/10">
             <div className="flex items-baseline gap-0.5">
               <span className="text-gold text-base font-accent drop-shadow-md">$</span>
               <span className="text-warm-white text-xl font-accent drop-shadow-md">{service.price}</span>
