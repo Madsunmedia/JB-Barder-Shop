@@ -52,7 +52,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     duration: "25 mins",
     category: "haircut",
     description: "Classic styling and clipper work tailored exclusively for our distinguished senior clients.",
-    image: "https://images.unsplash.com/photo-1593702295094-aea22597af65?q=80&w=600&auto=format&fit=crop",
+    image: "/senior-cut.jpg",
   },
   {
     id: "kids-skin-fade",
@@ -88,7 +88,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     duration: "25 mins",
     category: "beard",
     description: "Full shaping, debulking, and conditioning of the beard, finished with sharp razor lines.",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop",
+    image: "/beard-trim.jpg",
   },
   {
     id: "beard-line-up",
