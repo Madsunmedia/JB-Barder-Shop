@@ -4,7 +4,6 @@ import "./globals.css";
 import MagneticCursor from "@/components/MagneticCursor";
 import NoiseOverlay from "@/components/NoiseOverlay";
 import PageTransition from "@/components/PageTransition";
-import BookNowCTA from "@/components/BookNowCTA";
 import { Analytics } from "@vercel/analytics/react";
 import SiteLoader from "@/components/SiteLoader";
 
@@ -118,7 +117,6 @@ export default function RootLayout({
             {children}
           </PageTransition>
         </main>
-        <BookNowCTA />
         <Analytics />
       </body>
     </html>

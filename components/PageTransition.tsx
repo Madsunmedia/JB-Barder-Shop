@@ -10,10 +10,11 @@ export default function PageTransition({ children }: { children: React.ReactNode
     <AnimatePresence mode="wait">
       <motion.div
         key={pathname}
-        initial={{ opacity: 0, clipPath: "circle(0% at 50% 50%)" }}
-        animate={{ opacity: 1, clipPath: "circle(150% at 50% 50%)" }}
-        exit={{ opacity: 0, clipPath: "circle(0% at 50% 50%)" }}
-        transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.25, ease: "easeInOut" }}
+        style={{ minHeight: "100%" }}
       >
         {children}
       </motion.div>

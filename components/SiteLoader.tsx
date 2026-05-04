@@ -3,13 +3,26 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 
+// Only show on first visit per session — prevents blocking scroll on back navigation
+const HAS_LOADED_KEY = "jb_site_loaded";
+
 export default function SiteLoader() {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    const alreadyLoaded = sessionStorage.getItem(HAS_LOADED_KEY);
+    if (alreadyLoaded) {
+      setLoading(false);
+      return;
+    }
+
+    // First visit this session
+    setLoading(true);
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 2500);
+      sessionStorage.setItem(HAS_LOADED_KEY, "1");
+    }, 2200);
+
     return () => clearTimeout(timer);
   }, []);
 
@@ -20,7 +33,7 @@ export default function SiteLoader() {
           initial={{ opacity: 1 }}
           exit={{ 
             opacity: 0,
-            transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] }
+            transition: { duration: 0.6, ease: [0.76, 0, 0.24, 1] }
           }}
           className="fixed inset-0 z-[9999] bg-black flex flex-col items-center justify-center"
         >
