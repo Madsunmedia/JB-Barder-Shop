@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 import { Star, Quote } from "lucide-react";
 import { REVIEWS_DATA } from "@/lib/reviews-data";
 import { useState } from "react";
@@ -28,7 +28,7 @@ export default function ReviewsSection() {
     }
   };
 
-  const starVariants = {
+  const starVariants: Variants = {
     hidden: { opacity: 0, scale: 0, rotate: -45 },
     visible: (i: number) => ({
       opacity: 1,
@@ -36,7 +36,7 @@ export default function ReviewsSection() {
       rotate: 0,
       transition: {
         delay: i * 0.1,
-        type: "spring",
+        type: "spring" as const,
         stiffness: 260,
         damping: 20
       }
