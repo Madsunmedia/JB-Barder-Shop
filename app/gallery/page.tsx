@@ -37,7 +37,7 @@ export default async function GalleryPage() {
     : FALLBACK_IMAGES;
 
   return (
-    <div className="min-h-screen bg-[#050505] flex flex-col overflow-hidden">
+    <div className="min-h-screen bg-[#050505] flex flex-col overflow-x-hidden">
       <Navbar />
 
       {/* Background Text Effect */}

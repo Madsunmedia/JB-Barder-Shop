@@ -18,7 +18,7 @@ export default function KidsHaircutsPage() {
   ];
 
   return (
-    <div className="relative bg-[#050505] flex flex-col min-h-screen overflow-hidden">
+    <div className="relative bg-[#050505] flex flex-col min-h-screen overflow-x-hidden">
       <Navbar />
       <main className="flex-grow pt-32 pb-20">
         <div className="max-w-4xl mx-auto px-5 md:px-10">

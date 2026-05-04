@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function BookingPage() {
   return (
-    <div className="min-h-screen bg-[#050505] flex flex-col overflow-hidden">
+    <div className="min-h-screen bg-[#050505] flex flex-col overflow-x-hidden">
       <Navbar />
       
       {/* Background Effect */}
