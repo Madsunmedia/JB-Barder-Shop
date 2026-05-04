@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { User, Phone, Mail, FileText, ShieldCheck, Loader2 } from "lucide-react";
+import { createBooking } from "@/app/actions/booking";
 
 export default function Step4_Details({ data, onChange, onConfirm, onBack }: any) {
   const [agreed, setAgreed] = useState(false);
@@ -18,19 +19,17 @@ export default function Step4_Details({ data, onChange, onConfirm, onBack }: any
     setErrorMsg("");
     setIsSubmitting(true);
     try {
-      const res = await fetch("/api/appointments", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          serviceId: data.service.id,
-          clientName: data.details.name,
-          phone: data.details.phone,
-          email: data.details.email,
-          date: data.date.toISOString().split("T")[0],
-          time: data.time,
-        }),
+      const res = await createBooking({
+        fullName: data.details.name,
+        phoneNumber: data.details.phone,
+        serviceSelected: data.service?.name || "Unknown Service",
+        barberSelected: data.barber?.name || undefined,
+        dateSelected: data.date,
+        timeSelected: data.time,
+        customerNotes: data.details.notes,
+        source: "Wizard",
       });
-      if (res.ok) {
+      if (res.success) {
         onConfirm();
       } else {
         setErrorMsg("Failed to book appointment. Please try again.");

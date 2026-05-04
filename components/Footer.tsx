@@ -131,7 +131,7 @@ export default function Footer() {
             <ul className="space-y-4">
               <li>
                 <a
-                  href="https://maps.google.com/?q=410+13+Street+North+Lethbridge+Alberta"
+                  href="https://maps.google.com/?q=714+4+Ave+S+Lethbridge+Alberta"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-start gap-3 text-warm-white/50 hover:text-gold transition-colors text-sm group"
@@ -143,19 +143,19 @@ export default function Footer() {
                     aria-hidden="true"
                   />
                   <span className="leading-relaxed">
-                    410 13 Street North<br />
-                    Lethbridge, Alberta T1H 2S2
+                    714 4 Ave S<br />
+                    Lethbridge, Alberta T1J 0N8
                   </span>
                 </a>
               </li>
               <li>
                 <a
-                  href="tel:+14039297321"
+                  href="tel:+14039425332"
                   className="flex items-center gap-3 text-warm-white/50 hover:text-gold transition-colors text-sm group"
-                  aria-label="Call +1 403 929 7321"
+                  aria-label="Call +1 403 942 5332"
                 >
                   <Phone size={15} className="text-gold/70 shrink-0 group-hover:text-gold transition-colors" aria-hidden="true" />
-                  <span className="font-mono">+1 403 929 7321</span>
+                  <span className="font-mono">+1 403 942 5332</span>
                 </a>
               </li>
               <li>

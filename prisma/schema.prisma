@@ -115,3 +115,71 @@ enum AppointmentStatus {
   CANCELLED
   COMPLETED
 }
+
+enum BookingStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  RESCHEDULE_REQUESTED
+  CANCELLED
+  COMPLETED
+}
+
+model Booking {
+  id                 String           @id @default(cuid())
+  fullName           String
+  phoneNumber        String
+  serviceSelected    String
+  barberSelected     String?
+  dateSelected       DateTime
+  timeSelected       String
+  status             BookingStatus    @default(PENDING)
+  adminNotes         String?          @db.Text
+  customerNotes      String?          @db.Text
+  source             String?          
+  notificationStatus String?          
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+  messages           BookingMessage[]
+}
+
+model BookingMessage {
+  id        String   @id @default(cuid())
+  bookingId String
+  booking   Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  sender    String   // "ADMIN" | "CUSTOMER" | "SYSTEM"
+  content   String   @db.Text
+  createdAt DateTime @default(now())
+}
+
+enum AvailabilityType {
+  FULL_DAY
+  DATE_RANGE
+  PARTIAL
+  RECURRING
+}
+
+model AvailabilityBlock {
+  id        String           @id @default(cuid())
+  name      String
+  type      AvailabilityType
+  startDate DateTime?
+  endDate   DateTime?
+  startTime String?
+  endTime   String?
+  dayOfWeek Int?
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+}
+
+model MediaItem {
+  id        String   @id @default(cuid())
+  url       String
+  publicId  String?
+  title     String?
+  altText   String?
+  section   String   @default("gallery")
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

@@ -14,12 +14,16 @@ import {
   LogOut,
   Menu,
   X,
-  Bell
+  Bell,
+  ClipboardList,
+  Clock
 } from "lucide-react";
 import { signOut } from "next-auth/react";
 
 const sidebarItems = [
   { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
+  { name: "Bookings", href: "/admin/bookings", icon: ClipboardList },
+  { name: "Availability", href: "/admin/availability", icon: Clock },
   { name: "Appointments", href: "/admin/appointments", icon: Calendar },
   { name: "Services", href: "/admin/services", icon: Scissors },
   { name: "Gallery", href: "/admin/gallery", icon: ImageIcon },

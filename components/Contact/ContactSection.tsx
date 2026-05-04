@@ -164,7 +164,7 @@ export default function ContactSection() {
                       id="phone"
                       required
                       type="tel"
-                      placeholder="(403) 929-7321"
+                      placeholder="(403) 942-5332"
                       value={formData.phone}
                       onChange={(e) => setFormData({...formData, phone: e.target.value})}
                       className="w-full min-h-[52px] bg-black/40 border border-white/10 rounded-xl px-5 text-warm-white placeholder:text-white/20 focus:border-gold focus:bg-white/[0.02] outline-none transition-all duration-300"
@@ -267,15 +267,15 @@ export default function ContactSection() {
               <InfoCard 
                 icon={<MapPin size={18} />} 
                 title="Location" 
-                value={<>410 13 Street North<br />Lethbridge, AB T1H 2S2</>} 
-                href="https://maps.google.com/?q=410+13+Street+North+Lethbridge"
+                value={<>714 4 Ave S<br />Lethbridge, AB T1J 0N8</>} 
+                href="https://maps.google.com/?q=714+4+Ave+S+Lethbridge"
                 ariaLabel="Open in Google Maps"
               />
               <InfoCard 
                 icon={<Phone size={18} />} 
                 title="Call Us" 
-                value="+1 403 929 7321" 
-                href="tel:+14039297321"
+                value="+1 403 942 5332" 
+                href="tel:+14039425332"
                 ariaLabel="Call JB Barbershop"
               />
               <InfoCard 

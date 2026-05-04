@@ -12,10 +12,10 @@ const nextConfig: NextConfig = {
   turbopack: {}, // Silences the warning when using webpack plugins like next-pwa
   images: {
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
-      },
+      { protocol: 'https', hostname: 'images.unsplash.com' },
+      { protocol: 'https', hostname: 'res.cloudinary.com' },
+      { protocol: 'https', hostname: 'images.setmore.com' },
+      { protocol: 'https', hostname: '**.cloudinary.com' },
     ],
   },
 };

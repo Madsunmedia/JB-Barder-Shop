@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Clock } from "lucide-react";
+import { fetchAvailability } from "@/app/actions/availability";
 
 const BUSINESS_HOURS = {
   weekdays: { start: 9, end: 20 },
@@ -13,16 +14,26 @@ export default function Step3_Calendar({ data, onSelect, onNext, onBack }: any) 
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<Date | null>(data.date);
   const [selectedTime, setSelectedTime] = useState<string | null>(data.time);
-  const [bookedSlots, setBookedSlots] = useState<string[]>([]);
+  const [availableSlots, setAvailableSlots] = useState<string[]>([]);
 
   useEffect(() => {
     if (selectedDate) {
-      const dateStr = selectedDate.toISOString().split("T")[0];
-      fetch(`/api/availability?date=${dateStr}`)
-        .then(res => res.json())
-        .then(data => setBookedSlots(data));
+      const year = selectedDate.getFullYear();
+      const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+      const day = String(selectedDate.getDate()).padStart(2, '0');
+      const dateStr = `${year}-${month}-${day}`;
+      const barberId = data.barber?.id;
+      fetchAvailability(dateStr, barberId).then(res => {
+        if (res.success && res.availableSlots) {
+          setAvailableSlots(res.availableSlots);
+        } else {
+          setAvailableSlots([]);
+          console.error("Availability error:", res.error);
+          alert("Error fetching availability: " + res.error);
+        }
+      });
     }
-  }, [selectedDate]);
+  }, [selectedDate, data.barber]);
 
   const daysInMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0).getDate();
   const firstDayOfMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 1).getDay();
@@ -117,7 +128,7 @@ export default function Step3_Calendar({ data, onSelect, onNext, onBack }: any) 
           ) : (
             <div className="flex-1 grid grid-cols-2 gap-3 overflow-y-auto pr-2 custom-scrollbar">
               {timeSlots.map(time => {
-                const isBooked = bookedSlots.includes(time);
+                const isBooked = !availableSlots.includes(time);
                 const isSelected = selectedTime === time;
 
                 return (

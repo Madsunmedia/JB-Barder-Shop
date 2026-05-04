@@ -2,7 +2,10 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Calendar, Clock, User, Phone, Mail } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { fetchAvailability } from "@/app/actions/availability";
+import { createBooking } from "@/app/actions/booking";
+import { Loader2, CheckCircle2 } from "lucide-react";
 
 interface Service {
   id: string;
@@ -25,27 +28,50 @@ export default function BookingDrawer({ isOpen, onClose, service }: BookingDrawe
     time: "",
   });
 
+  const [availableSlots, setAvailableSlots] = useState<string[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  useEffect(() => {
+    if (formData.date) {
+      fetchAvailability(formData.date).then(res => {
+        if (res.success && res.availableSlots) setAvailableSlots(res.availableSlots);
+        else setAvailableSlots([]);
+      });
+      // Reset time when date changes
+      setFormData(prev => ({ ...prev, time: "" }));
+    }
+  }, [formData.date]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
     try {
-      const res = await fetch("/api/appointments", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...formData,
-          serviceId: service?.id,
-          clientName: formData.name,
-        }),
+      const res = await createBooking({
+        fullName: formData.name,
+        phoneNumber: formData.phone,
+        serviceSelected: service?.name || "General Booking",
+        dateSelected: formData.date,
+        timeSelected: formData.time,
+        customerNotes: formData.email ? `Email: ${formData.email}` : undefined,
+        source: "Drawer",
       });
       
-      if (res.ok) {
-        alert("Appointment requested successfully!");
-        onClose();
-        // Redirect to Setmore if needed
-        // window.open("https://jbbarbershopdsoo.setmore.com/book", "_blank");
+      if (res.success) {
+        setIsSuccess(true);
+        setTimeout(() => {
+          setIsSuccess(false);
+          onClose();
+          setFormData({ name: "", phone: "", email: "", date: "", time: "" });
+        }, 3000);
+      } else {
+        alert("Booking failed. Please try again.");
       }
     } catch (error) {
       console.error("Booking error:", error);
+      alert("A network error occurred.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -83,12 +109,22 @@ export default function BookingDrawer({ isOpen, onClose, service }: BookingDrawe
                 <p className="text-warm-white/60 font-body">Complete the details below to request your spot.</p>
               </div>
 
-              {service && (
-                <div className="p-6 glass rounded-2xl border border-gold/20">
-                  <h3 className="text-xl font-accent text-gold uppercase">{service.name}</h3>
-                  <p className="text-2xl font-accent text-warm-white mt-1">${service.price}</p>
+              {isSuccess ? (
+                <div className="flex flex-col items-center justify-center py-20 text-center space-y-4">
+                  <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="text-gold">
+                    <CheckCircle2 size={80} />
+                  </motion.div>
+                  <h2 className="text-3xl font-accent text-gold uppercase">Request Sent!</h2>
+                  <p className="text-warm-white/70">We will confirm your appointment shortly.</p>
                 </div>
-              )}
+              ) : (
+                <>
+                  {service && (
+                    <div className="p-6 glass rounded-2xl border border-gold/20">
+                      <h3 className="text-xl font-accent text-gold uppercase">{service.name}</h3>
+                      <p className="text-2xl font-accent text-warm-white mt-1">${service.price}</p>
+                    </div>
+                  )}
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="space-y-4">
@@ -131,6 +167,7 @@ export default function BookingDrawer({ isOpen, onClose, service }: BookingDrawe
                       <input
                         required
                         type="date"
+                        min={new Date().toISOString().split("T")[0]}
                         className="w-full bg-black/40 border border-white/10 rounded-xl py-4 pl-12 pr-4 text-warm-white focus:border-gold outline-none transition-colors [color-scheme:dark]"
                         value={formData.date}
                         onChange={(e) => setFormData({ ...formData, date: e.target.value })}
@@ -138,24 +175,34 @@ export default function BookingDrawer({ isOpen, onClose, service }: BookingDrawe
                     </div>
                     <div className="relative">
                       <Clock className="absolute left-4 top-1/2 -translate-y-1/2 text-gold/50" size={18} />
-                      <input
+                      <select
                         required
-                        type="time"
-                        className="w-full bg-black/40 border border-white/10 rounded-xl py-4 pl-12 pr-4 text-warm-white focus:border-gold outline-none transition-colors [color-scheme:dark]"
+                        disabled={!formData.date || availableSlots.length === 0}
+                        className="w-full bg-black/40 border border-white/10 rounded-xl py-4 pl-12 pr-4 text-warm-white focus:border-gold outline-none transition-colors appearance-none disabled:opacity-50"
                         value={formData.time}
                         onChange={(e) => setFormData({ ...formData, time: e.target.value })}
-                      />
+                      >
+                        <option value="" disabled>
+                          {!formData.date ? "Select Date First" : availableSlots.length === 0 ? "No Slots" : "Select Time"}
+                        </option>
+                        {availableSlots.map(time => (
+                          <option key={time} value={time}>{time}</option>
+                        ))}
+                      </select>
                     </div>
                   </div>
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full py-5 bg-gold text-black font-accent text-2xl uppercase rounded-xl shadow-[0_10px_30px_rgba(201,168,76,0.3)] hover:scale-[1.02] active:scale-[0.98] transition-all"
+                  disabled={isSubmitting}
+                  className="w-full py-5 flex items-center justify-center gap-2 bg-gold text-black font-accent text-2xl uppercase rounded-xl shadow-[0_10px_30px_rgba(201,168,76,0.3)] hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-70 disabled:hover:scale-100"
                 >
-                  Confirm Booking
+                  {isSubmitting ? <Loader2 className="animate-spin" size={24} /> : "Confirm Booking"}
                 </button>
               </form>
+                </>
+              )}
             </div>
           </motion.div>
         </>
