@@ -161,7 +161,7 @@ export default function BookingDrawer({ isOpen, onClose, service }: BookingDrawe
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     />
                   </div>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="relative">
                       <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 text-gold/50" size={18} />
                       <input
