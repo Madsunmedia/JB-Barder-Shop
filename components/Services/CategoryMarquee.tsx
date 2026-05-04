@@ -54,7 +54,7 @@ const Card = ({ text }: { text: string }) => {
   return (
     <div 
       ref={cardRef} 
-      className="flex-shrink-0 w-[220px] md:w-[300px] h-[90px] md:h-[120px] mx-6 md:mx-12 flex flex-col items-center justify-center rounded-3xl border border-white/10 bg-[#050505] transition-shadow will-change-transform"
+      className="flex-shrink-0 w-[180px] md:w-[300px] min-h-[90px] md:min-h-[120px] p-4 mx-4 md:mx-12 flex flex-col items-center justify-center rounded-2xl md:rounded-3xl border border-white/10 bg-[#050505] transition-shadow will-change-transform whitespace-normal"
       style={{ 
         transform: `scale(${scale})`, 
         opacity: opacity,
@@ -63,8 +63,8 @@ const Card = ({ text }: { text: string }) => {
         borderColor: opacity > 0.8 ? 'rgba(201,168,76,0.6)' : 'rgba(255,255,255,0.05)'
       }}
     >
-       <Scissors size={20} className="text-gold mb-2" aria-hidden="true" style={{ opacity: opacity > 0.8 ? 1 : 0.2 }} />
-       <span className="text-warm-white font-accent text-lg md:text-2xl uppercase tracking-[0.15em] text-center px-4 leading-tight">
+       <Scissors size={18} className="text-gold mb-2 md:mb-3" aria-hidden="true" style={{ opacity: opacity > 0.8 ? 1 : 0.2 }} />
+       <span className="text-warm-white font-accent text-sm md:text-xl uppercase tracking-widest text-center leading-snug">
          {text}
        </span>
     </div>
