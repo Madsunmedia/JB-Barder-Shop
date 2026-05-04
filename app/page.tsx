@@ -19,8 +19,8 @@ export default function Home() {
       <main className="flex-grow">
         <Hero />
         <CategoryMarquee />
-        <ReviewsSection />
         <ServicesSection />
+        <ReviewsSection />
         <SEOServices />
         <TeamSection />
         <FAQSection />
