@@ -37,7 +37,7 @@ export default function TeamSection() {
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
             <div className="absolute bottom-6 left-6">
               <p className="text-gold font-accent text-xl uppercase">Jeet</p>
-              <p className="text-warm-white/60 font-mono text-xs uppercase tracking-widest">Head Barber</p>
+              <p className="text-warm-white/60 font-mono text-xs uppercase tracking-widest">Beard Specialist</p>
             </div>
           </motion.div>
         </div>

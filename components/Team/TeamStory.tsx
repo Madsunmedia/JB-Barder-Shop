@@ -8,11 +8,25 @@ import BarberCard from "@/components/Team/BarberCard";
 
 const TEAM = [
   {
-    name: "Jeet",
-    title: "Head Barber · Fade Specialist",
-    bio: "With years of precision craftsmanship under his belt, Jeet brings an uncompromising standard to every cut. Known across Lethbridge for his flawless skin fades and immaculate beard work, his attention to detail is second to none.",
+    name: "Jas Grewal",
+    title: "Barber",
+    bio: "Experienced barber skilled in modern cuts, fades, and beard styling.",
+    image: "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?q=80&w=2070&auto=format&fit=crop",
+    specialties: ["Modern Cuts", "Fades", "Beard Styling"],
+  },
+  {
+    name: "Karan",
+    title: "Hair Stylist",
+    bio: "متخصص in trendy hairstyles and precision grooming.",
+    image: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=2070&auto=format&fit=crop",
+    specialties: ["Trendy Hairstyles", "Precision Grooming"],
+  },
+  {
+    name: "Jeet Dhaliwal",
+    title: "Beard Specialist",
+    bio: "Expert in beard shaping and classic barber techniques.",
     image: "https://images.unsplash.com/photo-1621605815841-aa33c5cc70a9?q=80&w=2070&auto=format&fit=crop",
-    specialties: ["Skin Fades", "Beard Sculpting", "Facials", "Hot Towel Shave"],
+    specialties: ["Beard Shaping", "Classic Barbering"],
     quote: "Every client deserves to leave looking and feeling their absolute best.",
   },
 ];
@@ -65,7 +79,7 @@ export default function TeamStory() {
             The Masters
           </span>
           <h2 className="text-4xl md:text-6xl font-accent text-warm-white uppercase leading-tight">
-            Meet the <span className="text-gold">Team</span>
+            Meet Our <span className="text-gold">Team</span>
           </h2>
           <p className="text-warm-white/40 text-sm md:text-base font-body max-w-lg">
             Skilled professionals who take immense pride in their craft. Your look is personal — we treat it that way.
