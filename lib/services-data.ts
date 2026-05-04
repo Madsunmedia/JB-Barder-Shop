@@ -5,6 +5,7 @@ export interface ServiceItem {
   duration: string;
   category: string;
   description: string;
+  image?: string;
 }
 
 export const SERVICES_DATA: ServiceItem[] = [
@@ -15,6 +16,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     duration: "45 mins",
     category: "haircut",
     description: "Our signature precision skin fade, seamlessly blended down to the skin, paired with a detailed beard trim and razor line-up.",
+    image: "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?q=80&w=600&auto=format&fit=crop",
   },
   {
     id: "skin-fade",
@@ -23,6 +25,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     duration: "30 mins",
     category: "haircut",
     description: "Expertly crafted fade tailored to your head shape, finishing clean to the skin for a sharp, long-lasting look.",
+    image: "https://images.unsplash.com/photo-1622286342621-4bd786c2447c?q=80&w=600&auto=format&fit=crop",
   },
   {
     id: "regular-cut",
@@ -31,6 +34,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     duration: "30 mins",
     category: "haircut",
     description: "A traditional haircut with scissors and clippers. Includes a clean neckline and professional styling.",
+    image: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=600&auto=format&fit=crop",
   },
   {
     id: "regular-cut-beard",
@@ -39,6 +43,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     duration: "45 mins",
     category: "haircut",
     description: "A traditional haircut combo with a precise beard trim, shaping, and straight razor edge-up.",
+    image: "https://images.unsplash.com/photo-1621605815841-aa33c5cc70a9?q=80&w=600&auto=format&fit=crop",
   },
   {
     id: "seniors-cut",
@@ -47,6 +52,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     duration: "25 mins",
     category: "haircut",
     description: "Classic styling and clipper work tailored exclusively for our distinguished senior clients.",
+    image: "https://images.unsplash.com/photo-1593702295094-aea22597af65?q=80&w=600&auto=format&fit=crop",
   },
   {
     id: "kids-skin-fade",
@@ -55,6 +61,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     duration: "30 mins",
     category: "kids",
     description: "Sharp and stylish skin fades tailored specifically for the younger gentlemen.",
+    image: "https://images.unsplash.com/photo-1534063234978-5a21e6be5715?q=80&w=600&auto=format&fit=crop",
   },
   {
     id: "kids-regular",
@@ -63,6 +70,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     duration: "20 mins",
     category: "kids",
     description: "A simple, clean haircut to keep the little guys looking smart and well-groomed.",
+    image: "https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?q=80&w=600&auto=format&fit=crop",
   },
   {
     id: "hot-towel-shave",
@@ -71,6 +79,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     duration: "15 mins",
     category: "shave",
     description: "A relaxing straight razor face shave featuring hot towels, warm lather, and soothing aftershave balms.",
+    image: "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?q=80&w=600&auto=format&fit=crop",
   },
   {
     id: "beard-trim",
@@ -79,6 +88,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     duration: "25 mins",
     category: "beard",
     description: "Full shaping, debulking, and conditioning of the beard, finished with sharp razor lines.",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop",
   },
   {
     id: "beard-line-up",
@@ -87,6 +97,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     duration: "15 mins",
     category: "beard",
     description: "A fast touch-up to re-establish clean lines on your cheeks and neck using trimmers and a straight razor.",
+    image: "https://images.unsplash.com/photo-1520699049698-acd2fceb8cc0?q=80&w=600&auto=format&fit=crop",
   },
   {
     id: "facials",
@@ -95,6 +106,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     duration: "30 mins",
     category: "grooming",
     description: "A deeply cleansing and moisturizing facial treatment to refresh the skin and clear clogged pores.",
+    image: "https://images.unsplash.com/photo-1512618831669-521d4b375f5d?q=80&w=600&auto=format&fit=crop",
   },
   {
     id: "ear-nose-wax",
@@ -103,6 +115,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     duration: "15 mins",
     category: "grooming",
     description: "A quick, virtually painless hard wax treatment to remove unwanted ear and nose hair.",
+    image: "https://images.unsplash.com/photo-1508215885820-4585e561081e?q=80&w=600&auto=format&fit=crop",
   },
 ];
 
