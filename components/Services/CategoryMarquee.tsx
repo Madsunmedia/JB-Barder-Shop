@@ -78,8 +78,8 @@ export default function CategoryMarquee() {
   useAnimationFrame(() => {
     if (!trackRef.current) return;
     
-    // Significantly faster loop speed
-    const speed = window.innerWidth < 768 ? 2.5 : 3.5; 
+    // Medium speed (between old and recent)
+    const speed = window.innerWidth < 768 ? 1.75 : 2.5; 
     x.current -= speed; 
     
     // Reset loop seamlessly when halfway through the doubled array
