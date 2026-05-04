@@ -51,7 +51,7 @@ export default function ReviewsSection() {
             </div>
             <div className="w-px h-10 bg-white/10" />
             <div>
-              <p className="text-warm-white font-accent text-xl leading-none">19</p>
+              <p className="text-warm-white font-accent text-xl leading-none">89</p>
               <p className="text-warm-white/40 text-xs font-mono mt-1 uppercase tracking-wider">Reviews</p>
             </div>
           </motion.div>
