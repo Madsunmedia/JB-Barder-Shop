@@ -108,62 +108,59 @@ export default function ReviewsSection() {
           viewport={{ once: true, margin: "-50px" }}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
         >
-          <AnimatePresence mode="popLayout">
-            {reviews.slice(0, displayCount).map((review, i) => (
-              <motion.div
-                key={review.id}
-                variants={cardVariants}
-                layout
-                className="flex flex-col gap-4 p-6 rounded-2xl border border-white/8 bg-white/[0.02] hover:border-gold/20 transition-colors duration-300 group"
-              >
-                {/* Stars with Sequential Animation */}
-                <div className="flex gap-0.5 text-gold">
-                  {[...Array(review.rating)].map((_, si) => (
-                    <motion.div
-                      key={si}
-                      custom={si}
-                      variants={starVariants}
-                      initial="hidden"
-                      whileInView="visible"
-                      viewport={{ once: true }}
-                    >
-                      <Star size={14} fill="currentColor" aria-hidden="true" />
-                    </motion.div>
-                  ))}
-                </div>
+          {reviews.slice(0, displayCount).map((review, i) => (
+            <motion.div
+              key={review.id}
+              variants={cardVariants}
+              className="flex flex-col gap-4 p-6 rounded-2xl border border-white/8 bg-white/[0.02] hover:border-gold/20 transition-colors duration-300 group"
+            >
+              {/* Stars with Sequential Animation */}
+              <div className="flex gap-0.5 text-gold">
+                {[...Array(review.rating)].map((_, si) => (
+                  <motion.div
+                    key={si}
+                    custom={si}
+                    variants={starVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                  >
+                    <Star size={14} fill="currentColor" aria-hidden="true" />
+                  </motion.div>
+                ))}
+              </div>
 
-                {/* Quote */}
-                <div className="relative flex-1">
-                  <Quote
-                    size={20}
-                    className="text-gold/20 absolute -top-1 -left-1"
-                    aria-hidden="true"
-                  />
-                  <p className="text-warm-white/70 font-body text-sm leading-relaxed pl-4">
-                    {review.comment}
+              {/* Quote */}
+              <div className="relative flex-1">
+                <Quote
+                  size={20}
+                  className="text-gold/20 absolute -top-1 -left-1"
+                  aria-hidden="true"
+                />
+                <p className="text-warm-white/70 font-body text-sm leading-relaxed pl-4">
+                  {review.comment}
+                </p>
+              </div>
+
+              {/* Reviewer */}
+              <div className="flex items-center gap-3 pt-3 border-t border-white/5">
+                <div
+                  className="w-9 h-9 rounded-full bg-gold/15 border border-gold/20 flex items-center justify-center text-gold font-accent text-sm flex-shrink-0 group-hover:scale-110 transition-transform"
+                  aria-hidden="true"
+                >
+                  {review.name.charAt(0)}
+                </div>
+                <div>
+                  <p className="text-warm-white text-sm font-accent uppercase tracking-wider leading-none">
+                    {review.name}
+                  </p>
+                  <p className="text-warm-white/30 text-[10px] font-mono uppercase tracking-wider mt-0.5">
+                    Google Review
                   </p>
                 </div>
-
-                {/* Reviewer */}
-                <div className="flex items-center gap-3 pt-3 border-t border-white/5">
-                  <div
-                    className="w-9 h-9 rounded-full bg-gold/15 border border-gold/20 flex items-center justify-center text-gold font-accent text-sm flex-shrink-0 group-hover:scale-110 transition-transform"
-                    aria-hidden="true"
-                  >
-                    {review.name.charAt(0)}
-                  </div>
-                  <div>
-                    <p className="text-warm-white text-sm font-accent uppercase tracking-wider leading-none">
-                      {review.name}
-                    </p>
-                    <p className="text-warm-white/30 text-[10px] font-mono uppercase tracking-wider mt-0.5">
-                      Google Review
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
+              </div>
+            </motion.div>
+          ))}
         </motion.div>
 
         {/* Bottom Actions */}
