@@ -97,7 +97,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     duration: "15 mins",
     category: "beard",
     description: "A fast touch-up to re-establish clean lines on your cheeks and neck using trimmers and a straight razor.",
-    image: "https://images.unsplash.com/photo-1520699049698-acd2fceb8cc0?q=80&w=600&auto=format&fit=crop",
+    image: "/beard-lineup.jpg",
   },
   {
     id: "facials",
@@ -106,7 +106,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     duration: "30 mins",
     category: "grooming",
     description: "A deeply cleansing and moisturizing facial treatment to refresh the skin and clear clogged pores.",
-    image: "https://images.unsplash.com/photo-1512618831669-521d4b375f5d?q=80&w=600&auto=format&fit=crop",
+    image: "/facial.jpg",
   },
   {
     id: "ear-nose-wax",
