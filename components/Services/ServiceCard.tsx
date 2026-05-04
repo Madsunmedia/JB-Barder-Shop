@@ -52,18 +52,20 @@ export default function ServiceCard({
           </span>
         </div>
 
-        <div>
-          <h3 className="text-lg md:text-xl font-accent text-warm-white uppercase leading-snug group-hover:text-gold transition-colors duration-300 mb-1 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-            {service.name}
-          </h3>
-          <div className="flex items-center justify-between mt-3 pt-3 border-t border-white/10">
-            <div className="flex items-baseline gap-0.5">
-              <span className="text-gold text-base font-accent drop-shadow-md">$</span>
-              <span className="text-warm-white text-xl font-accent drop-shadow-md">{service.price}</span>
+        <div className="mt-auto">
+          <div className="flex items-end justify-between pt-3 border-t border-white/10">
+            <div className="flex flex-col gap-1 pr-4">
+              <h3 className="text-sm md:text-base font-accent text-warm-white uppercase leading-tight group-hover:text-gold transition-colors duration-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                {service.name}
+              </h3>
+              <div className="flex items-baseline gap-0.5">
+                <span className="text-gold text-xs font-accent drop-shadow-md">$</span>
+                <span className="text-warm-white text-lg font-accent drop-shadow-md">{service.price}</span>
+              </div>
             </div>
             <button
               onClick={() => onBook(service)}
-              className="flex items-center gap-1.5 min-h-[32px] px-4 py-1.5 bg-gold/10 backdrop-blur-md border border-gold/30 text-gold text-[10px] font-accent uppercase tracking-widest rounded-full hover:bg-gold hover:text-black active:scale-95 transition-all duration-300 shadow-[0_0_15px_rgba(201,168,76,0.15)] group-hover:shadow-[0_0_20px_rgba(201,168,76,0.3)]"
+              className="flex items-center gap-1.5 min-h-[30px] px-4 py-1.5 bg-gold/10 backdrop-blur-md border border-gold/30 text-gold text-[9px] font-accent uppercase tracking-widest rounded-full hover:bg-gold hover:text-black active:scale-95 transition-all duration-300 shadow-[0_0_15px_rgba(201,168,76,0.15)] group-hover:shadow-[0_0_20px_rgba(201,168,76,0.3)] flex-shrink-0"
             >
               Book
               <ArrowRight size={10} aria-hidden="true" />
