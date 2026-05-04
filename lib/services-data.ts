@@ -115,7 +115,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     duration: "15 mins",
     category: "grooming",
     description: "A quick, virtually painless hard wax treatment to remove unwanted ear and nose hair.",
-    image: "https://images.unsplash.com/photo-1508215885820-4585e561081e?q=80&w=600&auto=format&fit=crop",
+    image: "/waxing.jpg",
   },
 ];
 

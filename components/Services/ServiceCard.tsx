@@ -28,15 +28,15 @@ export default function ServiceCard({
       transition={{ duration: 0.5 }}
       className="group relative flex flex-col justify-between bg-white/[0.03] border border-white/10 hover:border-gold/40 rounded-2xl p-6 transition-all duration-500 overflow-hidden min-h-[220px]"
     >
-      {/* Background Image with Dark Overlay */}
+      {/* Background Image with Light Blur & Dark Overlay */}
       {service.image && (
         <>
           <div 
-            className="absolute inset-0 bg-cover bg-center opacity-60 group-hover:opacity-80 group-hover:scale-105 transition-all duration-700 ease-out z-0"
+            className="absolute inset-0 bg-cover bg-center opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-700 ease-out z-0"
             style={{ backgroundImage: `url(${service.image})` }}
             aria-hidden="true"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/70 to-[#050505]/40 z-0" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/70 to-[#050505]/40 backdrop-blur-[1px] z-0" />
         </>
       )}
 
@@ -47,26 +47,26 @@ export default function ServiceCard({
             <Clock size={10} aria-hidden="true" />
             {service.duration}
           </span>
-          <span className="text-warm-white/40 text-xs font-mono uppercase tracking-widest bg-black/20 px-2 py-0.5 rounded-full backdrop-blur-sm">
+          <span className="text-warm-white/40 text-[10px] font-mono uppercase tracking-widest bg-black/20 px-2 py-0.5 rounded-full backdrop-blur-sm">
             {service.category}
           </span>
         </div>
 
         <div>
-          <h3 className="text-xl md:text-2xl font-accent text-warm-white uppercase leading-snug group-hover:text-gold transition-colors duration-300 mb-2 drop-shadow-md">
+          <h3 className="text-lg md:text-xl font-accent text-warm-white uppercase leading-snug group-hover:text-gold transition-colors duration-300 mb-2 drop-shadow-md">
             {service.name}
           </h3>
           <div className="flex items-center justify-between mt-6 pt-4 border-t border-white/10">
             <div className="flex items-baseline gap-0.5">
-              <span className="text-gold text-lg font-accent drop-shadow-md">$</span>
-              <span className="text-warm-white text-2xl font-accent drop-shadow-md">{service.price}</span>
+              <span className="text-gold text-base font-accent drop-shadow-md">$</span>
+              <span className="text-warm-white text-xl font-accent drop-shadow-md">{service.price}</span>
             </div>
             <button
               onClick={() => onBook(service)}
-              className="flex items-center gap-1.5 min-h-[36px] px-5 py-1.5 bg-gold/10 backdrop-blur-md border border-gold/30 text-gold text-xs font-accent uppercase tracking-wider rounded-full hover:bg-gold hover:text-black active:scale-95 transition-all duration-300 shadow-[0_0_15px_rgba(201,168,76,0.15)] group-hover:shadow-[0_0_20px_rgba(201,168,76,0.3)]"
+              className="flex items-center gap-1.5 min-h-[32px] px-4 py-1.5 bg-gold/10 backdrop-blur-md border border-gold/30 text-gold text-[10px] font-accent uppercase tracking-widest rounded-full hover:bg-gold hover:text-black active:scale-95 transition-all duration-300 shadow-[0_0_15px_rgba(201,168,76,0.15)] group-hover:shadow-[0_0_20px_rgba(201,168,76,0.3)]"
             >
               Book
-              <ArrowRight size={12} aria-hidden="true" />
+              <ArrowRight size={10} aria-hidden="true" />
             </button>
           </div>
         </div>
