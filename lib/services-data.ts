@@ -61,7 +61,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     duration: "30 mins",
     category: "kids",
     description: "Sharp and stylish skin fades tailored specifically for the younger gentlemen.",
-    image: "https://images.unsplash.com/photo-1534063234978-5a21e6be5715?q=80&w=600&auto=format&fit=crop",
+    image: "/kids-haircut.jpg",
   },
   {
     id: "kids-regular",
@@ -70,7 +70,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     duration: "20 mins",
     category: "kids",
     description: "A simple, clean haircut to keep the little guys looking smart and well-groomed.",
-    image: "https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?q=80&w=600&auto=format&fit=crop",
+    image: "/kids-haircut.jpg",
   },
   {
     id: "hot-towel-shave",
