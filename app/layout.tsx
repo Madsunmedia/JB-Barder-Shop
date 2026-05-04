@@ -108,20 +108,6 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${playfair.variable} ${bebas.variable} font-body bg-black text-white selection:bg-gold selection:text-black overflow-x-hidden`}
       >
-<<<<<<< HEAD
-        <SiteLoader />
-        <div id="skip-link">
-           <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-6 focus:py-3 focus:bg-gold focus:text-black focus:font-accent focus:uppercase focus:rounded-xl">Skip to Content</a>
-        </div>
-        <NoiseOverlay />
-        <MagneticCursor />
-        <main id="main-content">
-          <PageTransition>
-            {children}
-          </PageTransition>
-        </main>
-        <Analytics />
-=======
         <Providers>
           <SiteLoader />
           <div id="skip-link">
@@ -134,10 +120,8 @@ export default function RootLayout({
               {children}
             </PageTransition>
           </main>
-          <BookNowCTA />
           <Analytics />
         </Providers>
->>>>>>> b4c582a8fc8aa2bdf4c84b0b8df4748f5a71f09c
       </body>
     </html>
   );
