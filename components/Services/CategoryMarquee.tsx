@@ -78,8 +78,8 @@ export default function CategoryMarquee() {
   useAnimationFrame(() => {
     if (!trackRef.current) return;
     
-    // Adjust speed here (higher = faster)
-    const speed = window.innerWidth < 768 ? 1.0 : 1.5; 
+    // Significantly faster loop speed
+    const speed = window.innerWidth < 768 ? 2.5 : 3.5; 
     x.current -= speed; 
     
     // Reset loop seamlessly when halfway through the doubled array
@@ -91,14 +91,14 @@ export default function CategoryMarquee() {
   });
 
   return (
-    <section className="relative w-full py-16 md:py-24 bg-[#050505] overflow-hidden">
+    <section className="relative w-full py-8 md:py-16 bg-[#050505] overflow-hidden">
       
       {/* Edge Gradients for smooth fading */}
       <div className="absolute inset-y-0 left-0 w-24 md:w-64 bg-gradient-to-r from-[#050505] via-[#050505]/80 to-transparent z-20 pointer-events-none" />
       <div className="absolute inset-y-0 right-0 w-24 md:w-64 bg-gradient-to-l from-[#050505] via-[#050505]/80 to-transparent z-20 pointer-events-none" />
       
-      <div className="text-center mb-12 relative z-30">
-        <span className="text-gold font-accent text-sm tracking-[0.3em] uppercase">Signature Services</span>
+      <div className="text-center mb-8 md:mb-12 relative z-30">
+        <span className="text-gold font-accent text-xs md:text-sm tracking-[0.3em] uppercase">Signature Services</span>
       </div>
 
       <div className="relative flex items-center justify-center">
