@@ -128,7 +128,7 @@ export default function Hero() {
           className="lg:col-span-6 relative w-full aspect-[4/5] sm:aspect-square lg:aspect-[4/5] rounded-[2rem] overflow-hidden border border-white/10 group order-1 lg:order-2"
         >
           <Image
-            src="/mens-haircut-lethbridge.jpg"
+            src="/hero-haircut-sharp.jpg"
             alt="Barber performing a precision skin fade haircut in Lethbridge"
             fill
             priority
