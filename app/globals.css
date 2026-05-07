@@ -12,6 +12,9 @@
   --font-body: var(--font-inter), ui-sans-serif, system-ui;
   --font-heading: var(--font-playfair), ui-serif, Georgia;
   --font-accent: var(--font-bebas), impact, sans-serif;
+
+  /* Custom breakpoints */
+  --breakpoint-xs: 480px;
 }
 
 :root {
@@ -42,6 +45,13 @@
   }
   .rotate-y-180 {
     transform: rotateY(180deg);
+  }
+  /* Hide scrollbar cross-browser */
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
   }
 }
 
@@ -104,6 +114,13 @@ html, body {
   max-width: 100%;
 }
 
+/* Smooth scrolling for the whole site */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 /* Standard page container */
 .page-container {
   width: 100%;
@@ -153,4 +170,235 @@ a, button {
 
 nav a, .nav-link {
   min-height: unset;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MOBILE OPTIMIZATIONS
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── 1. GPU-accelerated scroll for mobile smoothness ── */
+@media (max-width: 1024px) {
+  .glass {
+    /* Reduce backdrop-filter cost on mobile — still looks premium */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  /* Disable 3D transforms on mobile for perf */
+  .preserve-3d {
+    transform-style: flat !important;
+  }
+}
+
+/* ── 2. Horizontal scroll container for filter tabs ── */
+.scroll-tabs {
+  display: flex;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  gap: 0.5rem;
+  padding-bottom: 4px;
+}
+
+.scroll-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.scroll-tabs > * {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+}
+
+/* ── 3. Review cards — smooth touch scroll on mobile ── */
+@media (max-width: 640px) {
+  /* Allow the reviews grid to scroll horizontally on mobile */
+  .reviews-mobile-scroll {
+    display: flex;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    margin-left: -1.25rem;
+    margin-right: -1.25rem;
+    scrollbar-width: none;
+  }
+
+  .reviews-mobile-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .reviews-mobile-scroll > * {
+    scroll-snap-align: start;
+    flex-shrink: 0;
+    width: calc(85vw);
+    max-width: 320px;
+  }
+}
+
+/* ── 4. Improved tap highlight — subtle gold on mobile ── */
+* {
+  -webkit-tap-highlight-color: rgba(201, 168, 76, 0.08);
+}
+
+/* ── 5. Better image rendering on mobile ── */
+img {
+  image-rendering: -webkit-optimize-contrast;
+}
+
+/* ── 6. Prevent layout shift from lazy-loaded images ── */
+img[loading="lazy"] {
+  content-visibility: auto;
+}
+
+/* ── 7. Booking step card overflow fix on iPhone ── */
+@media (max-width: 480px) {
+  /* Ensure nothing spills on very small screens */
+  .booking-step-container {
+    overflow-x: hidden;
+  }
+
+  /* Make category tabs scroll horizontally in booking */
+  .booking-cat-tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+
+  .booking-cat-tabs::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ── 8. Hero CTA sticky bar — only on smallest screens ── */
+@media (max-width: 479px) {
+  .hero-cta-mobile {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    padding: 0.75rem 1.25rem;
+    padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
+    background: linear-gradient(to top, rgba(5,5,5,0.98) 80%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  /* Push hero content up to prevent overlap with sticky bar */
+  .hero-cta-spacer {
+    display: block;
+    height: 90px;
+  }
+}
+
+@media (min-width: 480px) {
+  .hero-cta-mobile {
+    position: relative;
+    bottom: auto;
+    padding: 0;
+    background: none;
+    backdrop-filter: none;
+    flex-direction: row;
+  }
+
+  .hero-cta-spacer {
+    display: none;
+  }
+}
+
+/* ── 9. Safe area insets (notched iPhones) ── */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.pt-safe {
+  padding-top: env(safe-area-inset-top);
+}
+
+/* ── 10. Disable heavy hover animations on touch devices ── */
+@media (hover: none) {
+  /* Remove hover-only 3D tilt effects */
+  .service-card-hover-3d:hover {
+    transform: none !important;
+  }
+
+  /* Simplify hover glow on touch for perf */
+  .hover-glow:hover {
+    box-shadow: none !important;
+  }
+}
+
+/* ── 11. Better select/input appearance on iOS ── */
+select,
+input[type="date"],
+input[type="time"] {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* ── 12. Prevent zoom-on-input on iOS (font-size must be ≥ 16px) ── */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+textarea,
+select {
+  font-size: 16px;
+}
+
+@media (min-width: 768px) {
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="number"],
+  textarea,
+  select {
+    font-size: 0.875rem;
+  }
+}
+
+/* ── 13. Ticker performance on mobile ── */
+.ticker-track {
+  will-change: transform;
+}
+
+/* ── 14. Reduce animation weight on mobile ── */
+@media (max-width: 768px) {
+  /* Reduce blur amount for performance */
+  [class*="blur-[120px]"],
+  [class*="blur-[100px]"],
+  [class*="blur-[150px]"] {
+    filter: blur(60px);
+  }
+
+  /* Shorter animation durations for snappiness */
+  [class*="transition-all"] {
+    transition-duration: 200ms;
+  }
+}
+
+/* ── 15. Section heading size ramp for mobile ── */
+@media (max-width: 380px) {
+  /* Prevents hero h1 overflow on tiny screens */
+  .hero-heading-clamp {
+    font-size: clamp(2rem, 10vw, 4rem);
+    line-height: 1.05;
+  }
+
+  .section-heading-clamp {
+    font-size: clamp(1.75rem, 9vw, 3.5rem);
+  }
+}
+
+/* ── 16. Bottom navigation safe zone padding ── */
+.mobile-bottom-safe {
+  padding-bottom: calc(1.5rem + env(safe-area-inset-bottom));
 }

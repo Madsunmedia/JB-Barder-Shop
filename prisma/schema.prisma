@@ -38,6 +38,8 @@ model Service {
   description  String
   price        Float
   duration     Int // in minutes
+  category     String        @default("haircut")
+  image        String?
   appointments Appointment[]
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt

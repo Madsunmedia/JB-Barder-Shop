@@ -1,37 +1,23 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Scissors } from "lucide-react";
 import BarberCard from "@/components/Team/BarberCard";
-
-const TEAM = [
-  {
-    name: "Jas Grewal",
-    title: "Barber",
-    bio: "Experienced barber skilled in modern cuts, fades, and beard styling.",
-    image: "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?q=80&w=2070&auto=format&fit=crop",
-    specialties: ["Modern Cuts", "Fades", "Beard Styling"],
-  },
-  {
-    name: "Karan",
-    title: "Hair Stylist",
-    bio: "Specialist in trendy hairstyles and precision grooming.",
-    image: "/karan.jpg",
-    specialties: ["Trendy Hairstyles", "Precision Grooming"],
-  },
-  {
-    name: "Jeet Dhaliwal",
-    title: "Beard Specialist",
-    bio: "Expert in beard shaping and classic barber techniques.",
-    image: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=2070&auto=format&fit=crop",
-    specialties: ["Beard Shaping", "Classic Barbering"],
-    quote: "Every client deserves to leave looking and feeling their absolute best.",
-  },
-];
+import { getTeam } from "@/app/actions/team";
 
 export default function TeamStory() {
+  const [team, setTeam] = useState<any[]>([]);
+
+  useEffect(() => {
+    async function loadTeam() {
+      const data = await getTeam();
+      setTeam(data);
+    }
+    loadTeam();
+  }, []);
   return (
     <div className="w-full">
       {/* ─── Story Section ─── */}
@@ -87,8 +73,8 @@ export default function TeamStory() {
         </div>
 
         <div className="space-y-8">
-          {TEAM.map((barber) => (
-            <BarberCard key={barber.name} barber={barber} />
+          {team.map((barber) => (
+            <BarberCard key={barber.id} barber={barber} />
           ))}
         </div>
       </section>
