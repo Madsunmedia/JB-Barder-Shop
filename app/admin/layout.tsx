@@ -157,7 +157,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </div>
 
         {/* Reuse sidebar nav + logout (never collapsed on mobile) */}
-        <nav className="flex-1 overflow-y-auto px-3 py-5 space-y-1">
+        <nav className="flex-1 overflow-y-auto px-3 py-5 space-y-1.5">
           {sidebarItems.map((item) => {
             const isActive = pathname === item.href;
             return (
@@ -165,24 +165,24 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 key={item.name}
                 href={item.href}
                 onClick={() => setIsMobileOpen(false)}
-                className={`flex items-center gap-3 px-3 py-3 rounded-xl transition-all min-h-[52px] ${
+                className={`flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all min-h-[56px] ${
                   isActive
                     ? "bg-gold text-black shadow-[0_0_20px_rgba(201,168,76,0.3)]"
                     : "text-warm-white/50 hover:bg-white/5 hover:text-gold active:bg-white/10"
                 }`}
               >
-                <item.icon size={20} className="flex-shrink-0" />
+                <item.icon size={22} className="flex-shrink-0" />
                 <span className="font-accent text-sm uppercase tracking-widest">{item.name}</span>
               </Link>
             );
           })}
         </nav>
-        <div className="px-3 pb-6 border-t border-white/5 pt-3">
+        <div className="px-3 pb-8 border-t border-white/5 pt-4">
           <button
             onClick={() => signOut({ callbackUrl: "/" })}
-            className="w-full flex items-center gap-3 px-3 py-3 min-h-[48px] text-red-500/60 hover:text-red-500 hover:bg-red-500/5 rounded-xl transition-all"
+            className="w-full flex items-center gap-4 px-4 py-3.5 min-h-[56px] text-red-500/60 hover:text-red-500 hover:bg-red-500/5 rounded-xl transition-all"
           >
-            <LogOut size={20} className="flex-shrink-0" />
+            <LogOut size={22} className="flex-shrink-0" />
             <span className="font-accent text-sm uppercase tracking-widest">Logout</span>
           </button>
         </div>
