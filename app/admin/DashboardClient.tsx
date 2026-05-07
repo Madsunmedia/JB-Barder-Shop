@@ -35,32 +35,32 @@ const statusColors: Record<string, string> = {
 
 export default function DashboardClient({ stats }: { stats: DashboardStats }) {
   return (
-    <div className="space-y-10">
+    <div className="space-y-6 md:space-y-10">
       {/* Stats Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
         <StatsCard
-          icon={<Calendar size={22} />}
+          icon={<Calendar size={20} />}
           title="Today's Bookings"
           value={String(stats.todayBookings)}
           sub="Live from database"
           color="gold"
         />
         <StatsCard
-          icon={<AlertCircle size={22} />}
+          icon={<AlertCircle size={20} />}
           title="Pending Bookings"
           value={String(stats.pendingBookings)}
           sub={stats.pendingBookings > 0 ? "Needs attention" : "All clear"}
           color={stats.pendingBookings > 0 ? "amber" : "green"}
         />
         <StatsCard
-          icon={<MessageSquare size={22} />}
+          icon={<MessageSquare size={20} />}
           title="Pending Reviews"
           value={String(stats.pendingReviews)}
           sub={stats.pendingReviews > 0 ? "Awaiting moderation" : "All reviewed"}
           color={stats.pendingReviews > 0 ? "amber" : "green"}
         />
         <StatsCard
-          icon={<Scissors size={22} />}
+          icon={<Scissors size={20} />}
           title="Total Services"
           value={String(stats.totalServices)}
           sub="In menu"
@@ -68,23 +68,23 @@ export default function DashboardClient({ stats }: { stats: DashboardStats }) {
         />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
         {/* Booking Trend Chart */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="lg:col-span-2 glass p-8 rounded-3xl border border-white/5"
+          className="lg:col-span-2 glass p-5 md:p-8 rounded-[1.5rem] md:rounded-[2rem] border border-white/5 flex flex-col"
         >
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center justify-between mb-6 md:mb-8 flex-shrink-0">
             <div>
-              <h3 className="text-xl font-accent text-gold uppercase tracking-widest">Booking Trends</h3>
-              <p className="text-[10px] font-mono text-warm-white/30 uppercase tracking-wider mt-1">Last 7 days — live data</p>
+              <h3 className="text-lg md:text-xl font-accent text-gold uppercase tracking-widest leading-tight">Booking Trends</h3>
+              <p className="text-[9px] md:text-[10px] font-mono text-warm-white/30 uppercase tracking-wider mt-1">Last 7 days — live data</p>
             </div>
-            <TrendingUp size={20} className="text-gold/40" />
+            <TrendingUp size={20} className="text-gold/40 flex-shrink-0 ml-2" />
           </div>
-          <div className="h-[280px] w-full">
+          <div className="h-[220px] md:h-[280px] w-full min-w-0">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={stats.bookingsByDay}>
+              <AreaChart data={stats.bookingsByDay} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
                 <defs>
                   <linearGradient id="colorGold" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#C9A84C" stopOpacity={0.3} />
@@ -92,10 +92,10 @@ export default function DashboardClient({ stats }: { stats: DashboardStats }) {
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="#ffffff05" vertical={false} />
-                <XAxis dataKey="name" stroke="#ffffff20" fontSize={10} tickLine={false} axisLine={false} />
-                <YAxis stroke="#ffffff20" fontSize={10} tickLine={false} axisLine={false} allowDecimals={false} />
+                <XAxis dataKey="name" stroke="#ffffff20" fontSize={10} tickLine={false} axisLine={false} tickMargin={8} />
+                <YAxis stroke="#ffffff20" fontSize={10} tickLine={false} axisLine={false} allowDecimals={false} tickMargin={8} />
                 <Tooltip
-                  contentStyle={{ backgroundColor: "#111", border: "1px solid #C9A84C20", borderRadius: "12px" }}
+                  contentStyle={{ backgroundColor: "#111", border: "1px solid rgba(201,168,76,0.2)", borderRadius: "12px", fontSize: "12px" }}
                   itemStyle={{ color: "#C9A84C" }}
                 />
                 <Area type="monotone" dataKey="bookings" stroke="#C9A84C" fillOpacity={1} fill="url(#colorGold)" strokeWidth={2.5} />
@@ -109,10 +109,10 @@ export default function DashboardClient({ stats }: { stats: DashboardStats }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="glass p-8 rounded-3xl border border-white/5 space-y-6"
+          className="glass p-5 md:p-8 rounded-[1.5rem] md:rounded-[2rem] border border-white/5 space-y-5 md:space-y-6"
         >
-          <h3 className="text-xl font-accent text-gold uppercase tracking-widest">At a Glance</h3>
-          <div className="space-y-4">
+          <h3 className="text-lg md:text-xl font-accent text-gold uppercase tracking-widest">At a Glance</h3>
+          <div className="space-y-3 md:space-y-4">
             <GlanceRow icon={<CheckCircle2 size={16} className="text-green-400" />} label="Confirmed Today" value={String(stats.todayBookings)} />
             <GlanceRow icon={<AlertCircle size={16} className="text-amber-400" />} label="Pending Action" value={String(stats.pendingBookings)} />
             <GlanceRow icon={<MessageSquare size={16} className="text-blue-400" />} label="Reviews Queue" value={String(stats.pendingReviews)} />
@@ -126,61 +126,68 @@ export default function DashboardClient({ stats }: { stats: DashboardStats }) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="glass rounded-3xl border border-white/5 overflow-hidden"
+        className="glass rounded-[1.5rem] md:rounded-[2rem] border border-white/5 overflow-hidden flex flex-col"
       >
-        <div className="p-8 border-b border-white/5 flex justify-between items-center">
-          <div>
-            <h3 className="text-xl font-accent text-gold uppercase tracking-widest">Recent Bookings</h3>
-            <p className="text-[10px] font-mono text-warm-white/30 uppercase tracking-wider mt-1">Latest {stats.recentBookings.length} entries</p>
+        <div className="p-5 md:p-8 border-b border-white/5 flex justify-between items-center flex-shrink-0 gap-4">
+          <div className="min-w-0">
+            <h3 className="text-lg md:text-xl font-accent text-gold uppercase tracking-widest truncate">Recent Bookings</h3>
+            <p className="text-[9px] md:text-[10px] font-mono text-warm-white/30 uppercase tracking-wider mt-1 truncate">Latest {stats.recentBookings.length} entries</p>
           </div>
-          <a href="/admin/bookings" className="text-[10px] font-accent text-warm-white/40 hover:text-gold uppercase tracking-widest transition-colors">
+          <a href="/admin/bookings" className="flex-shrink-0 text-[10px] font-accent text-warm-white/40 hover:text-gold uppercase tracking-widest transition-colors whitespace-nowrap p-2 -mr-2">
             View All →
           </a>
         </div>
-        <div className="overflow-x-auto">
+        
+        {/* 
+          IMPORTANT: Use a dedicated wrapper for horizontal scrolling. 
+          The wrapper must have min-w-0 if nested in flex, or just be a block element.
+        */}
+        <div className="w-full overflow-x-auto scrollbar-none custom-scrollbar-mobile">
           {stats.recentBookings.length === 0 ? (
-            <div className="py-20 text-center text-warm-white/20 font-accent uppercase tracking-widest text-xs">
+            <div className="py-12 md:py-20 text-center text-warm-white/20 font-accent uppercase tracking-widest text-xs px-4">
               No bookings yet
             </div>
           ) : (
-            <table className="w-full text-left">
-              <thead className="bg-white/[0.02] text-[10px] font-accent uppercase text-warm-white/40 tracking-[0.2em]">
-                <tr>
-                  <th className="px-6 py-4">Client</th>
-                  <th className="px-6 py-4">Service</th>
-                  <th className="px-6 py-4">Barber</th>
-                  <th className="px-6 py-4">Date</th>
-                  <th className="px-6 py-4">Status</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-white/5">
-                {stats.recentBookings.map((b) => (
-                  <tr key={b.id} className="hover:bg-white/[0.01] transition-colors">
-                    <td className="px-6 py-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-gold/10 flex items-center justify-center text-gold font-accent text-sm">
-                          {b.fullName.charAt(0)}
-                        </div>
-                        <span className="text-sm font-accent text-warm-white uppercase tracking-wider">{b.fullName}</span>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 text-xs text-warm-white/50">{b.serviceSelected}</td>
-                    <td className="px-6 py-4 text-xs text-warm-white/50">{b.barberSelected ?? "Any"}</td>
-                    <td className="px-6 py-4">
-                      <div className="flex items-center gap-1.5 text-[10px] font-mono text-warm-white/40">
-                        <Clock size={11} />
-                        {formatDistanceToNow(new Date(b.createdAt), { addSuffix: true })}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <span className={`px-2.5 py-1 rounded-full text-[8px] font-accent uppercase tracking-widest ${statusColors[b.status] ?? "bg-white/5 text-white/40"}`}>
-                        {b.status.toLowerCase()}
-                      </span>
-                    </td>
+            <div className="min-w-[600px]">
+              <table className="w-full text-left">
+                <thead className="bg-white/[0.02] text-[9px] md:text-[10px] font-accent uppercase text-warm-white/40 tracking-[0.2em]">
+                  <tr>
+                    <th className="px-5 py-3 md:px-6 md:py-4 whitespace-nowrap">Client</th>
+                    <th className="px-5 py-3 md:px-6 md:py-4 whitespace-nowrap">Service</th>
+                    <th className="px-5 py-3 md:px-6 md:py-4 whitespace-nowrap">Barber</th>
+                    <th className="px-5 py-3 md:px-6 md:py-4 whitespace-nowrap">Date</th>
+                    <th className="px-5 py-3 md:px-6 md:py-4 whitespace-nowrap text-right pr-5 md:pr-8">Status</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-white/5">
+                  {stats.recentBookings.map((b) => (
+                    <tr key={b.id} className="hover:bg-white/[0.01] transition-colors">
+                      <td className="px-5 py-3 md:px-6 md:py-4">
+                        <div className="flex items-center gap-3">
+                          <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-gold/10 flex items-center justify-center text-gold font-accent text-xs md:text-sm flex-shrink-0">
+                            {b.fullName.charAt(0).toUpperCase()}
+                          </div>
+                          <span className="text-xs md:text-sm font-accent text-warm-white uppercase tracking-wider whitespace-nowrap">{b.fullName}</span>
+                        </div>
+                      </td>
+                      <td className="px-5 py-3 md:px-6 md:py-4 text-[11px] md:text-xs text-warm-white/50 whitespace-nowrap">{b.serviceSelected}</td>
+                      <td className="px-5 py-3 md:px-6 md:py-4 text-[11px] md:text-xs text-warm-white/50 whitespace-nowrap">{b.barberSelected ?? "Any"}</td>
+                      <td className="px-5 py-3 md:px-6 md:py-4 whitespace-nowrap">
+                        <div className="flex items-center gap-1.5 text-[9px] md:text-[10px] font-mono text-warm-white/40">
+                          <Clock size={10} className="flex-shrink-0" />
+                          {formatDistanceToNow(new Date(b.createdAt), { addSuffix: true })}
+                        </div>
+                      </td>
+                      <td className="px-5 py-3 md:px-6 md:py-4 text-right pr-5 md:pr-8 whitespace-nowrap">
+                        <span className={`inline-flex items-center justify-center px-2 py-0.5 md:px-2.5 md:py-1 rounded-full text-[8px] font-accent uppercase tracking-widest ${statusColors[b.status] ?? "bg-white/5 text-white/40"}`}>
+                          {b.status.toLowerCase()}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )}
         </div>
       </motion.div>
@@ -190,34 +197,36 @@ export default function DashboardClient({ stats }: { stats: DashboardStats }) {
 
 function StatsCard({ icon, title, value, sub, color }: { icon: React.ReactNode; title: string; value: string; sub: string; color: string }) {
   const colorMap: Record<string, string> = {
-    gold: "text-gold bg-gold/10",
-    amber: "text-amber-400 bg-amber-400/10",
-    green: "text-green-400 bg-green-400/10",
+    gold: "text-gold bg-gold/10 border-gold/20",
+    amber: "text-amber-400 bg-amber-400/10 border-amber-400/20",
+    green: "text-green-400 bg-green-400/10 border-green-400/20",
   };
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
-      className="glass p-6 rounded-2xl border border-white/5 hover:border-gold/20 transition-all"
+      className="glass p-4 md:p-6 rounded-2xl md:rounded-[1.5rem] border border-white/5 hover:border-gold/20 transition-all flex flex-col h-full"
     >
-      <div className={`w-11 h-11 rounded-xl flex items-center justify-center mb-4 ${colorMap[color] ?? colorMap.gold}`}>
+      <div className={`w-9 h-9 md:w-11 md:h-11 rounded-lg md:rounded-xl flex items-center justify-center mb-3 md:mb-4 flex-shrink-0 border ${colorMap[color] ?? colorMap.gold}`}>
         {icon}
       </div>
-      <p className="text-[10px] font-accent text-warm-white/40 uppercase tracking-widest mb-1">{title}</p>
-      <div className="text-3xl font-accent text-warm-white mb-1">{value}</div>
-      <p className="text-[10px] font-mono text-warm-white/20 uppercase tracking-wider">{sub}</p>
+      <div className="mt-auto">
+        <p className="text-[9px] md:text-[10px] font-accent text-warm-white/40 uppercase tracking-widest mb-1 truncate">{title}</p>
+        <div className="text-2xl md:text-3xl font-accent text-warm-white mb-1 leading-none">{value}</div>
+        <p className="text-[8px] md:text-[10px] font-mono text-warm-white/20 uppercase tracking-wider truncate">{sub}</p>
+      </div>
     </motion.div>
   );
 }
 
 function GlanceRow({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
   return (
-    <div className="flex items-center justify-between py-2 border-b border-white/5 last:border-0">
-      <div className="flex items-center gap-3">
-        {icon}
-        <span className="text-xs font-accent text-warm-white/60 uppercase tracking-wider">{label}</span>
+    <div className="flex items-center justify-between py-2 md:py-2.5 border-b border-white/5 last:border-0 gap-3">
+      <div className="flex items-center gap-3 min-w-0">
+        <div className="flex-shrink-0">{icon}</div>
+        <span className="text-[11px] md:text-xs font-accent text-warm-white/60 uppercase tracking-wider truncate">{label}</span>
       </div>
-      <span className="text-sm font-accent text-warm-white">{value}</span>
+      <span className="text-xs md:text-sm font-accent text-warm-white flex-shrink-0">{value}</span>
     </div>
   );
 }

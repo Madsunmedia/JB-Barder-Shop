@@ -88,14 +88,14 @@ export default function TeamManager({ initialTeam }: { initialTeam: Barber[] }) 
   return (
     <div className="space-y-10">
       {/* Header */}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-6">
         <div>
-          <h2 className="text-3xl font-accent text-gold uppercase tracking-tighter">Team Management</h2>
-          <p className="text-warm-white/40 text-xs font-mono mt-2">Manage your barbers and their profiles.</p>
+          <h2 className="text-2xl md:text-3xl font-accent text-gold uppercase tracking-tighter">Team Management</h2>
+          <p className="text-warm-white/40 text-[10px] md:text-xs font-mono mt-1 md:mt-2">Manage your barbers and their profiles.</p>
         </div>
         <button 
           onClick={() => setIsFormOpen(true)}
-          className="flex items-center gap-2 px-6 py-3 bg-gold text-black rounded-xl text-[10px] font-accent uppercase tracking-widest hover:scale-105 transition-all shadow-[0_10px_20px_rgba(201,168,76,0.2)]"
+          className="w-full md:w-auto flex items-center justify-center gap-2 px-6 py-3.5 md:py-3 bg-gold text-black rounded-xl text-[11px] md:text-[10px] font-accent uppercase tracking-widest hover:scale-105 transition-all shadow-[0_10px_20px_rgba(201,168,76,0.2)]"
         >
           <Plus size={16} /> Add Barber
         </button>
@@ -118,16 +118,16 @@ export default function TeamManager({ initialTeam }: { initialTeam: Barber[] }) 
                     <UserPlus size={40} className="text-white/10" />
                  </div>
                )}
-               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6 gap-2">
+               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 md:via-transparent to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity flex items-end p-4 md:p-6 gap-2">
                   <button 
                     onClick={() => handleEdit(barber)}
-                    className="flex-1 bg-white text-black py-2.5 rounded-lg text-[10px] font-accent uppercase tracking-widest hover:bg-gold transition-colors flex items-center justify-center gap-2"
+                    className="flex-1 bg-white/10 md:bg-white text-white md:text-black py-2.5 rounded-lg text-[10px] font-accent uppercase tracking-widest hover:bg-gold hover:text-black transition-colors flex items-center justify-center gap-2 backdrop-blur-md md:backdrop-blur-none border border-white/20 md:border-none"
                   >
                     <Pencil size={12} /> Edit
                   </button>
                   <button 
                     onClick={() => handleDelete(barber.id)}
-                    className="flex-1 bg-red-600 text-white py-2.5 rounded-lg text-[10px] font-accent uppercase tracking-widest hover:bg-red-500 transition-colors flex items-center justify-center gap-2"
+                    className="flex-1 bg-red-500/20 md:bg-red-600 text-red-400 md:text-white py-2.5 rounded-lg text-[10px] font-accent uppercase tracking-widest hover:bg-red-500 hover:text-white transition-colors flex items-center justify-center gap-2 backdrop-blur-md md:backdrop-blur-none border border-red-500/30 md:border-none"
                   >
                     <Trash2 size={12} /> Delete
                   </button>
@@ -154,7 +154,7 @@ export default function TeamManager({ initialTeam }: { initialTeam: Barber[] }) 
       {/* Form Overlay */}
       <AnimatePresence>
         {isFormOpen && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 md:p-10">
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-10">
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -166,24 +166,24 @@ export default function TeamManager({ initialTeam }: { initialTeam: Barber[] }) 
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-2xl glass p-8 md:p-12 rounded-[2rem] border border-gold/20 shadow-[0_0_50px_rgba(201,168,76,0.1)] overflow-y-auto max-h-full"
+              className="relative w-full max-w-2xl glass p-6 md:p-12 rounded-3xl md:rounded-[2rem] border border-gold/20 shadow-[0_0_50px_rgba(201,168,76,0.1)] overflow-y-auto max-h-[90vh]"
             >
               <button 
                 onClick={resetForm}
-                className="absolute top-6 right-6 text-warm-white/20 hover:text-gold transition-colors"
+                className="absolute top-4 right-4 md:top-6 md:right-6 w-10 h-10 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-warm-white/40 hover:text-gold hover:bg-white/10 transition-colors"
               >
-                <X size={24} />
+                <X size={18} />
               </button>
 
-              <div className="flex items-center gap-4 mb-10">
-                <div className="w-12 h-12 rounded-2xl bg-gold/10 flex items-center justify-center text-gold border border-gold/20">
-                  {editingId ? <Pencil size={20} /> : <UserPlus size={20} />}
+              <div className="flex items-center gap-3 md:gap-4 mb-6 md:mb-10 pr-10">
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-gold/10 flex items-center justify-center text-gold border border-gold/20 flex-shrink-0">
+                  {editingId ? <Pencil size={16} className="md:w-5 md:h-5" /> : <UserPlus size={16} className="md:w-5 md:h-5" />}
                 </div>
-                <div>
-                  <h3 className="text-2xl font-accent text-gold uppercase tracking-tight">
+                <div className="min-w-0">
+                  <h3 className="text-xl md:text-2xl font-accent text-gold uppercase tracking-tight truncate">
                     {editingId ? "Edit Profile" : "Add Team Member"}
                   </h3>
-                  <p className="text-xs text-warm-white/40 font-mono uppercase tracking-widest">
+                  <p className="text-[9px] md:text-xs text-warm-white/40 font-mono uppercase tracking-widest truncate">
                     {editingId ? "Updating staff details" : "Building your dream team"}
                   </p>
                 </div>
@@ -258,7 +258,7 @@ export default function TeamManager({ initialTeam }: { initialTeam: Barber[] }) 
                 <button
                   type="submit"
                   disabled={isPending}
-                  className="w-full py-4 bg-gold text-black font-accent text-xl uppercase rounded-xl shadow-[0_10px_30px_rgba(201,168,76,0.3)] hover:scale-[1.01] active:scale-[0.99] transition-all disabled:opacity-50"
+                  className="w-full py-3.5 md:py-4 bg-gold text-black font-accent text-base md:text-xl uppercase rounded-xl shadow-[0_10px_30px_rgba(201,168,76,0.3)] hover:scale-[1.01] active:scale-[0.99] transition-all disabled:opacity-50 min-h-[52px]"
                 >
                   {isPending ? "Processing..." : editingId ? "Save Changes" : "Add Barber to Team"}
                 </button>

@@ -118,31 +118,31 @@ export default function ServicesManager({ initialServices }: { initialServices: 
       </AnimatePresence>
 
       {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-6">
         <div>
-          <h2 className="text-3xl font-accent text-gold uppercase tracking-tighter">Manage Services</h2>
-          <p className="text-warm-white/40 text-xs font-mono mt-2">
+          <h2 className="text-2xl md:text-3xl font-accent text-gold uppercase tracking-tighter">Manage Services</h2>
+          <p className="text-warm-white/40 text-[10px] md:text-xs font-mono mt-1 md:mt-2">
             {initialServices.length} services · Configure menu, pricing &amp; timing
           </p>
         </div>
         <button
           onClick={() => setIsFormOpen(true)}
-          className="flex items-center gap-2 px-6 py-3 bg-gold text-black rounded-xl text-[10px] font-accent uppercase tracking-widest hover:scale-105 transition-all shadow-[0_10px_20px_rgba(201,168,76,0.2)]"
+          className="w-full md:w-auto flex items-center justify-center gap-2 px-6 py-3.5 md:py-3 bg-gold text-black rounded-xl text-[11px] md:text-[10px] font-accent uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-[0_10px_20px_rgba(201,168,76,0.2)]"
         >
           <Plus size={16} /> Add New Service
         </button>
       </div>
 
       {/* Category filter */}
-      <div className="flex gap-2 flex-wrap">
+      <div className="flex gap-2 overflow-x-auto scrollbar-none pb-2 -mx-2 px-2 custom-scrollbar-mobile">
         {["all", ...CATEGORIES].map((cat) => (
           <button
             key={cat}
             onClick={() => setFilterCat(cat)}
-            className={`px-4 py-1.5 rounded-full text-[10px] font-accent uppercase tracking-widest border transition-all ${
+            className={`flex-shrink-0 px-4 py-2 md:py-1.5 rounded-full text-[10px] font-accent uppercase tracking-widest border transition-all ${
               filterCat === cat
                 ? "bg-gold text-black border-gold"
-                : "bg-white/5 border-white/10 text-warm-white/50 hover:border-gold/30 hover:text-gold"
+                : "bg-white/5 border-white/10 text-warm-white/50 hover:border-gold/30 hover:text-gold active:bg-white/10"
             }`}
           >
             {cat}
@@ -151,61 +151,65 @@ export default function ServicesManager({ initialServices }: { initialServices: 
       </div>
 
       {/* Services Table */}
-      <div className={`glass rounded-3xl border border-white/5 overflow-hidden transition-opacity ${isPending ? "opacity-50" : ""}`}>
-        <div className="overflow-x-auto">
-          <table className="w-full text-left">
-            <thead className="bg-white/[0.02] text-[10px] font-accent uppercase text-warm-white/40 tracking-[0.2em]">
-              <tr>
-                <th className="px-6 py-4">Service</th>
-                <th className="px-6 py-4">Category</th>
-                <th className="px-6 py-4">Price</th>
-                <th className="px-6 py-4">Duration</th>
-                <th className="px-6 py-4 text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-white/5">
-              {visibleServices.length === 0 ? (
+      <div className={`glass rounded-2xl md:rounded-3xl border border-white/5 overflow-hidden transition-opacity ${isPending ? "opacity-50 pointer-events-none" : ""}`}>
+        <div className="w-full overflow-x-auto scrollbar-none custom-scrollbar-mobile">
+          <div className="min-w-[600px]">
+            <table className="w-full text-left">
+              <thead className="bg-white/[0.02] text-[9px] md:text-[10px] font-accent uppercase text-warm-white/40 tracking-[0.2em]">
                 <tr>
-                  <td colSpan={5} className="px-6 py-16 text-center text-warm-white/20 font-accent uppercase tracking-widest text-xs">
-                    No services in this category
-                  </td>
+                  <th className="px-5 py-3 md:px-6 md:py-4 whitespace-nowrap">Service</th>
+                  <th className="px-5 py-3 md:px-6 md:py-4 whitespace-nowrap">Category</th>
+                  <th className="px-5 py-3 md:px-6 md:py-4 whitespace-nowrap">Price</th>
+                  <th className="px-5 py-3 md:px-6 md:py-4 whitespace-nowrap">Duration</th>
+                  <th className="px-5 py-3 md:px-6 md:py-4 whitespace-nowrap text-right pr-5 md:pr-8">Actions</th>
                 </tr>
+              </thead>
+              <tbody className="divide-y divide-white/5">
+                {visibleServices.length === 0 ? (
+                  <tr>
+                    <td colSpan={5} className="px-6 py-12 md:py-16 text-center text-warm-white/20 font-accent uppercase tracking-widest text-xs">
+                      No services in this category
+                    </td>
+                  </tr>
               ) : (
                 visibleServices.map((s) => (
                   <tr key={s.id} className="hover:bg-white/[0.015] transition-colors group">
-                    <td className="px-6 py-5">
-                      <div className="flex items-center gap-4">
-                        <div className="w-9 h-9 rounded-lg bg-gold/5 border border-gold/10 flex items-center justify-center text-gold flex-shrink-0">
-                          <Scissors size={16} />
+                    <td className="px-5 py-4 md:px-6 md:py-5">
+                      <div className="flex items-center gap-3 md:gap-4">
+                        <div className="w-8 h-8 md:w-9 md:h-9 rounded-lg bg-gold/5 border border-gold/10 flex items-center justify-center text-gold flex-shrink-0">
+                          <Scissors size={14} className="md:w-4 md:h-4" />
                         </div>
-                        <div>
-                          <p className="text-sm font-accent text-warm-white uppercase tracking-wider">{s.name}</p>
-                          <p className="text-[10px] text-warm-white/30 font-body mt-0.5 max-w-xs truncate">{s.description}</p>
+                        <div className="min-w-0">
+                          <p className="text-xs md:text-sm font-accent text-warm-white uppercase tracking-wider truncate">{s.name}</p>
+                          <p className="text-[9px] md:text-[10px] text-warm-white/30 font-body mt-0.5 max-w-[200px] md:max-w-xs truncate">{s.description}</p>
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-5">
-                      <span className={`px-2.5 py-0.5 rounded-full text-[9px] font-mono uppercase border ${categoryColors[s.category] ?? "text-warm-white/40 bg-white/5 border-white/10"}`}>
+                    <td className="px-5 py-4 md:px-6 md:py-5 whitespace-nowrap">
+                      <span className={`px-2.5 py-0.5 rounded-full text-[8px] md:text-[9px] font-mono uppercase border ${categoryColors[s.category] ?? "text-warm-white/40 bg-white/5 border-white/10"}`}>
                         {s.category}
                       </span>
                     </td>
-                    <td className="px-6 py-5">
+                    <td className="px-5 py-4 md:px-6 md:py-5 whitespace-nowrap">
                       <span className="text-gold font-accent text-sm">${s.price.toFixed(2)}</span>
                     </td>
-                    <td className="px-6 py-5">
-                      <span className="text-[10px] font-mono text-warm-white/40">{s.duration} min</span>
+                    <td className="px-5 py-4 md:px-6 md:py-5 whitespace-nowrap">
+                      <span className="text-[9px] md:text-[10px] font-mono text-warm-white/40">{s.duration} min</span>
                     </td>
-                    <td className="px-6 py-5 text-right">
-                      <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <td className="px-5 py-4 md:px-6 md:py-5 text-right pr-5 md:pr-8 whitespace-nowrap">
+                      {/* Actions visible on mobile by default (md:opacity-0 group-hover:opacity-100 for desktop) */}
+                      <div className="flex justify-end gap-1 md:gap-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
                         <button
                           onClick={() => handleEdit(s)}
-                          className="p-2 rounded-lg text-warm-white/40 hover:text-gold hover:bg-gold/10 transition-all"
+                          className="p-2 md:p-2 rounded-lg text-warm-white/40 hover:text-gold hover:bg-gold/10 active:bg-gold/20 transition-all"
+                          aria-label="Edit"
                         >
                           <Pencil size={15} />
                         </button>
                         <button
                           onClick={() => handleDelete(s.id, s.name)}
-                          className="p-2 rounded-lg text-warm-white/40 hover:text-red-400 hover:bg-red-500/10 transition-all"
+                          className="p-2 md:p-2 rounded-lg text-warm-white/40 hover:text-red-400 hover:bg-red-500/10 active:bg-red-500/20 transition-all"
+                          aria-label="Delete"
                         >
                           <Trash2 size={15} />
                         </button>
@@ -216,13 +220,14 @@ export default function ServicesManager({ initialServices }: { initialServices: 
               )}
             </tbody>
           </table>
+          </div>
         </div>
       </div>
 
       {/* Modal Form */}
       <AnimatePresence>
         {isFormOpen && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -234,21 +239,21 @@ export default function ServicesManager({ initialServices }: { initialServices: 
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-2xl glass p-8 md:p-10 rounded-[2rem] border border-gold/20 overflow-y-auto max-h-[90vh]"
+              className="relative w-full max-w-2xl glass p-6 md:p-10 rounded-3xl md:rounded-[2rem] border border-gold/20 overflow-y-auto max-h-[90vh]"
             >
-              <button onClick={resetForm} className="absolute top-6 right-6 text-warm-white/20 hover:text-gold transition-colors">
-                <X size={22} />
+              <button onClick={resetForm} className="absolute top-4 right-4 md:top-6 md:right-6 w-10 h-10 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-warm-white/40 hover:text-gold hover:bg-white/10 transition-colors">
+                <X size={18} />
               </button>
 
-              <div className="flex items-center gap-4 mb-8">
-                <div className="w-11 h-11 rounded-2xl bg-gold/10 flex items-center justify-center text-gold border border-gold/20">
-                  {editingId ? <Pencil size={18} /> : <Plus size={18} />}
+              <div className="flex items-center gap-3 md:gap-4 mb-6 md:mb-8 pr-10">
+                <div className="w-10 h-10 md:w-11 md:h-11 rounded-xl md:rounded-2xl bg-gold/10 flex items-center justify-center text-gold border border-gold/20 flex-shrink-0">
+                  {editingId ? <Pencil size={16} /> : <Plus size={16} />}
                 </div>
-                <div>
-                  <h3 className="text-2xl font-accent text-gold uppercase tracking-tight">
+                <div className="min-w-0">
+                  <h3 className="text-xl md:text-2xl font-accent text-gold uppercase tracking-tight truncate">
                     {editingId ? "Edit Service" : "Add Service"}
                   </h3>
-                  <p className="text-[10px] text-warm-white/30 font-mono uppercase tracking-widest mt-0.5">
+                  <p className="text-[9px] md:text-[10px] text-warm-white/30 font-mono uppercase tracking-widest mt-0.5 truncate">
                     {editingId ? "Update details below" : "Fill in service details"}
                   </p>
                 </div>

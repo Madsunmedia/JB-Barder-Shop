@@ -54,10 +54,10 @@ export default function ReviewsClient({ initialData }: ReviewsClientProps) {
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
          <div>
-            <h2 className="text-3xl font-accent text-gold uppercase tracking-tighter">Review Moderation</h2>
-            <p className="text-warm-white/40 text-xs font-mono mt-2">Manage customer feedback and testimonials.</p>
+            <h2 className="text-2xl md:text-3xl font-accent text-gold uppercase tracking-tighter">Review Moderation</h2>
+            <p className="text-warm-white/40 text-[10px] md:text-xs font-mono mt-1 md:mt-2">Manage customer feedback and testimonials.</p>
          </div>
-         <div className="flex bg-black/40 p-1 rounded-2xl border border-white/5 overflow-x-auto max-w-full">
+         <div className="w-full md:w-auto flex bg-black/40 p-1.5 rounded-2xl border border-white/5 overflow-x-auto scrollbar-none custom-scrollbar-mobile max-w-full">
             <button 
               onClick={() => setActiveTab("pending")}
               className={`px-6 py-2 rounded-xl text-[10px] font-accent uppercase tracking-widest transition-all whitespace-nowrap ${activeTab === "pending" ? "bg-gold text-black" : "text-warm-white/40 hover:text-gold"}`}
@@ -80,11 +80,11 @@ export default function ReviewsClient({ initialData }: ReviewsClientProps) {
       </div>
 
       {/* List */}
-      <div className={`space-y-6 transition-opacity ${isPendingAction ? "opacity-50 pointer-events-none" : ""}`}>
+      <div className={`space-y-4 md:space-y-6 transition-opacity ${isPendingAction ? "opacity-50 pointer-events-none" : ""}`}>
          {currentReviews.length === 0 ? (
-           <div className="glass p-20 rounded-3xl border border-white/5 flex flex-col items-center justify-center text-center">
-              <Star size={40} className="text-warm-white/10 mb-4" />
-              <p className="text-warm-white/20 font-accent uppercase tracking-widest">No reviews in this category</p>
+           <div className="glass p-12 md:p-20 rounded-[1.5rem] md:rounded-3xl border border-white/5 flex flex-col items-center justify-center text-center">
+              <Star size={32} className="text-warm-white/10 mb-3 md:mb-4 md:w-10 md:h-10" />
+              <p className="text-warm-white/20 font-accent uppercase tracking-widest text-[10px] md:text-xs">No reviews in this category</p>
            </div>
          ) : (
            currentReviews.map((review) => (
@@ -111,20 +111,20 @@ function ReviewModerationCard({ review, onApprove, onReject, onHide, onDelete }:
     <motion.div 
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="glass p-6 md:p-8 rounded-3xl border border-white/5 flex flex-col lg:flex-row gap-8 items-start hover:border-gold/20 transition-all group"
+      className="glass p-5 md:p-8 rounded-[1.5rem] md:rounded-3xl border border-white/5 flex flex-col lg:flex-row gap-5 md:gap-8 items-start hover:border-gold/20 transition-all group"
     >
        <div className="flex-1 space-y-4 w-full">
-          <div className="flex items-center justify-between gap-4">
-             <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-gold/10 flex items-center justify-center text-gold font-accent text-xl uppercase border border-gold/20">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
+             <div className="flex items-center gap-3 md:gap-4">
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gold/10 flex items-center justify-center text-gold font-accent text-lg md:text-xl uppercase border border-gold/20 flex-shrink-0">
                    {review.name[0]}
                 </div>
-                <div>
-                   <h4 className="text-lg font-accent text-warm-white uppercase tracking-wider">{review.name}</h4>
-                   <p className="text-[10px] font-mono text-warm-white/20 uppercase">{dateStr}</p>
+                <div className="min-w-0">
+                   <h4 className="text-base md:text-lg font-accent text-warm-white uppercase tracking-wider truncate">{review.name}</h4>
+                   <p className="text-[9px] md:text-[10px] font-mono text-warm-white/20 uppercase truncate">{dateStr}</p>
                 </div>
              </div>
-             <div className="flex gap-1">
+             <div className="flex gap-1 pl-14 sm:pl-0">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} size={14} className={i < review.rating ? "text-gold fill-gold" : "text-warm-white/10"} />
                 ))}

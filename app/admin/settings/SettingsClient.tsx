@@ -99,7 +99,7 @@ export default function SettingsClient({ initialSettings }: { initialSettings: S
           <ShieldCheck size={20} />
           <h3 className="text-sm font-accent uppercase tracking-widest">Business Identity</h3>
         </div>
-        <div className="glass p-8 rounded-3xl border border-white/5 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="glass p-5 md:p-8 rounded-[1.5rem] md:rounded-3xl border border-white/5 grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
           <div className="space-y-2">
             <label className="text-[10px] font-accent text-warm-white/40 uppercase tracking-widest flex items-center gap-1.5"><ShieldCheck size={10} /> Shop Name</label>
             <input value={businessName} onChange={(e) => setBusinessName(e.target.value)}
@@ -129,11 +129,11 @@ export default function SettingsClient({ initialSettings }: { initialSettings: S
           <Clock size={20} />
           <h3 className="text-sm font-accent uppercase tracking-widest">Shop Hours</h3>
         </div>
-        <div className="glass p-8 rounded-3xl border border-white/5 space-y-3">
+        <div className="glass p-5 md:p-8 rounded-[1.5rem] md:rounded-3xl border border-white/5 space-y-3">
           {DAYS.map((day) => (
-            <div key={day} className="flex items-center justify-between py-3 border-b border-white/5 last:border-0 gap-4">
-              <div className="w-28 text-xs font-accent text-warm-white uppercase tracking-wider">{DAY_LABELS[day]}</div>
-              <div className="flex items-center gap-4 flex-1">
+            <div key={day} className="flex flex-col xs:flex-row xs:items-center justify-between py-4 xs:py-3 border-b border-white/5 last:border-0 gap-3 xs:gap-4">
+              <div className="w-full xs:w-28 text-xs font-accent text-warm-white uppercase tracking-wider">{DAY_LABELS[day]}</div>
+              <div className="flex items-center gap-2 xs:gap-4 flex-1">
                 <input type="time" value={hours[day]?.open ?? "09:00"} disabled={hours[day]?.closed}
                   onChange={(e) => updateHour(day, "open", e.target.value)}
                   className="bg-black/40 border border-white/10 rounded-lg py-1.5 px-3 text-[11px] font-mono text-warm-white focus:border-gold outline-none transition-colors disabled:opacity-30" />
@@ -144,7 +144,7 @@ export default function SettingsClient({ initialSettings }: { initialSettings: S
               </div>
               <button
                 onClick={() => updateHour(day, "closed", !hours[day]?.closed)}
-                className={`px-3 py-1 rounded-full text-[9px] font-accent uppercase tracking-widest border transition-all ${
+                className={`w-full xs:w-auto px-4 xs:px-3 py-2 xs:py-1 mt-2 xs:mt-0 rounded-xl xs:rounded-full text-[10px] xs:text-[9px] font-accent uppercase tracking-widest border transition-all flex items-center justify-center ${
                   hours[day]?.closed
                     ? "bg-red-500/10 text-red-400 border-red-500/20"
                     : "bg-green-500/10 text-green-400 border-green-500/20"
@@ -163,16 +163,16 @@ export default function SettingsClient({ initialSettings }: { initialSettings: S
           <Calendar size={20} />
           <h3 className="text-sm font-accent uppercase tracking-widest">Booking Logic</h3>
         </div>
-        <div className="glass p-8 rounded-3xl border border-white/5 space-y-8">
-          <div className="flex items-center justify-between gap-8">
+        <div className="glass p-5 md:p-8 rounded-[1.5rem] md:rounded-3xl border border-white/5 space-y-6 md:space-y-8">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-8">
             <div>
               <h4 className="text-sm font-accent text-warm-white uppercase tracking-wider mb-1">Minimum Advance Notice</h4>
               <p className="text-[10px] text-warm-white/20 font-mono uppercase tracking-wider">Hours before a slot that customers can book</p>
             </div>
             <div className="flex items-center gap-3">
               <input type="number" min={0} value={minAdvanceHours} onChange={(e) => setMinAdvanceHours(Number(e.target.value))}
-                className="w-20 bg-black/40 border border-white/10 rounded-xl py-2 px-3 text-center text-gold font-accent text-lg outline-none focus:border-gold transition-colors" />
-              <span className="text-[10px] font-accent text-warm-white/40 uppercase tracking-widest">hrs</span>
+                className="w-full sm:w-20 bg-black/40 border border-white/10 rounded-xl py-3 sm:py-2 px-3 text-center text-gold font-accent text-lg outline-none focus:border-gold transition-colors" />
+              <span className="text-[10px] font-accent text-warm-white/40 uppercase tracking-widest flex-shrink-0">hrs</span>
             </div>
           </div>
 
@@ -180,18 +180,18 @@ export default function SettingsClient({ initialSettings }: { initialSettings: S
             <h4 className="text-sm font-accent text-warm-white uppercase tracking-wider">Blocked Dates (Closures)</h4>
             <div className="flex flex-wrap gap-3">
               {blockedDates.map((date) => (
-                <div key={date} className="flex items-center gap-2 px-3 py-1.5 bg-gold/10 border border-gold/20 rounded-xl text-gold text-[10px] font-mono">
+                <div key={date} className="flex items-center gap-2 px-3 py-2 sm:py-1.5 bg-gold/10 border border-gold/20 rounded-xl text-gold text-[10px] font-mono whitespace-nowrap">
                   {date}
                   <button onClick={() => setBlockedDates(blockedDates.filter((d) => d !== date))}
-                    className="hover:text-red-400 transition-colors ml-1"><X size={12} /></button>
+                    className="hover:text-red-400 transition-colors ml-1 p-1"><X size={12} /></button>
                 </div>
               ))}
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 w-full sm:w-auto mt-2 sm:mt-0">
                 <input type="date" value={newDate} onChange={(e) => setNewDate(e.target.value)}
-                  className="bg-black/40 border border-white/10 rounded-xl py-1.5 px-3 text-[11px] font-mono text-warm-white focus:border-gold outline-none transition-colors" />
+                  className="flex-1 sm:flex-none bg-black/40 border border-white/10 rounded-xl py-2.5 sm:py-1.5 px-3 text-[11px] font-mono text-warm-white focus:border-gold outline-none transition-colors min-w-[140px]" />
                 <button onClick={addBlockedDate}
-                  className="flex items-center gap-1 px-3 py-1.5 bg-white/5 border border-white/10 rounded-xl text-warm-white/40 text-[10px] font-accent uppercase tracking-widest hover:text-gold hover:border-gold/40 transition-all">
-                  <Plus size={12} /> Add
+                  className="flex items-center justify-center gap-1 px-4 py-2.5 sm:py-1.5 bg-white/5 border border-white/10 rounded-xl text-warm-white/40 text-[10px] font-accent uppercase tracking-widest hover:text-gold hover:border-gold/40 transition-all flex-shrink-0 min-w-[80px]">
+                  <Plus size={14} /> Add
                 </button>
               </div>
             </div>
@@ -200,9 +200,9 @@ export default function SettingsClient({ initialSettings }: { initialSettings: S
       </section>
 
       {/* Save */}
-      <div className="flex justify-end pt-4">
+      <div className="flex justify-end pt-2 pb-6">
         <button onClick={handleSave} disabled={isPending}
-          className="flex items-center gap-3 bg-gold text-black px-10 py-4 rounded-2xl font-accent text-base uppercase tracking-widest shadow-[0_20px_50px_rgba(201,168,76,0.3)] hover:scale-105 active:scale-95 transition-all disabled:opacity-50">
+          className="w-full md:w-auto flex items-center justify-center gap-3 bg-gold text-black px-10 py-4 rounded-xl md:rounded-2xl font-accent text-base uppercase tracking-widest shadow-[0_20px_50px_rgba(201,168,76,0.3)] hover:scale-105 active:scale-95 transition-all disabled:opacity-50 min-h-[56px]">
           <Save size={20} /> {isPending ? "Saving..." : "Save Global Changes"}
         </button>
       </div>
