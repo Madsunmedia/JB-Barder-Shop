@@ -37,7 +37,7 @@ export default function DashboardClient({ stats }: { stats: DashboardStats }) {
   return (
     <div className="space-y-6 md:space-y-10">
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-5">
         <StatsCard
           icon={<Calendar size={20} />}
           title="Today's Bookings"
@@ -205,15 +205,15 @@ function StatsCard({ icon, title, value, sub, color }: { icon: React.ReactNode; 
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
-      className="glass p-4 md:p-6 rounded-2xl md:rounded-[1.5rem] border border-white/5 hover:border-gold/20 transition-all flex flex-col h-full"
+      className="glass p-4 md:p-6 rounded-2xl md:rounded-[1.5rem] border border-white/5 hover:border-gold/20 transition-all flex items-center md:flex-col md:items-start h-full gap-4 md:gap-0"
     >
-      <div className={`w-9 h-9 md:w-11 md:h-11 rounded-lg md:rounded-xl flex items-center justify-center mb-3 md:mb-4 flex-shrink-0 border ${colorMap[color] ?? colorMap.gold}`}>
+      <div className={`w-10 h-10 md:w-11 md:h-11 rounded-xl flex items-center justify-center md:mb-4 flex-shrink-0 border ${colorMap[color] ?? colorMap.gold}`}>
         {icon}
       </div>
-      <div className="mt-auto">
-        <p className="text-[9px] md:text-[10px] font-accent text-warm-white/40 uppercase tracking-widest mb-1 truncate">{title}</p>
-        <div className="text-2xl md:text-3xl font-accent text-warm-white mb-1 leading-none">{value}</div>
-        <p className="text-[8px] md:text-[10px] font-mono text-warm-white/20 uppercase tracking-wider truncate">{sub}</p>
+      <div className="md:mt-auto flex-1 min-w-0">
+        <p className="text-[10px] font-accent text-warm-white/40 uppercase tracking-widest mb-0.5 md:mb-1 truncate">{title}</p>
+        <div className="text-2xl md:text-3xl font-accent text-warm-white mb-0.5 md:mb-1 leading-none">{value}</div>
+        <p className="text-[9px] md:text-[10px] font-mono text-warm-white/20 uppercase tracking-wider truncate">{sub}</p>
       </div>
     </motion.div>
   );
