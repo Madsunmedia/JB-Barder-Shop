@@ -295,7 +295,7 @@ export default function ServicesManager({ initialServices }: { initialServices: 
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-2xl glass p-6 md:p-10 rounded-3xl md:rounded-[2rem] border border-gold/20 overflow-y-auto max-h-[90vh]"
+              className="relative w-full max-w-2xl glass p-5 md:p-10 rounded-3xl md:rounded-[2rem] border border-gold/20 overflow-y-auto max-h-[90vh] custom-scrollbar-mobile"
             >
               <button onClick={resetForm} className="absolute top-4 right-4 md:top-6 md:right-6 w-10 h-10 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-warm-white/40 hover:text-gold hover:bg-white/10 transition-colors">
                 <X size={18} />
@@ -357,7 +357,7 @@ export default function ServicesManager({ initialServices }: { initialServices: 
                 </div>
 
                 <button type="submit" disabled={isPending}
-                  className="w-full py-4 bg-gold text-black font-accent text-base uppercase rounded-xl shadow-[0_10px_30px_rgba(201,168,76,0.3)] hover:scale-[1.01] active:scale-[0.99] transition-all disabled:opacity-50">
+                  className="w-full py-4 bg-gold text-black font-accent text-base uppercase rounded-xl shadow-[0_10px_30px_rgba(201,168,76,0.3)] hover:scale-[1.01] active:scale-[0.99] transition-all disabled:opacity-50 min-h-[56px] flex items-center justify-center">
                   {isPending ? "Saving..." : editingId ? "Save Changes" : "Add Service"}
                 </button>
               </form>

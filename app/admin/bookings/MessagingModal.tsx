@@ -107,7 +107,7 @@ export default function MessagingModal({ booking, onClose }: MessagingModalProps
       />
 
       {/* Modal */}
-      <div className="relative w-full max-w-2xl bg-charcoal border border-white/10 rounded-3xl shadow-2xl overflow-hidden">
+      <div className="relative w-full max-w-2xl bg-charcoal border border-white/10 rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-white/5">
           <div className="flex items-center gap-3">
@@ -131,7 +131,7 @@ export default function MessagingModal({ booking, onClose }: MessagingModalProps
           </button>
         </div>
 
-        <div className="p-6 space-y-6 max-h-[75vh] overflow-y-auto">
+        <div className="p-5 md:p-8 space-y-6 overflow-y-auto flex-1 custom-scrollbar-mobile">
           {/* Template Selector */}
           <div>
             <p className="text-xs font-accent text-warm-white/40 uppercase tracking-widest mb-3">
@@ -162,7 +162,7 @@ export default function MessagingModal({ booking, onClose }: MessagingModalProps
                 <Clock size={12} />
                 Suggested Available Slots (Tomorrow)
               </p>
-              <div className="grid grid-cols-4 gap-2">
+              <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
                 {availableSlots.map((slot) => (
                   <button
                     key={slot}
@@ -203,17 +203,17 @@ export default function MessagingModal({ booking, onClose }: MessagingModalProps
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between p-6 border-t border-white/5">
+        <div className="flex flex-col sm:flex-row items-center justify-between p-5 md:p-6 border-t border-white/5 gap-4">
           <a
             href={`tel:${booking.phoneNumber}`}
-            className="text-xs font-accent text-warm-white/40 hover:text-gold uppercase tracking-widest flex items-center gap-2 transition-colors"
+            className="w-full sm:w-auto text-center text-xs font-accent text-warm-white/40 hover:text-gold uppercase tracking-widest flex items-center justify-center gap-2 transition-colors py-2"
           >
             📞 Call Instead
           </a>
           <button
             onClick={handleSend}
             disabled={isSending || !messageText.trim()}
-            className="flex items-center gap-2 px-6 py-3 bg-gold text-black font-accent text-sm uppercase tracking-widest rounded-full hover:scale-105 active:scale-95 transition-all disabled:opacity-50 disabled:hover:scale-100"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 bg-gold text-black font-accent text-sm uppercase tracking-widest rounded-xl md:rounded-full hover:scale-105 active:scale-95 transition-all disabled:opacity-50 disabled:hover:scale-100 min-h-[56px]"
           >
             {sent ? (
               "✅ Logged!"
@@ -221,7 +221,7 @@ export default function MessagingModal({ booking, onClose }: MessagingModalProps
               "Sending..."
             ) : (
               <>
-                <Send size={14} />
+                <Send size={16} />
                 Send SMS
               </>
             )}

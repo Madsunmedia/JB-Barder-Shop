@@ -182,7 +182,7 @@ export default function GalleryAdminPage() {
             placeholder="https://example.com/image.jpg"
             value={pastedUrl}
             onChange={(e) => setPastedUrl(e.target.value)}
-            className="w-full bg-black/40 border border-white/10 rounded-xl py-3 px-4 text-warm-white text-sm outline-none focus:border-gold"
+            className="w-full bg-black/40 border border-white/10 rounded-xl py-3.5 px-5 text-warm-white text-sm outline-none focus:border-gold transition-colors min-h-[48px]"
           />
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <input
@@ -200,17 +200,17 @@ export default function GalleryAdminPage() {
             <select
               value={urlSection}
               onChange={(e) => setUrlSection(e.target.value)}
-              className="bg-black/40 border border-white/10 rounded-xl py-3 px-4 text-warm-white text-sm outline-none focus:border-gold"
+              className="bg-black/40 border border-white/10 rounded-xl py-3.5 px-5 text-warm-white text-sm outline-none focus:border-gold appearance-none min-h-[48px]"
             >
               {SECTIONS.map((s) => (
                 <option key={s.value} value={s.value}>{s.label}</option>
               ))}
             </select>
           </div>
-          <div className="flex justify-end gap-3">
-            <button type="button" onClick={() => setShowUrlForm(false)} className="px-4 py-2 text-xs font-accent text-warm-white/40 uppercase tracking-widest">Cancel</button>
-            <button type="submit" disabled={isPending} className="flex items-center gap-2 px-6 py-2 bg-gold text-black font-accent text-xs uppercase tracking-widest rounded-full hover:scale-105 transition-all disabled:opacity-60">
-              {isPending ? <Loader2 size={12} className="animate-spin" /> : <Plus size={12} />} Add Image
+          <div className="flex flex-col sm:flex-row justify-end gap-3 pt-2">
+            <button type="button" onClick={() => setShowUrlForm(false)} className="w-full sm:w-auto py-3 px-6 text-xs font-accent text-warm-white/40 uppercase tracking-widest hover:text-warm-white transition-colors">Cancel</button>
+            <button type="submit" disabled={isPending} className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-3.5 bg-gold text-black font-accent text-xs uppercase tracking-widest rounded-xl sm:rounded-full hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-60 min-h-[48px]">
+              {isPending ? <Loader2 size={14} className="animate-spin" /> : <Plus size={14} />} Add Image
             </button>
           </div>
         </form>
@@ -301,7 +301,7 @@ export default function GalleryAdminPage() {
       {editingId && (
         <div className="fixed inset-0 z-[300] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={() => setEditingId(null)} />
-          <div className="relative w-full max-w-md bg-charcoal border border-white/10 rounded-3xl p-6 space-y-5 shadow-2xl">
+          <div className="relative w-full max-w-md glass border border-gold/20 rounded-3xl p-5 md:p-8 space-y-6 shadow-2xl overflow-y-auto max-h-[90vh] custom-scrollbar-mobile">
             <div className="flex items-center justify-between">
               <h3 className="font-accent text-gold uppercase tracking-widest">Edit Image</h3>
               <button onClick={() => setEditingId(null)} className="text-warm-white/40 hover:text-white transition-colors"><X size={18} /></button>

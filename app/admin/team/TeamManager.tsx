@@ -166,7 +166,7 @@ export default function TeamManager({ initialTeam }: { initialTeam: Barber[] }) 
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-2xl glass p-6 md:p-12 rounded-3xl md:rounded-[2rem] border border-gold/20 shadow-[0_0_50px_rgba(201,168,76,0.1)] overflow-y-auto max-h-[90vh]"
+              className="relative w-full max-w-2xl glass p-5 md:p-12 rounded-3xl md:rounded-[2rem] border border-gold/20 shadow-[0_0_50px_rgba(201,168,76,0.1)] overflow-y-auto max-h-[90vh] custom-scrollbar-mobile"
             >
               <button 
                 onClick={resetForm}
@@ -258,7 +258,7 @@ export default function TeamManager({ initialTeam }: { initialTeam: Barber[] }) 
                 <button
                   type="submit"
                   disabled={isPending}
-                  className="w-full py-3.5 md:py-4 bg-gold text-black font-accent text-base md:text-xl uppercase rounded-xl shadow-[0_10px_30px_rgba(201,168,76,0.3)] hover:scale-[1.01] active:scale-[0.99] transition-all disabled:opacity-50 min-h-[52px]"
+                  className="w-full py-4 bg-gold text-black font-accent text-base md:text-xl uppercase rounded-xl shadow-[0_10px_30px_rgba(201,168,76,0.3)] hover:scale-[1.01] active:scale-[0.99] transition-all disabled:opacity-50 min-h-[56px] flex items-center justify-center"
                 >
                   {isPending ? "Processing..." : editingId ? "Save Changes" : "Add Barber to Team"}
                 </button>

@@ -131,20 +131,20 @@ export default function SettingsClient({ initialSettings }: { initialSettings: S
         </div>
         <div className="glass p-5 md:p-8 rounded-[1.5rem] md:rounded-3xl border border-white/5 space-y-3">
           {DAYS.map((day) => (
-            <div key={day} className="flex flex-col xs:flex-row xs:items-center justify-between py-4 xs:py-3 border-b border-white/5 last:border-0 gap-3 xs:gap-4">
-              <div className="w-full xs:w-28 text-xs font-accent text-warm-white uppercase tracking-wider">{DAY_LABELS[day]}</div>
-              <div className="flex items-center gap-2 xs:gap-4 flex-1">
+            <div key={day} className="flex flex-col sm:flex-row sm:items-center justify-between py-5 sm:py-3 border-b border-white/5 last:border-0 gap-4 sm:gap-6">
+              <div className="w-full sm:w-28 text-[11px] sm:text-xs font-accent text-warm-white uppercase tracking-wider">{DAY_LABELS[day]}</div>
+              <div className="flex items-center gap-3 sm:gap-4 flex-1">
                 <input type="time" value={hours[day]?.open ?? "09:00"} disabled={hours[day]?.closed}
                   onChange={(e) => updateHour(day, "open", e.target.value)}
-                  className="bg-black/40 border border-white/10 rounded-lg py-1.5 px-3 text-[11px] font-mono text-warm-white focus:border-gold outline-none transition-colors disabled:opacity-30" />
+                  className="flex-1 sm:flex-none bg-black/40 border border-white/10 rounded-xl py-3 sm:py-1.5 px-4 sm:px-3 text-sm sm:text-[11px] font-mono text-warm-white focus:border-gold outline-none transition-colors disabled:opacity-30 min-h-[44px] sm:min-h-0" />
                 <span className="text-warm-white/20 text-xs">—</span>
                 <input type="time" value={hours[day]?.close ?? "20:00"} disabled={hours[day]?.closed}
                   onChange={(e) => updateHour(day, "close", e.target.value)}
-                  className="bg-black/40 border border-white/10 rounded-lg py-1.5 px-3 text-[11px] font-mono text-warm-white focus:border-gold outline-none transition-colors disabled:opacity-30" />
+                  className="flex-1 sm:flex-none bg-black/40 border border-white/10 rounded-xl py-3 sm:py-1.5 px-4 sm:px-3 text-sm sm:text-[11px] font-mono text-warm-white focus:border-gold outline-none transition-colors disabled:opacity-30 min-h-[44px] sm:min-h-0" />
               </div>
               <button
                 onClick={() => updateHour(day, "closed", !hours[day]?.closed)}
-                className={`w-full xs:w-auto px-4 xs:px-3 py-2 xs:py-1 mt-2 xs:mt-0 rounded-xl xs:rounded-full text-[10px] xs:text-[9px] font-accent uppercase tracking-widest border transition-all flex items-center justify-center ${
+                className={`w-full sm:w-auto px-6 sm:px-3 py-3 sm:py-1.5 mt-2 sm:mt-0 rounded-xl sm:rounded-full text-xs sm:text-[9px] font-accent uppercase tracking-widest border transition-all flex items-center justify-center min-h-[44px] sm:min-h-0 ${
                   hours[day]?.closed
                     ? "bg-red-500/10 text-red-400 border-red-500/20"
                     : "bg-green-500/10 text-green-400 border-green-500/20"
@@ -199,11 +199,10 @@ export default function SettingsClient({ initialSettings }: { initialSettings: S
         </div>
       </section>
 
-      {/* Save */}
-      <div className="flex justify-end pt-2 pb-6">
+      <div className="flex justify-end pt-4 pb-10">
         <button onClick={handleSave} disabled={isPending}
-          className="w-full md:w-auto flex items-center justify-center gap-3 bg-gold text-black px-10 py-4 rounded-xl md:rounded-2xl font-accent text-base uppercase tracking-widest shadow-[0_20px_50px_rgba(201,168,76,0.3)] hover:scale-105 active:scale-95 transition-all disabled:opacity-50 min-h-[56px]">
-          <Save size={20} /> {isPending ? "Saving..." : "Save Global Changes"}
+          className="w-full sm:w-auto flex items-center justify-center gap-3 bg-gold text-black px-12 py-5 rounded-2xl md:rounded-3xl font-accent text-lg uppercase tracking-widest shadow-[0_20px_50px_rgba(201,168,76,0.3)] hover:scale-105 active:scale-95 transition-all disabled:opacity-50 min-h-[64px]">
+          <Save size={24} /> {isPending ? "Saving..." : "Save Global Changes"}
         </button>
       </div>
     </div>
