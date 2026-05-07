@@ -137,57 +137,90 @@ export default function DashboardClient({ stats }: { stats: DashboardStats }) {
             View All →
           </a>
         </div>
-        
-        {/* 
-          IMPORTANT: Use a dedicated wrapper for horizontal scrolling. 
-          The wrapper must have min-w-0 if nested in flex, or just be a block element.
-        */}
-        <div className="w-full overflow-x-auto scrollbar-none custom-scrollbar-mobile">
+        <div className="w-full">
           {stats.recentBookings.length === 0 ? (
             <div className="py-12 md:py-20 text-center text-warm-white/20 font-accent uppercase tracking-widest text-xs px-4">
               No bookings yet
             </div>
           ) : (
-            <div className="min-w-[600px]">
-              <table className="w-full text-left">
-                <thead className="bg-white/[0.02] text-[9px] md:text-[10px] font-accent uppercase text-warm-white/40 tracking-[0.2em]">
-                  <tr>
-                    <th className="px-5 py-3 md:px-6 md:py-4 whitespace-nowrap">Client</th>
-                    <th className="px-5 py-3 md:px-6 md:py-4 whitespace-nowrap">Service</th>
-                    <th className="px-5 py-3 md:px-6 md:py-4 whitespace-nowrap">Barber</th>
-                    <th className="px-5 py-3 md:px-6 md:py-4 whitespace-nowrap">Date</th>
-                    <th className="px-5 py-3 md:px-6 md:py-4 whitespace-nowrap text-right pr-5 md:pr-8">Status</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-white/5">
-                  {stats.recentBookings.map((b) => (
-                    <tr key={b.id} className="hover:bg-white/[0.01] transition-colors">
-                      <td className="px-5 py-3 md:px-6 md:py-4">
-                        <div className="flex items-center gap-3">
-                          <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-gold/10 flex items-center justify-center text-gold font-accent text-xs md:text-sm flex-shrink-0">
-                            {b.fullName.charAt(0).toUpperCase()}
-                          </div>
-                          <span className="text-xs md:text-sm font-accent text-warm-white uppercase tracking-wider whitespace-nowrap">{b.fullName}</span>
+            <>
+              {/* Mobile Card Layout */}
+              <div className="md:hidden divide-y divide-white/5">
+                {stats.recentBookings.map((b) => (
+                  <div key={b.id} className="p-5 flex flex-col gap-4 hover:bg-white/[0.01] transition-colors">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-full bg-gold/10 flex items-center justify-center text-gold font-accent text-sm flex-shrink-0">
+                          {b.fullName.charAt(0).toUpperCase()}
                         </div>
-                      </td>
-                      <td className="px-5 py-3 md:px-6 md:py-4 text-[11px] md:text-xs text-warm-white/50 whitespace-nowrap">{b.serviceSelected}</td>
-                      <td className="px-5 py-3 md:px-6 md:py-4 text-[11px] md:text-xs text-warm-white/50 whitespace-nowrap">{b.barberSelected ?? "Any"}</td>
-                      <td className="px-5 py-3 md:px-6 md:py-4 whitespace-nowrap">
-                        <div className="flex items-center gap-1.5 text-[9px] md:text-[10px] font-mono text-warm-white/40">
-                          <Clock size={10} className="flex-shrink-0" />
+                        <span className="text-sm font-accent text-warm-white uppercase tracking-wider">{b.fullName}</span>
+                      </div>
+                      <span className={`inline-flex items-center justify-center px-2 py-0.5 rounded-full text-[8px] font-accent uppercase tracking-widest ${statusColors[b.status] ?? "bg-white/5 text-white/40"}`}>
+                        {b.status.toLowerCase()}
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-2 gap-3 pl-11">
+                      <div>
+                        <p className="text-[9px] font-accent text-warm-white/40 uppercase tracking-widest mb-0.5">Service</p>
+                        <p className="text-xs text-warm-white/70">{b.serviceSelected}</p>
+                      </div>
+                      <div>
+                        <p className="text-[9px] font-accent text-warm-white/40 uppercase tracking-widest mb-0.5">Barber</p>
+                        <p className="text-xs text-warm-white/70">{b.barberSelected ?? "Any"}</p>
+                      </div>
+                      <div className="col-span-2 pt-1">
+                        <div className="flex items-center gap-1.5 text-[10px] font-mono text-warm-white/40">
+                          <Clock size={12} className="flex-shrink-0 text-gold/50" />
                           {formatDistanceToNow(new Date(b.createdAt), { addSuffix: true })}
                         </div>
-                      </td>
-                      <td className="px-5 py-3 md:px-6 md:py-4 text-right pr-5 md:pr-8 whitespace-nowrap">
-                        <span className={`inline-flex items-center justify-center px-2 py-0.5 md:px-2.5 md:py-1 rounded-full text-[8px] font-accent uppercase tracking-widest ${statusColors[b.status] ?? "bg-white/5 text-white/40"}`}>
-                          {b.status.toLowerCase()}
-                        </span>
-                      </td>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Desktop Table Layout */}
+              <div className="hidden md:block w-full">
+                <table className="w-full text-left">
+                  <thead className="bg-white/[0.02] text-[10px] font-accent uppercase text-warm-white/40 tracking-[0.2em]">
+                    <tr>
+                      <th className="px-6 py-4 whitespace-nowrap">Client</th>
+                      <th className="px-6 py-4 whitespace-nowrap">Service</th>
+                      <th className="px-6 py-4 whitespace-nowrap">Barber</th>
+                      <th className="px-6 py-4 whitespace-nowrap">Date</th>
+                      <th className="px-6 py-4 whitespace-nowrap text-right pr-8">Status</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody className="divide-y divide-white/5">
+                    {stats.recentBookings.map((b) => (
+                      <tr key={b.id} className="hover:bg-white/[0.01] transition-colors">
+                        <td className="px-6 py-4">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 rounded-full bg-gold/10 flex items-center justify-center text-gold font-accent text-sm flex-shrink-0">
+                              {b.fullName.charAt(0).toUpperCase()}
+                            </div>
+                            <span className="text-sm font-accent text-warm-white uppercase tracking-wider whitespace-nowrap">{b.fullName}</span>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 text-xs text-warm-white/50 whitespace-nowrap">{b.serviceSelected}</td>
+                        <td className="px-6 py-4 text-xs text-warm-white/50 whitespace-nowrap">{b.barberSelected ?? "Any"}</td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center gap-1.5 text-[10px] font-mono text-warm-white/40">
+                            <Clock size={12} className="flex-shrink-0" />
+                            {formatDistanceToNow(new Date(b.createdAt), { addSuffix: true })}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 text-right pr-8 whitespace-nowrap">
+                          <span className={`inline-flex items-center justify-center px-2.5 py-1 rounded-full text-[8px] font-accent uppercase tracking-widest ${statusColors[b.status] ?? "bg-white/5 text-white/40"}`}>
+                            {b.status.toLowerCase()}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </>
           )}
         </div>
       </motion.div>

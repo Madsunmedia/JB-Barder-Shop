@@ -152,63 +152,120 @@ export default function ServicesManager({ initialServices }: { initialServices: 
 
       {/* Services Table */}
       <div className={`glass rounded-2xl md:rounded-3xl border border-white/5 overflow-hidden transition-opacity ${isPending ? "opacity-50 pointer-events-none" : ""}`}>
-        <div className="w-full overflow-x-auto scrollbar-none custom-scrollbar-mobile">
-          <div className="min-w-[600px]">
-            <table className="w-full text-left">
-              <thead className="bg-white/[0.02] text-[9px] md:text-[10px] font-accent uppercase text-warm-white/40 tracking-[0.2em]">
+        
+        {/* Mobile Card Layout */}
+        <div className="md:hidden divide-y divide-white/5">
+          {visibleServices.length === 0 ? (
+            <div className="px-6 py-12 text-center text-warm-white/20 font-accent uppercase tracking-widest text-xs">
+              No services in this category
+            </div>
+          ) : (
+            visibleServices.map((s) => (
+              <div key={s.id} className="p-5 flex flex-col gap-3 hover:bg-white/[0.015] transition-colors relative group">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className="w-10 h-10 rounded-xl bg-gold/5 border border-gold/10 flex items-center justify-center text-gold flex-shrink-0">
+                      <Scissors size={18} />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-sm font-accent text-warm-white uppercase tracking-wider truncate">{s.name}</p>
+                      <p className="text-[10px] text-warm-white/30 font-body mt-0.5 line-clamp-2 pr-2">{s.description}</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-3 bg-white/[0.02] p-4 rounded-2xl border border-white/5 mt-2">
+                  <div>
+                    <p className="text-[9px] font-accent text-warm-white/40 uppercase tracking-widest mb-1">Price</p>
+                    <p className="text-sm font-accent text-gold">${s.price.toFixed(2)}</p>
+                  </div>
+                  <div>
+                    <p className="text-[9px] font-accent text-warm-white/40 uppercase tracking-widest mb-1">Duration</p>
+                    <p className="text-[11px] font-mono text-warm-white/60 mt-0.5">{s.duration} min</p>
+                  </div>
+                  <div className="col-span-2 flex items-center justify-between pt-3 mt-1 border-t border-white/5">
+                    <span className={`px-2.5 py-1 rounded-full text-[8px] font-mono uppercase border tracking-[0.1em] ${categoryColors[s.category] ?? "text-warm-white/40 bg-white/5 border-white/10"}`}>
+                      {s.category}
+                    </span>
+                    <div className="flex justify-end gap-1">
+                      <button
+                        onClick={() => handleEdit(s)}
+                        className="p-2 rounded-lg text-warm-white/40 hover:text-gold hover:bg-gold/10 active:bg-gold/20 transition-all border border-transparent"
+                        aria-label="Edit"
+                      >
+                        <Pencil size={15} />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(s.id, s.name)}
+                        className="p-2 rounded-lg text-warm-white/40 hover:text-red-400 hover:bg-red-500/10 active:bg-red-500/20 transition-all border border-transparent"
+                        aria-label="Delete"
+                      >
+                        <Trash2 size={15} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+
+        {/* Desktop Table Layout */}
+        <div className="hidden md:block w-full">
+          <table className="w-full text-left">
+            <thead className="bg-white/[0.02] text-[10px] font-accent uppercase text-warm-white/40 tracking-[0.2em]">
+              <tr>
+                <th className="px-6 py-4 whitespace-nowrap">Service</th>
+                <th className="px-6 py-4 whitespace-nowrap">Category</th>
+                <th className="px-6 py-4 whitespace-nowrap">Price</th>
+                <th className="px-6 py-4 whitespace-nowrap">Duration</th>
+                <th className="px-6 py-4 whitespace-nowrap text-right pr-8">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/5">
+              {visibleServices.length === 0 ? (
                 <tr>
-                  <th className="px-5 py-3 md:px-6 md:py-4 whitespace-nowrap">Service</th>
-                  <th className="px-5 py-3 md:px-6 md:py-4 whitespace-nowrap">Category</th>
-                  <th className="px-5 py-3 md:px-6 md:py-4 whitespace-nowrap">Price</th>
-                  <th className="px-5 py-3 md:px-6 md:py-4 whitespace-nowrap">Duration</th>
-                  <th className="px-5 py-3 md:px-6 md:py-4 whitespace-nowrap text-right pr-5 md:pr-8">Actions</th>
+                  <td colSpan={5} className="px-6 py-16 text-center text-warm-white/20 font-accent uppercase tracking-widest text-xs">
+                    No services in this category
+                  </td>
                 </tr>
-              </thead>
-              <tbody className="divide-y divide-white/5">
-                {visibleServices.length === 0 ? (
-                  <tr>
-                    <td colSpan={5} className="px-6 py-12 md:py-16 text-center text-warm-white/20 font-accent uppercase tracking-widest text-xs">
-                      No services in this category
-                    </td>
-                  </tr>
               ) : (
                 visibleServices.map((s) => (
                   <tr key={s.id} className="hover:bg-white/[0.015] transition-colors group">
-                    <td className="px-5 py-4 md:px-6 md:py-5">
-                      <div className="flex items-center gap-3 md:gap-4">
-                        <div className="w-8 h-8 md:w-9 md:h-9 rounded-lg bg-gold/5 border border-gold/10 flex items-center justify-center text-gold flex-shrink-0">
-                          <Scissors size={14} className="md:w-4 md:h-4" />
+                    <td className="px-6 py-5">
+                      <div className="flex items-center gap-4">
+                        <div className="w-9 h-9 rounded-lg bg-gold/5 border border-gold/10 flex items-center justify-center text-gold flex-shrink-0">
+                          <Scissors size={16} />
                         </div>
                         <div className="min-w-0">
-                          <p className="text-xs md:text-sm font-accent text-warm-white uppercase tracking-wider truncate">{s.name}</p>
-                          <p className="text-[9px] md:text-[10px] text-warm-white/30 font-body mt-0.5 max-w-[200px] md:max-w-xs truncate">{s.description}</p>
+                          <p className="text-sm font-accent text-warm-white uppercase tracking-wider truncate">{s.name}</p>
+                          <p className="text-[10px] text-warm-white/30 font-body mt-0.5 max-w-xs truncate">{s.description}</p>
                         </div>
                       </div>
                     </td>
-                    <td className="px-5 py-4 md:px-6 md:py-5 whitespace-nowrap">
-                      <span className={`px-2.5 py-0.5 rounded-full text-[8px] md:text-[9px] font-mono uppercase border ${categoryColors[s.category] ?? "text-warm-white/40 bg-white/5 border-white/10"}`}>
+                    <td className="px-6 py-5 whitespace-nowrap">
+                      <span className={`px-2.5 py-0.5 rounded-full text-[9px] font-mono uppercase border ${categoryColors[s.category] ?? "text-warm-white/40 bg-white/5 border-white/10"}`}>
                         {s.category}
                       </span>
                     </td>
-                    <td className="px-5 py-4 md:px-6 md:py-5 whitespace-nowrap">
+                    <td className="px-6 py-5 whitespace-nowrap">
                       <span className="text-gold font-accent text-sm">${s.price.toFixed(2)}</span>
                     </td>
-                    <td className="px-5 py-4 md:px-6 md:py-5 whitespace-nowrap">
-                      <span className="text-[9px] md:text-[10px] font-mono text-warm-white/40">{s.duration} min</span>
+                    <td className="px-6 py-5 whitespace-nowrap">
+                      <span className="text-[10px] font-mono text-warm-white/40">{s.duration} min</span>
                     </td>
-                    <td className="px-5 py-4 md:px-6 md:py-5 text-right pr-5 md:pr-8 whitespace-nowrap">
-                      {/* Actions visible on mobile by default (md:opacity-0 group-hover:opacity-100 for desktop) */}
-                      <div className="flex justify-end gap-1 md:gap-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
+                    <td className="px-6 py-5 text-right pr-8 whitespace-nowrap">
+                      <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                         <button
                           onClick={() => handleEdit(s)}
-                          className="p-2 md:p-2 rounded-lg text-warm-white/40 hover:text-gold hover:bg-gold/10 active:bg-gold/20 transition-all"
+                          className="p-2 rounded-lg text-warm-white/40 hover:text-gold hover:bg-gold/10 transition-all"
                           aria-label="Edit"
                         >
                           <Pencil size={15} />
                         </button>
                         <button
                           onClick={() => handleDelete(s.id, s.name)}
-                          className="p-2 md:p-2 rounded-lg text-warm-white/40 hover:text-red-400 hover:bg-red-500/10 active:bg-red-500/20 transition-all"
+                          className="p-2 rounded-lg text-warm-white/40 hover:text-red-400 hover:bg-red-500/10 transition-all"
                           aria-label="Delete"
                         >
                           <Trash2 size={15} />
@@ -220,7 +277,6 @@ export default function ServicesManager({ initialServices }: { initialServices: 
               )}
             </tbody>
           </table>
-          </div>
         </div>
       </div>
 

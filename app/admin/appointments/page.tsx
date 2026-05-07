@@ -61,28 +61,40 @@ export default function AppointmentsPage() {
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="glass rounded-3xl border border-white/5 overflow-hidden"
+          className="glass rounded-2xl md:rounded-3xl border border-white/5 overflow-hidden w-full"
         >
-           <table className="w-full text-left">
-              <thead className="bg-white/[0.02] text-[10px] font-accent uppercase text-warm-white/40 tracking-[0.2em]">
-                 <tr>
-                    <th className="px-8 py-4">Status</th>
-                    <th className="px-8 py-4">Time & Date</th>
-                    <th className="px-8 py-4">Client</th>
-                    <th className="px-8 py-4">Service</th>
-                    <th className="px-8 py-4">Barber</th>
-                    <th className="px-8 py-4">Price</th>
-                    <th className="px-8 py-4 text-right">Actions</th>
-                 </tr>
-              </thead>
-              <tbody className="divide-y divide-white/5">
-                 <AppointmentListItem status="confirmed" time="10:00 AM" date="Today" name="Ayush Verma" service="Skin Fade" barber="Jeet" price="$30" />
-                 <AppointmentListItem status="pending" time="11:30 AM" date="Today" name="Robert G." service="Full Groom" barber="Any" price="$65" />
-                 <AppointmentListItem status="completed" time="09:00 AM" date="Today" name="John Doe" service="Beard Trim" barber="Jeet" price="$25" />
-                 <AppointmentListItem status="cancelled" time="02:00 PM" date="Apr 26" name="Shelley B." service="Kids Cut" barber="Jeet" price="$20" />
-                 <AppointmentListItem status="confirmed" time="04:30 PM" date="Apr 26" name="Kamaldeep S." service="Regular Cut" barber="Jeet" price="$25" />
-              </tbody>
-           </table>
+           {/* Mobile Card Layout */}
+           <div className="md:hidden divide-y divide-white/5">
+              <AppointmentMobileCard status="confirmed" time="10:00 AM" date="Today" name="Ayush Verma" service="Skin Fade" barber="Jeet" price="$30" />
+              <AppointmentMobileCard status="pending" time="11:30 AM" date="Today" name="Robert G." service="Full Groom" barber="Any" price="$65" />
+              <AppointmentMobileCard status="completed" time="09:00 AM" date="Today" name="John Doe" service="Beard Trim" barber="Jeet" price="$25" />
+              <AppointmentMobileCard status="cancelled" time="02:00 PM" date="Apr 26" name="Shelley B." service="Kids Cut" barber="Jeet" price="$20" />
+              <AppointmentMobileCard status="confirmed" time="04:30 PM" date="Apr 26" name="Kamaldeep S." service="Regular Cut" barber="Jeet" price="$25" />
+           </div>
+
+           {/* Desktop Table Layout */}
+           <div className="hidden md:block w-full">
+             <table className="w-full text-left">
+                <thead className="bg-white/[0.02] text-[10px] font-accent uppercase text-warm-white/40 tracking-[0.2em]">
+                   <tr>
+                      <th className="px-8 py-4 whitespace-nowrap">Status</th>
+                      <th className="px-8 py-4 whitespace-nowrap">Time & Date</th>
+                      <th className="px-8 py-4 whitespace-nowrap">Client</th>
+                      <th className="px-8 py-4 whitespace-nowrap">Service</th>
+                      <th className="px-8 py-4 whitespace-nowrap">Barber</th>
+                      <th className="px-8 py-4 whitespace-nowrap">Price</th>
+                      <th className="px-8 py-4 text-right whitespace-nowrap">Actions</th>
+                   </tr>
+                </thead>
+                <tbody className="divide-y divide-white/5">
+                   <AppointmentListItem status="confirmed" time="10:00 AM" date="Today" name="Ayush Verma" service="Skin Fade" barber="Jeet" price="$30" />
+                   <AppointmentListItem status="pending" time="11:30 AM" date="Today" name="Robert G." service="Full Groom" barber="Any" price="$65" />
+                   <AppointmentListItem status="completed" time="09:00 AM" date="Today" name="John Doe" service="Beard Trim" barber="Jeet" price="$25" />
+                   <AppointmentListItem status="cancelled" time="02:00 PM" date="Apr 26" name="Shelley B." service="Kids Cut" barber="Jeet" price="$20" />
+                   <AppointmentListItem status="confirmed" time="04:30 PM" date="Apr 26" name="Kamaldeep S." service="Regular Cut" barber="Jeet" price="$25" />
+                </tbody>
+             </table>
+           </div>
         </motion.div>
       ) : (
         <CalendarView />
@@ -102,41 +114,89 @@ function AppointmentListItem({ status, time, date, name, service, barber, price 
 
   return (
     <tr className="hover:bg-white/[0.01] transition-colors group">
-       <td className="px-8 py-6">
+       <td className="px-6 lg:px-8 py-5 lg:py-6 whitespace-nowrap">
           <span className={`px-3 py-1 rounded-full text-[8px] font-accent uppercase border tracking-[0.2em] ${statusColors[status]}`}>
              {status}
           </span>
        </td>
-       <td className="px-8 py-6">
+       <td className="px-6 lg:px-8 py-5 lg:py-6 whitespace-nowrap">
           <div className="flex items-center gap-3">
              <Clock size={14} className="text-gold" />
              <div className="text-xs font-accent uppercase tracking-widest text-warm-white/80">{time}</div>
              <div className="text-[10px] font-mono text-warm-white/20 uppercase">{date}</div>
           </div>
        </td>
-       <td className="px-8 py-6">
+       <td className="px-6 lg:px-8 py-5 lg:py-6 whitespace-nowrap">
           <div className="flex items-center gap-3">
-             <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[10px] text-gold uppercase font-accent">
+             <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[10px] text-gold uppercase font-accent flex-shrink-0">
                 {name[0]}
              </div>
              <div className="text-sm font-accent text-warm-white uppercase tracking-wider">{name}</div>
           </div>
        </td>
-       <td className="px-8 py-6">
+       <td className="px-6 lg:px-8 py-5 lg:py-6 whitespace-nowrap">
           <div className="text-xs text-warm-white/40">{service}</div>
        </td>
-       <td className="px-8 py-6">
+       <td className="px-6 lg:px-8 py-5 lg:py-6 whitespace-nowrap">
           <div className="text-xs text-warm-white/40">{barber}</div>
        </td>
-       <td className="px-8 py-6">
+       <td className="px-6 lg:px-8 py-5 lg:py-6 whitespace-nowrap">
           <div className="text-xs font-accent text-gold">{price}</div>
        </td>
-       <td className="px-8 py-6 text-right">
-          <button className="text-warm-white/20 hover:text-gold transition-colors">
+       <td className="px-6 lg:px-8 py-5 lg:py-6 text-right whitespace-nowrap">
+          <button className="p-2 text-warm-white/20 hover:text-gold hover:bg-gold/10 rounded-lg transition-all" aria-label="More options">
              <MoreVertical size={20} />
           </button>
        </td>
     </tr>
+  );
+}
+
+function AppointmentMobileCard({ status, time, date, name, service, barber, price }: any) {
+  const statusColors: any = {
+    confirmed: "bg-green-500/10 text-green-500 border-green-500/20",
+    pending: "bg-gold/10 text-gold border-gold/20",
+    completed: "bg-blue-500/10 text-blue-500 border-blue-500/20",
+    cancelled: "bg-red-500/10 text-red-500 border-red-500/20"
+  };
+
+  return (
+    <div className="p-5 flex flex-col gap-4 hover:bg-white/[0.01] transition-colors relative group">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+           <div className="w-10 h-10 rounded-full bg-gold/10 border border-gold/20 flex items-center justify-center text-sm text-gold uppercase font-accent flex-shrink-0">
+              {name[0]}
+           </div>
+           <div>
+             <div className="text-base font-accent text-warm-white uppercase tracking-wider leading-tight">{name}</div>
+             <div className="flex items-center gap-1.5 text-[10px] font-mono text-warm-white/40 uppercase mt-0.5">
+                <Clock size={10} className="text-gold/50" />
+                {date} · {time}
+             </div>
+           </div>
+        </div>
+        <button className="p-2 -mr-2 text-warm-white/20 hover:text-gold transition-colors" aria-label="More options">
+           <MoreVertical size={20} />
+        </button>
+      </div>
+      
+      <div className="grid grid-cols-2 gap-3 pl-13 bg-white/[0.02] p-4 rounded-2xl border border-white/5">
+        <div>
+           <p className="text-[9px] font-accent text-warm-white/40 uppercase tracking-widest mb-1">Service</p>
+           <p className="text-xs text-warm-white/80">{service}</p>
+        </div>
+        <div>
+           <p className="text-[9px] font-accent text-warm-white/40 uppercase tracking-widest mb-1">Barber</p>
+           <p className="text-xs text-warm-white/80">{barber}</p>
+        </div>
+        <div className="col-span-2 flex items-center justify-between pt-2 mt-1 border-t border-white/5">
+           <span className={`px-2.5 py-1 rounded-full text-[8px] font-accent uppercase border tracking-[0.2em] ${statusColors[status]}`}>
+              {status}
+           </span>
+           <span className="text-sm font-accent text-gold">{price}</span>
+        </div>
+      </div>
+    </div>
   );
 }
 
