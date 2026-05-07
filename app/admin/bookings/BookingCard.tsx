@@ -77,26 +77,32 @@ export default function BookingCard({ booking: initialBooking }: { booking: any 
           {/* Status indicator */}
           <div className={`w-2 h-2 rounded-full shrink-0 ${STATUS_COLORS[booking.status]?.split(" ")[1]?.replace("text-", "bg-") || "bg-gold"}`} />
 
-          {/* Customer Info */}
-          <div className="flex-1 min-w-0">
-            <p className="font-accent text-warm-white uppercase tracking-wide text-sm truncate">
-              {booking.fullName}
-            </p>
-            <a
-              href={`tel:${booking.phoneNumber}`}
-              onClick={(e) => e.stopPropagation()}
-              className="text-xs font-mono text-gold hover:underline"
-            >
-              {booking.phoneNumber}
-            </a>
-          </div>
-
-          {/* Service */}
-          <div className="hidden sm:block flex-1 min-w-0">
-            <p className="text-xs text-warm-white/70 truncate">{booking.serviceSelected}</p>
-            {booking.barberSelected && (
-              <p className="text-[10px] text-warm-white/30 font-mono">Barber: {booking.barberSelected}</p>
-            )}
+          {/* Customer Info & Service combined for mobile */}
+          <div className="flex-1 min-w-0 flex flex-col justify-center">
+            <div className="flex items-center justify-between gap-2">
+              <p className="font-accent text-warm-white uppercase tracking-wide text-sm truncate">
+                {booking.fullName}
+              </p>
+              {/* Date/Time visible on mobile to the right, or hidden if screen is too small, but better to put it below */}
+            </div>
+            
+            <div className="flex flex-col sm:flex-row sm:items-center gap-0.5 sm:gap-2 mt-0.5">
+              <a
+                href={`tel:${booking.phoneNumber}`}
+                onClick={(e) => e.stopPropagation()}
+                className="text-[10px] md:text-xs font-mono text-gold hover:underline truncate"
+              >
+                {booking.phoneNumber}
+              </a>
+              <span className="hidden sm:inline text-warm-white/20">•</span>
+              <p className="text-[10px] md:text-xs text-warm-white/70 truncate">{booking.serviceSelected} {booking.barberSelected && <span className="opacity-50">with {booking.barberSelected}</span>}</p>
+            </div>
+            
+            {/* Mobile Date/Time */}
+            <div className="md:hidden mt-1 flex items-center gap-1.5 text-[9px] font-mono text-warm-white/50">
+              <Clock size={10} className="text-gold" />
+              {dateLabel} · {booking.timeSelected}
+            </div>
           </div>
 
           {/* Date / Time */}
@@ -125,9 +131,9 @@ export default function BookingCard({ booking: initialBooking }: { booking: any 
 
         {/* Expanded Content */}
         {isExpanded && (
-          <div className="border-t border-white/5 p-5 space-y-5">
+          <div className="border-t border-white/5 p-4 md:p-5 space-y-5 bg-white/[0.01]">
             {/* Quick Action Buttons */}
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 md:gap-3">
               {booking.status === "PENDING" && (
                 <>
                   <ActionBtn
@@ -198,61 +204,65 @@ export default function BookingCard({ booking: initialBooking }: { booking: any 
 
             {/* Modify Time Panel */}
             {editingTime && (
-              <div className="bg-black/30 rounded-xl p-4 space-y-3 border border-white/5">
-                <p className="text-xs font-accent text-warm-white/40 uppercase tracking-widest">Modify Appointment Time</p>
-                <div className="flex gap-3 flex-wrap">
-                  <input
-                    type="date"
-                    value={newDate}
-                    min={new Date().toISOString().split("T")[0]}
-                    onChange={(e) => setNewDate(e.target.value)}
-                    className="bg-black/40 border border-white/10 rounded-lg px-3 py-2 text-sm text-warm-white [color-scheme:dark] outline-none focus:border-gold"
-                  />
+              <div className="bg-black/40 rounded-2xl p-4 md:p-5 space-y-4 border border-white/5">
+                <p className="text-[10px] md:text-xs font-accent text-warm-white/40 uppercase tracking-widest">Modify Appointment Time</p>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <div className="flex gap-3 flex-1">
+                    <input
+                      type="date"
+                      value={newDate}
+                      min={new Date().toISOString().split("T")[0]}
+                      onChange={(e) => setNewDate(e.target.value)}
+                      className="flex-1 w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 sm:py-2 text-sm text-warm-white [color-scheme:dark] outline-none focus:border-gold"
+                    />
                   <input
                     type="time"
                     value={newTime}
                     onChange={(e) => setNewTime(e.target.value)}
-                    className="bg-black/40 border border-white/10 rounded-lg px-3 py-2 text-sm text-warm-white [color-scheme:dark] outline-none focus:border-gold"
+                    className="flex-1 w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 sm:py-2 text-sm text-warm-white [color-scheme:dark] outline-none focus:border-gold"
                   />
-                  <button
-                    onClick={handleSaveTime}
-                    disabled={isPending}
-                    className="px-4 py-2 bg-gold text-black font-accent text-xs uppercase rounded-lg hover:scale-105 transition-transform"
-                  >
-                    Save
-                  </button>
-                  <button
-                    onClick={() => setEditingTime(false)}
-                    className="px-4 py-2 border border-white/10 text-warm-white/40 font-accent text-xs uppercase rounded-lg hover:text-warm-white transition-colors"
-                  >
-                    Cancel
-                  </button>
+                  </div>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={handleSaveTime}
+                      disabled={isPending}
+                      className="flex-1 px-4 py-3 sm:py-2 bg-gold text-black font-accent text-xs uppercase rounded-xl hover:scale-[1.02] transition-transform"
+                    >
+                      Save
+                    </button>
+                    <button
+                      onClick={() => setEditingTime(false)}
+                      className="flex-1 px-4 py-3 sm:py-2 border border-white/10 text-warm-white/40 font-accent text-xs uppercase rounded-xl hover:text-warm-white hover:bg-white/5 transition-colors"
+                    >
+                      Cancel
+                    </button>
+                  </div>
                 </div>
               </div>
             )}
 
             {/* Admin Notes Panel */}
             {editingNotes && (
-              <div className="bg-black/30 rounded-xl p-4 space-y-3 border border-white/5">
-                <p className="text-xs font-accent text-warm-white/40 uppercase tracking-widest">Admin Notes</p>
+              <div className="bg-black/40 rounded-2xl p-4 md:p-5 space-y-4 border border-white/5">
+                <p className="text-[10px] md:text-xs font-accent text-warm-white/40 uppercase tracking-widest">Admin Notes</p>
                 <textarea
                   rows={3}
                   value={noteText}
                   onChange={(e) => setNoteText(e.target.value)}
                   placeholder="Add internal notes about this booking..."
-                  className="w-full bg-black/40 border border-white/10 rounded-lg px-3 py-2 text-sm text-warm-white outline-none focus:border-gold resize-none"
+                  className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm text-warm-white outline-none focus:border-gold resize-none"
                 />
                 <div className="flex gap-2">
                   <button
                     onClick={handleSaveNote}
                     disabled={isPending}
-                    className="px-4 py-2 bg-gold text-black font-accent text-xs uppercase rounded-lg hover:scale-105 transition-transform"
+                    className="flex-1 sm:flex-none px-6 py-3 sm:py-2 bg-gold text-black font-accent text-xs uppercase rounded-xl hover:scale-[1.02] transition-transform"
                   >
                     Save Note
                   </button>
                   <button
                     onClick={() => setEditingNotes(false)}
-                    className="px-4 py-2 border border-white/10 text-warm-white/40 font-accent text-xs uppercase rounded-lg hover:text-warm-white transition-colors"
+                    className="flex-1 sm:flex-none px-6 py-3 sm:py-2 border border-white/10 text-warm-white/40 font-accent text-xs uppercase rounded-xl hover:text-warm-white hover:bg-white/5 transition-colors"
                   >
                     Cancel
                   </button>
@@ -316,8 +326,8 @@ function ActionBtn({ icon, label, color, onClick }: {
 }) {
   return (
     <button
-      onClick={onClick}
-      className={`flex items-center gap-1.5 px-3 py-2 rounded-lg border text-xs font-accent uppercase tracking-wide transition-all ${color}`}
+      onClick={(e) => { e.stopPropagation(); onClick(); }}
+      className={`flex flex-1 sm:flex-none items-center justify-center gap-2 px-4 py-3 md:py-2.5 min-h-[44px] md:min-h-0 rounded-xl border text-[10px] md:text-xs font-accent uppercase tracking-wide transition-all ${color}`}
     >
       {icon}
       {label}

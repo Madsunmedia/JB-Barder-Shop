@@ -72,30 +72,30 @@ export default function BookingsClient({ initialBookings }: { initialBookings: a
           type="date"
           value={dateFilter}
           onChange={(e) => setDateFilter(e.target.value)}
-          className="bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-warm-white [color-scheme:dark] outline-none focus:border-gold transition-colors"
+          className="w-full sm:w-auto bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-warm-white [color-scheme:dark] outline-none focus:border-gold transition-colors"
         />
 
         {/* Clear */}
         {(dateFilter || serviceFilter) && (
           <button
             onClick={() => { setDateFilter(""); setServiceFilter(""); }}
-            className="text-xs font-accent text-warm-white/30 hover:text-gold uppercase tracking-widest transition-colors whitespace-nowrap"
+            className="w-full sm:w-auto text-center text-xs font-accent text-warm-white/40 hover:text-gold uppercase tracking-widest transition-colors py-2"
           >
-            Clear
+            Clear Filters
           </button>
         )}
       </div>
 
       {/* Status Tabs */}
-      <div className="flex gap-2 flex-wrap">
+      <div className="flex gap-2 overflow-x-auto scrollbar-none pb-2 -mx-2 px-2 custom-scrollbar-mobile max-w-full">
         {ALL_STATUSES.map((s) => (
           <button
             key={s}
             onClick={() => setStatusFilter(s)}
-            className={`px-4 py-2 rounded-full text-xs font-accent uppercase tracking-widest border transition-all ${
+            className={`flex-shrink-0 px-4 py-2 md:py-1.5 rounded-full text-xs md:text-[10px] font-accent uppercase tracking-widest border transition-all ${
               statusFilter === s
                 ? "bg-gold text-black border-gold"
-                : "border-white/10 text-warm-white/40 hover:border-white/20 hover:text-warm-white/70"
+                : "border-white/10 text-warm-white/40 hover:border-white/20 hover:text-warm-white/70 active:bg-white/5"
             }`}
           >
             {STATUS_LABEL[s]}
