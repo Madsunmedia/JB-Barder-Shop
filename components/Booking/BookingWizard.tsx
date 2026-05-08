@@ -14,8 +14,8 @@ const STEPS = ["Service", "Barber", "Schedule", "Details"];
 
 export default function BookingWizard() {
   const [currentStep, setCurrentStep] = useState(0);
-  const [bookingData, setBookingData] = useState({
-    service: null,
+  const [bookingData, setBookingData] = useState<any>({
+    services: [] as any[],
     barber: null,
     date: null,
     time: null,
@@ -34,7 +34,7 @@ export default function BookingWizard() {
       if (serviceId) {
         const found = SERVICES_DATA.find((item: any) => item.id === serviceId);
         if (found) {
-          setBookingData((prev: any) => ({ ...prev, service: found }));
+          setBookingData((prev: any) => ({ ...prev, services: [found] }));
           setCurrentStep(1);
         }
       }
@@ -43,6 +43,18 @@ export default function BookingWizard() {
 
   const nextStep = () => setCurrentStep((prev) => Math.min(prev + 1, STEPS.length - 1));
   const prevStep = () => setCurrentStep((prev) => Math.max(prev - 1, 0));
+
+  const toggleService = (service: any) => {
+    setBookingData((prev: any) => {
+      const exists = prev.services.some((s: any) => s.id === service.id);
+      return {
+        ...prev,
+        services: exists
+          ? prev.services.filter((s: any) => s.id !== service.id)
+          : [...prev.services, service],
+      };
+    });
+  };
 
   const variants = {
     enter: (direction: number) => ({
@@ -108,10 +120,10 @@ export default function BookingWizard() {
               className="w-full h-full transform-style-3d"
             >
               {currentStep === 0 && (
-                <Step1_Services 
-                  selected={bookingData.service} 
-                  onSelect={(s: any) => setBookingData({ ...bookingData, service: s })} 
-                  onNext={nextStep} 
+                <Step1_Services
+                  selected={bookingData.services}
+                  onSelect={toggleService}
+                  onNext={nextStep}
                 />
               )}
               {currentStep === 1 && (

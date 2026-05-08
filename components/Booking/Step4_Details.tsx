@@ -19,10 +19,13 @@ export default function Step4_Details({ data, onChange, onConfirm, onBack }: any
     setErrorMsg("");
     setIsSubmitting(true);
     try {
+      const serviceNames =
+        (data.services as any[])?.map((s: any) => s.name).join(", ") ||
+        "Unknown Service";
       const res = await createBooking({
         fullName: data.details.name,
         phoneNumber: data.details.phone,
-        serviceSelected: data.service?.name || "Unknown Service",
+        serviceSelected: serviceNames,
         barberSelected: data.barber?.name || undefined,
         dateSelected: data.date,
         timeSelected: data.time,
