@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Clock, ArrowRight, ShoppingCart, Check } from "lucide-react";
 import { useState } from "react";
+import Link from "next/link";
 import { useCart } from "@/lib/CartContext";
 
 interface Service {
@@ -14,19 +15,13 @@ interface Service {
   image?: string;
 }
 
-export default function ServiceCard({
-  service,
-  onBook,
-}: {
-  service: Service;
-  onBook: (s: Service) => void;
-}) {
+export default function ServiceCard({ service }: { service: Service }) {
   const { addToCart, removeFromCart, isInCart, openCart } = useCart();
   const inCart = isInCart(service.id);
   const [flash, setFlash] = useState(false);
 
   const handleCartToggle = (e: React.MouseEvent) => {
-    e.stopPropagation();
+    e.preventDefault();
     if (inCart) {
       removeFromCart(service.id);
     } else {
@@ -115,15 +110,15 @@ export default function ServiceCard({
                 <span className="hidden sm:inline">{inCart ? "Added" : "Cart"}</span>
               </motion.button>
 
-              {/* Book Now */}
-              <button
-                onClick={() => onBook(service)}
+              {/* Book Now → 4-step wizard */}
+              <Link
+                href={`/book?serviceId=${service.id}`}
                 className="flex items-center gap-1.5 min-h-[38px] px-3 py-1.5 bg-gold/10 backdrop-blur-md border border-gold/30 text-gold text-[9px] font-accent uppercase tracking-widest rounded-full hover:bg-gold hover:text-black active:scale-95 transition-all duration-300 shadow-[0_0_15px_rgba(201,168,76,0.15)]"
                 aria-label={`Book ${service.name}`}
               >
                 Book
                 <ArrowRight size={10} aria-hidden="true" />
-              </button>
+              </Link>
             </div>
           </div>
         </div>

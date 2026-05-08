@@ -1,13 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
 import { SERVICES_DATA } from "@/lib/services-data";
-import BookingDrawer from "../Booking/BookingDrawer";
 import { Clock, ArrowRight, ShoppingCart, Check } from "lucide-react";
+import Link from "next/link";
 import { useCart } from "@/lib/CartContext";
 
-// Group services by category for the full menu
 const CATEGORY_GROUPS = [
   {
     id: "haircut",
@@ -37,14 +35,7 @@ const CATEGORY_GROUPS = [
 ];
 
 export default function FullServicesMenu() {
-  const [selectedService, setSelectedService] = useState<any>(null);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const { addToCart, removeFromCart, isInCart, openCart } = useCart();
-
-  const handleBook = (service: any) => {
-    setSelectedService(service);
-    setIsDrawerOpen(true);
-  };
 
   const handleCartToggle = (service: any) => {
     if (isInCart(service.id)) {
@@ -57,7 +48,7 @@ export default function FullServicesMenu() {
 
   return (
     <div className="w-full max-w-4xl mx-auto space-y-24">
-      {CATEGORY_GROUPS.map((group, groupIndex) => {
+      {CATEGORY_GROUPS.map((group) => {
         const groupServices = SERVICES_DATA.filter((s) => s.category === group.id);
         if (groupServices.length === 0) return null;
 
@@ -82,9 +73,9 @@ export default function FullServicesMenu() {
               </div>
             </div>
 
-            {/* Service Items List */}
+            {/* Service Items */}
             <div className="space-y-4">
-              {groupServices.map((service, index) => (
+              {groupServices.map((service) => (
                 <div
                   key={service.id}
                   className="group relative flex flex-col sm:flex-row sm:items-center justify-between gap-6 p-5 sm:p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-gold/30 hover:bg-white/[0.04] transition-all duration-300"
@@ -106,7 +97,7 @@ export default function FullServicesMenu() {
                   </div>
 
                   {/* Right: Price & CTAs */}
-                  <div className="flex sm:flex-col items-center justify-between sm:items-end gap-3 sm:gap-3 shrink-0 pt-4 sm:pt-0 border-t sm:border-t-0 border-white/5">
+                  <div className="flex sm:flex-col items-center justify-between sm:items-end gap-3 shrink-0 pt-4 sm:pt-0 border-t sm:border-t-0 border-white/5">
                     <div className="flex items-baseline gap-1">
                       <span className="text-gold text-sm font-accent">$</span>
                       <span className="text-warm-white text-3xl font-accent">
@@ -130,13 +121,15 @@ export default function FullServicesMenu() {
                           <><ShoppingCart size={13} /> Cart</>
                         )}
                       </button>
-                      {/* Book Now */}
-                      <button
-                        onClick={() => handleBook(service)}
+
+                      {/* Book Now → 4-step wizard */}
+                      <Link
+                        href={`/book?serviceId=${service.id}`}
                         className="flex items-center gap-1.5 min-h-[40px] px-4 py-2 bg-white/5 border border-white/10 text-warm-white/70 text-xs font-accent uppercase tracking-widest rounded-full hover:border-gold/40 hover:text-gold active:scale-95 transition-all duration-300"
+                        aria-label={`Book ${service.name}`}
                       >
                         Book <ArrowRight size={13} aria-hidden="true" />
-                      </button>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -145,12 +138,6 @@ export default function FullServicesMenu() {
           </motion.div>
         );
       })}
-
-      <BookingDrawer
-        isOpen={isDrawerOpen}
-        onClose={() => setIsDrawerOpen(false)}
-        service={selectedService}
-      />
     </div>
   );
 }

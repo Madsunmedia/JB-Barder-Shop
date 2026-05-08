@@ -5,24 +5,16 @@ import { motion, AnimatePresence } from "framer-motion";
 import { SERVICES_DATA, CATEGORIES } from "@/lib/services-data";
 import FilterTabs from "./FilterTabs";
 import ServiceCard from "./ServiceCard";
-import BookingDrawer from "../Booking/BookingDrawer";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 export default function ServicesSection() {
   const [activeCategory, setActiveCategory] = useState("all");
-  const [selectedService, setSelectedService] = useState<any>(null);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const filteredServices = useMemo(() => {
     if (activeCategory === "all") return SERVICES_DATA;
     return SERVICES_DATA.filter((s) => s.category === activeCategory);
   }, [activeCategory]);
-
-  const handleBook = (service: any) => {
-    setSelectedService(service);
-    setIsDrawerOpen(true);
-  };
 
   return (
     <section id="services" className="relative py-20 md:py-32 bg-black overflow-hidden">
@@ -110,7 +102,7 @@ export default function ServicesSection() {
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.3 }}
               >
-                <ServiceCard service={service} onBook={handleBook} />
+                <ServiceCard service={service} />
               </motion.div>
             ))}
           </AnimatePresence>
@@ -127,11 +119,6 @@ export default function ServicesSection() {
         </motion.p>
       </div>
 
-      <BookingDrawer
-        isOpen={isDrawerOpen}
-        onClose={() => setIsDrawerOpen(false)}
-        service={selectedService}
-      />
     </section>
   );
 }
