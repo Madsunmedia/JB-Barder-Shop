@@ -40,19 +40,19 @@ export default function AppointmentsPage() {
           </button>
         </div>
 
-        <div className="flex items-center gap-4">
-           <div className="relative group">
+        <div className="flex items-center flex-wrap gap-3">
+           <div className="relative group flex-1 min-w-0">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-warm-white/20 group-hover:text-gold transition-colors" size={16} />
-              <input 
-                placeholder="SEARCH CLIENTS..." 
-                className="bg-black/40 border border-white/10 rounded-xl py-3 pl-12 pr-6 text-[10px] font-accent uppercase tracking-widest outline-none focus:border-gold transition-all w-64"
+              <input
+                placeholder="SEARCH CLIENTS..."
+                className="bg-black/40 border border-white/10 rounded-xl py-3 pl-12 pr-6 text-[10px] font-accent uppercase tracking-widest outline-none focus:border-gold transition-all w-full sm:w-64"
               />
            </div>
-           <button className="glass p-3 rounded-xl border border-white/5 text-gold hover:scale-110 transition-transform">
+           <button className="glass p-3 rounded-xl border border-white/5 text-gold hover:scale-110 transition-transform flex-shrink-0">
               <Filter size={20} />
            </button>
-           <button className="bg-gold text-black px-6 py-3 rounded-xl font-accent text-[10px] uppercase tracking-widest hover:scale-[1.02] transition-all flex items-center gap-2">
-              <Download size={16} /> Export CSV
+           <button className="bg-gold text-black px-4 sm:px-6 py-3 rounded-xl font-accent text-[10px] uppercase tracking-widest hover:scale-[1.02] transition-all flex items-center gap-2 flex-shrink-0">
+              <Download size={16} /> <span className="hidden sm:inline">Export CSV</span><span className="sm:hidden">Export</span>
            </button>
         </div>
       </div>
@@ -180,7 +180,7 @@ function AppointmentMobileCard({ status, time, date, name, service, barber, pric
         </button>
       </div>
       
-      <div className="grid grid-cols-2 gap-3 pl-13 bg-white/[0.02] p-4 rounded-2xl border border-white/5">
+      <div className="grid grid-cols-2 gap-3 bg-white/[0.02] p-4 rounded-2xl border border-white/5">
         <div>
            <p className="text-[9px] font-accent text-warm-white/40 uppercase tracking-widest mb-1">Service</p>
            <p className="text-xs text-warm-white/80">{service}</p>
@@ -205,23 +205,24 @@ function CalendarView() {
   const days = Array.from({ length: 7 }, (_, i) => addDays(currentWeek, i));
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, scale: 0.98 }}
       animate={{ opacity: 1, scale: 1 }}
-      className="glass rounded-3xl border border-white/5 flex flex-col h-[700px]"
+      className="glass rounded-2xl md:rounded-3xl border border-white/5 flex flex-col"
     >
-       <div className="p-8 border-b border-white/5 flex justify-between items-center bg-white/[0.01]">
-          <div className="flex items-center gap-6">
-             <h3 className="text-2xl font-accent text-gold uppercase tracking-widest">
+       {/* Calendar header */}
+       <div className="p-4 md:p-8 border-b border-white/5 flex flex-wrap gap-4 justify-between items-center bg-white/[0.01]">
+          <div className="flex items-center gap-3 md:gap-6 flex-wrap">
+             <h3 className="text-lg md:text-2xl font-accent text-gold uppercase tracking-widest">
                {format(currentWeek, "MMMM yyyy")}
              </h3>
-             <div className="flex items-center gap-2 bg-black/40 rounded-xl border border-white/10 p-1">
-                <button onClick={() => setCurrentWeek(subWeeks(currentWeek, 1))} className="p-2 text-warm-white/40 hover:text-gold"><ChevronLeft size={18} /></button>
-                <button onClick={() => setCurrentWeek(new Date())} className="px-4 py-1 text-[8px] font-accent uppercase text-gold hover:underline tracking-widest">Today</button>
-                <button onClick={() => setCurrentWeek(addWeeks(currentWeek, 1))} className="p-2 text-warm-white/40 hover:text-gold"><ChevronRight size={18} /></button>
+             <div className="flex items-center gap-1 md:gap-2 bg-black/40 rounded-xl border border-white/10 p-1">
+                <button onClick={() => setCurrentWeek(subWeeks(currentWeek, 1))} className="p-2 text-warm-white/40 hover:text-gold"><ChevronLeft size={16} /></button>
+                <button onClick={() => setCurrentWeek(new Date())} className="px-3 py-1 text-[8px] font-accent uppercase text-gold hover:underline tracking-widest">Today</button>
+                <button onClick={() => setCurrentWeek(addWeeks(currentWeek, 1))} className="p-2 text-warm-white/40 hover:text-gold"><ChevronRight size={16} /></button>
              </div>
           </div>
-          <div className="flex gap-4">
+          <div className="hidden sm:flex gap-3 md:gap-4">
              {['Confirmed', 'Pending', 'Cancelled'].map(s => (
                <div key={s} className="flex items-center gap-2 text-[8px] font-accent uppercase tracking-widest text-warm-white/40">
                   <div className={`w-2 h-2 rounded-full ${s === 'Confirmed' ? 'bg-green-500' : s === 'Pending' ? 'bg-gold' : 'bg-red-500'}`} />
@@ -231,29 +232,31 @@ function CalendarView() {
           </div>
        </div>
 
-       <div className="flex-1 flex divide-x divide-white/5 overflow-hidden">
-          {days.map(day => (
-            <div key={day.toString()} className="flex-1 flex flex-col">
-               <div className="p-4 text-center border-b border-white/5 bg-white/[0.01]">
-                  <p className="text-[10px] font-accent text-gold uppercase tracking-widest mb-1">{format(day, "EEE")}</p>
-                  <p className={`text-xl font-accent ${format(day, 'yyyy-MM-dd') === format(new Date(), 'yyyy-MM-dd') ? 'text-gold' : 'text-warm-white/60'}`}>
-                    {format(day, "d")}
-                  </p>
-               </div>
-               <div className="flex-1 p-3 space-y-3 overflow-y-auto custom-scrollbar">
-                  {/* Mock Appointments for the day */}
-                  {day.getDay() === 1 && (
-                    <>
-                      <CalendarEvent time="09:00" title="Ayush Verma" service="Skin Fade" status="confirmed" />
-                      <CalendarEvent time="11:30" title="Robert G." service="Full Groom" status="pending" />
-                    </>
-                  )}
-                  {day.getDay() === 3 && (
-                    <CalendarEvent time="14:00" title="Shelley B." service="Kids Cut" status="cancelled" />
-                  )}
-               </div>
-            </div>
-          ))}
+       {/* Scrollable calendar body */}
+       <div className="overflow-x-auto">
+         <div className="flex divide-x divide-white/5 h-[600px] min-w-[640px]">
+           {days.map(day => (
+             <div key={day.toString()} className="flex-1 flex flex-col min-w-[90px]">
+                <div className="p-3 md:p-4 text-center border-b border-white/5 bg-white/[0.01]">
+                   <p className="text-[9px] md:text-[10px] font-accent text-gold uppercase tracking-widest mb-1">{format(day, "EEE")}</p>
+                   <p className={`text-lg md:text-xl font-accent ${format(day, 'yyyy-MM-dd') === format(new Date(), 'yyyy-MM-dd') ? 'text-gold' : 'text-warm-white/60'}`}>
+                     {format(day, "d")}
+                   </p>
+                </div>
+                <div className="flex-1 p-2 md:p-3 space-y-2 md:space-y-3 overflow-y-auto custom-scrollbar">
+                   {day.getDay() === 1 && (
+                     <>
+                       <CalendarEvent time="09:00" title="Ayush Verma" service="Skin Fade" status="confirmed" />
+                       <CalendarEvent time="11:30" title="Robert G." service="Full Groom" status="pending" />
+                     </>
+                   )}
+                   {day.getDay() === 3 && (
+                     <CalendarEvent time="14:00" title="Shelley B." service="Kids Cut" status="cancelled" />
+                   )}
+                </div>
+             </div>
+           ))}
+         </div>
        </div>
     </motion.div>
   );

@@ -15,7 +15,7 @@ export default function Step2_Barbers({ selected, onSelect, onNext, onBack }: an
   return (
     <div className="space-y-10">
       <div className="space-y-2">
-        <h2 className="text-4xl font-accent text-gold uppercase tracking-widest">Select Barber</h2>
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-accent text-gold uppercase tracking-widest">Select Barber</h2>
         <p className="text-warm-white/60">Choose your favorite stylist or go with the first available.</p>
       </div>
 

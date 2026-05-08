@@ -32,7 +32,7 @@ export default function BookingPage() {
                <CalendarCheck size={12} />
                Experience
              </span>
-             <h1 className="text-5xl md:text-7xl lg:text-8xl font-accent text-warm-white uppercase leading-[0.9] tracking-tight">
+             <h1 className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-accent text-warm-white uppercase leading-[0.9] tracking-tight">
                Reserve <br className="hidden md:block" />
                <span className="text-gold">Your Seat</span>
              </h1>

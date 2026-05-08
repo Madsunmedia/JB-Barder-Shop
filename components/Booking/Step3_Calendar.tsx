@@ -68,7 +68,7 @@ export default function Step3_Calendar({ data, onSelect, onNext, onBack }: any) 
   return (
     <div className="space-y-10">
       <div className="space-y-2">
-        <h2 className="text-4xl font-accent text-gold uppercase tracking-widest">Schedule</h2>
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-accent text-gold uppercase tracking-widest">Schedule</h2>
         <p className="text-warm-white/60">Find a time that works for your sharp new look.</p>
       </div>
 
@@ -117,7 +117,7 @@ export default function Step3_Calendar({ data, onSelect, onNext, onBack }: any) 
         </div>
 
         {/* Time Grid */}
-        <div className="space-y-6 h-[400px] flex flex-col">
+        <div className="space-y-6 min-h-[280px] md:h-[400px] flex flex-col">
           <h3 className="text-xl font-accent text-warm-white uppercase flex items-center gap-2">
             <Clock size={20} className="text-gold" />
             Available Slots

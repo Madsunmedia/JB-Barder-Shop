@@ -42,7 +42,7 @@ export default async function GalleryPage() {
 
       {/* Background Text Effect */}
       <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none select-none z-0">
-        <h1 className="text-[10rem] md:text-[20rem] font-accent text-warm-white opacity-[0.03] uppercase leading-none whitespace-nowrap">
+        <h1 className="text-[5rem] sm:text-[10rem] md:text-[20rem] font-accent text-warm-white opacity-[0.03] uppercase leading-none whitespace-nowrap">
           THE WORK THE WORK
         </h1>
       </div>
