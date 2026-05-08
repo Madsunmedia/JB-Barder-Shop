@@ -1,7 +1,12 @@
 import { getSettings } from "@/app/actions/settings";
 import SettingsClient from "./SettingsClient";
+import { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Settings | JB Barbershop Admin",
+};
 
 export default async function SettingsAdminPage() {
   const settings = await getSettings();

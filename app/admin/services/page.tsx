@@ -1,7 +1,12 @@
 import { getServices } from "@/app/actions/services";
 import ServicesManager from "./ServicesManager";
+import { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Services | JB Barbershop Admin",
+};
 
 export default async function ServicesAdminPage() {
   const services = await getServices();

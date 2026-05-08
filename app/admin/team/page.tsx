@@ -1,7 +1,12 @@
 import { getTeam } from "@/app/actions/team";
 import TeamManager from "./TeamManager";
+import { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Team | JB Barbershop Admin",
+};
 
 export default async function AdminTeamPage() {
   const team = await getTeam();
