@@ -1,10 +1,8 @@
-import dynamic from "next/dynamic";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Metadata } from "next";
 import { CalendarCheck } from "lucide-react";
-
-const BookingWizard = dynamic(() => import("@/components/Booking/BookingWizard"), { ssr: false });
+import BookingSection from "./BookingSection";
 
 export const metadata: Metadata = {
   title: "Book Appointment | JB Barbershop",
@@ -38,7 +36,7 @@ export default function BookingPage() {
              </h1>
           </header>
 
-          <BookingWizard />
+          <BookingSection />
         </div>
       </main>
 
