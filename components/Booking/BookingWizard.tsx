@@ -36,8 +36,9 @@ export default function BookingWizard() {
       if (serviceId) {
         const found = SERVICES_DATA.find((item: any) => item.id === serviceId);
         if (found) {
+          // Pre-select the service but stay on Step 1 so the user can
+          // review it and add more services before proceeding.
           setBookingData((prev: any) => ({ ...prev, services: [found] }));
-          setCurrentStep(1);
           return;
         }
       }

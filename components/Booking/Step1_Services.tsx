@@ -69,10 +69,10 @@ export default function Step1_Services({
     <div className="space-y-6 md:space-y-8">
       <div className="space-y-1.5 md:space-y-2">
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-accent text-gold uppercase tracking-widest">
-          Select Services
+          Choose Your Services
         </h2>
         <p className="text-warm-white/60 text-sm md:text-base">
-          Pick one or more services from any category.
+          Select as many as you like — mix and match across categories, then hit Next.
         </p>
       </div>
 
