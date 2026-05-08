@@ -1,6 +1,15 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
+function escapeHtml(s: string): string {
+  return String(s)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#x27;");
+}
+
 export async function POST(req: Request) {
   try {
     const { name, email, phone, message, service } = await req.json();
@@ -10,13 +19,13 @@ export async function POST(req: Request) {
       await resend.emails.send({
         from: "JB Barbershop Contact <system@resend.dev>",
         to: ["ijbbarbershop@gmail.com"],
-        subject: `New Inquiry from ${name}`,
+        subject: `New Inquiry from ${escapeHtml(name)}`,
         html: `
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Phone:</strong> ${phone}</p>
-          <p><strong>Service:</strong> ${service}</p>
-          <p><strong>Message:</strong> ${message}</p>
+          <p><strong>Name:</strong> ${escapeHtml(name)}</p>
+          <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+          <p><strong>Phone:</strong> ${escapeHtml(phone ?? "")}</p>
+          <p><strong>Service:</strong> ${escapeHtml(service ?? "")}</p>
+          <p><strong>Message:</strong> ${escapeHtml(message)}</p>
         `,
       });
     }

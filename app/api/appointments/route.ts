@@ -2,6 +2,15 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { Resend } from "resend";
 
+function escapeHtml(s: string): string {
+  return String(s)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#x27;");
+}
+
 export async function POST(req: Request) {
   try {
     const { serviceId, clientName, phone, email, date, time } = await req.json();
@@ -27,7 +36,7 @@ export async function POST(req: Request) {
         from: "JB Barbershop <appointments@resend.dev>",
         to: [email],
         subject: "Appointment Confirmed - JB Barbershop",
-        html: `<p>Hi ${clientName}, your appointment for ${date} at ${time} is confirmed!</p>`,
+        html: `<p>Hi ${escapeHtml(clientName)}, your appointment for ${escapeHtml(date)} at ${escapeHtml(time)} is confirmed!</p>`,
       });
 
       // Notify Barber
@@ -35,7 +44,7 @@ export async function POST(req: Request) {
         from: "JB Barbershop System <system@resend.dev>",
         to: ["ijbbarbershop@gmail.com"],
         subject: "New Appointment Request",
-        html: `<p>New appointment from ${clientName} (${phone}) on ${date} at ${time}.</p>`,
+        html: `<p>New appointment from ${escapeHtml(clientName)} (${escapeHtml(phone)}) on ${escapeHtml(date)} at ${escapeHtml(time)}.</p>`,
       });
     }
 
