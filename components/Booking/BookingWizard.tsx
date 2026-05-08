@@ -62,17 +62,17 @@ export default function BookingWizard() {
 
   if (isConfirmed) {
     return (
-      <div className="flex flex-col items-center justify-center py-20 text-center space-y-8 glass p-20 rounded-3xl border-gold/20">
+      <div className="flex flex-col items-center justify-center py-12 md:py-20 text-center space-y-6 md:space-y-8 glass p-6 md:p-16 rounded-3xl border-gold/20">
         <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="text-gold">
-          <CheckCircle2 size={120} />
+          <CheckCircle2 size={80} className="md:w-[120px] md:h-[120px]" />
         </motion.div>
-        <h2 className="text-5xl font-accent text-gold uppercase">Booking Confirmed!</h2>
-        <p className="text-warm-white/60 font-body text-xl">We&apos;ve sent a confirmation email to {bookingData.details.email}.</p>
-        <div className="bg-gold/10 p-6 rounded-2xl border border-gold/30">
+        <h2 className="text-3xl md:text-5xl font-accent text-gold uppercase">Booking Confirmed!</h2>
+        <p className="text-warm-white/60 font-body text-base md:text-xl">We&apos;ve sent a confirmation email to {bookingData.details.email}.</p>
+        <div className="bg-gold/10 p-4 md:p-6 rounded-2xl border border-gold/30 w-full max-w-xs">
           <p className="text-xs text-gold font-mono uppercase tracking-widest">Reference Number</p>
-          <p className="text-3xl text-warm-white font-accent mt-2">JB-{Math.random().toString(36).substr(2, 9).toUpperCase()}</p>
+          <p className="text-2xl md:text-3xl text-warm-white font-accent mt-2">JB-{Math.random().toString(36).substr(2, 9).toUpperCase()}</p>
         </div>
-        <button className="px-10 py-4 bg-gold text-black font-accent text-xl rounded-full uppercase hover:scale-105 transition-transform">
+        <button className="px-8 py-3 md:px-10 md:py-4 bg-gold text-black font-accent text-lg md:text-xl rounded-full uppercase hover:scale-105 transition-transform">
           Add to Calendar
         </button>
       </div>
