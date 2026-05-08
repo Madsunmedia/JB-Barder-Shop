@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SERVICES_DATA } from "@/lib/services-data";
 import Step1_Services from "./Step1_Services";
@@ -22,6 +22,10 @@ export default function BookingWizard() {
     details: { name: "", phone: "", email: "", notes: "" }
   });
   const [isConfirmed, setIsConfirmed] = useState(false);
+  const confirmRef = useRef<string | null>(null);
+  if (isConfirmed && !confirmRef.current) {
+    confirmRef.current = Math.random().toString(36).substr(2, 9).toUpperCase();
+  }
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -70,7 +74,7 @@ export default function BookingWizard() {
         <p className="text-warm-white/60 font-body text-base md:text-xl">We&apos;ve sent a confirmation email to {bookingData.details.email}.</p>
         <div className="bg-gold/10 p-4 md:p-6 rounded-2xl border border-gold/30 w-full max-w-xs">
           <p className="text-xs text-gold font-mono uppercase tracking-widest">Reference Number</p>
-          <p className="text-2xl md:text-3xl text-warm-white font-accent mt-2">JB-{Math.random().toString(36).substr(2, 9).toUpperCase()}</p>
+          <p className="text-2xl md:text-3xl text-warm-white font-accent mt-2">JB-{confirmRef.current}</p>
         </div>
         <button className="px-8 py-3 md:px-10 md:py-4 bg-gold text-black font-accent text-lg md:text-xl rounded-full uppercase hover:scale-105 transition-transform">
           Add to Calendar

@@ -15,6 +15,7 @@ export default function Step3_Calendar({ data, onSelect, onNext, onBack }: any) 
   const [selectedDate, setSelectedDate] = useState<Date | null>(data.date);
   const [selectedTime, setSelectedTime] = useState<string | null>(data.time);
   const [availableSlots, setAvailableSlots] = useState<string[]>([]);
+  const [slotsError, setSlotsError] = useState<string | null>(null);
 
   useEffect(() => {
     if (selectedDate) {
@@ -23,13 +24,14 @@ export default function Step3_Calendar({ data, onSelect, onNext, onBack }: any) 
       const day = String(selectedDate.getDate()).padStart(2, '0');
       const dateStr = `${year}-${month}-${day}`;
       const barberId = data.barber?.id;
+      setSlotsError(null);
       fetchAvailability(dateStr, barberId).then(res => {
         if (res.success && res.availableSlots) {
           setAvailableSlots(res.availableSlots);
         } else {
           setAvailableSlots([]);
+          setSlotsError("Could not load available slots. Please try a different date or call us to book.");
           console.error("Availability error:", res.error);
-          alert("Error fetching availability: " + res.error);
         }
       });
     }
@@ -124,6 +126,10 @@ export default function Step3_Calendar({ data, onSelect, onNext, onBack }: any) 
           {!selectedDate ? (
             <div className="flex-1 flex items-center justify-center glass rounded-3xl border-dashed border-gold/20">
                <p className="text-gold/30 font-accent uppercase tracking-widest">Select a date first</p>
+            </div>
+          ) : slotsError ? (
+            <div className="flex-1 flex items-center justify-center glass rounded-3xl border-dashed border-red-500/20 p-6 text-center">
+              <p className="text-red-400/70 text-sm font-body">{slotsError}</p>
             </div>
           ) : (
             <div className="flex-1 grid grid-cols-2 gap-3 overflow-y-auto pr-2 custom-scrollbar">

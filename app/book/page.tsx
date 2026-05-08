@@ -1,8 +1,10 @@
-import BookingWizard from "@/components/Booking/BookingWizard";
+import dynamic from "next/dynamic";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Metadata } from "next";
 import { CalendarCheck } from "lucide-react";
+
+const BookingWizard = dynamic(() => import("@/components/Booking/BookingWizard"), { ssr: false });
 
 export const metadata: Metadata = {
   title: "Book Appointment | JB Barbershop",
