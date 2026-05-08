@@ -9,6 +9,7 @@ import Step3_Calendar from "./Step3_Calendar";
 import Step4_Details from "./Step4_Details";
 import BookingSummary from "./BookingSummary";
 import { CheckCircle2 } from "lucide-react";
+import { useCart } from "@/lib/CartContext";
 
 const STEPS = ["Service", "Barber", "Schedule", "Details"];
 
@@ -23,6 +24,7 @@ export default function BookingWizard() {
   });
   const [isConfirmed, setIsConfirmed] = useState(false);
   const confirmRef = useRef<string | null>(null);
+  const { cart, clearCart } = useCart();
   if (isConfirmed && !confirmRef.current) {
     confirmRef.current = Math.random().toString(36).substr(2, 9).toUpperCase();
   }
@@ -36,9 +38,15 @@ export default function BookingWizard() {
         if (found) {
           setBookingData((prev: any) => ({ ...prev, services: [found] }));
           setCurrentStep(1);
+          return;
         }
       }
+      // Pre-populate from cart if services are present
+      if (cart.length > 0) {
+        setBookingData((prev: any) => ({ ...prev, services: cart }));
+      }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const nextStep = () => setCurrentStep((prev) => Math.min(prev + 1, STEPS.length - 1));
@@ -143,10 +151,10 @@ export default function BookingWizard() {
                 />
               )}
               {currentStep === 3 && (
-                <Step4_Details 
+                <Step4_Details
                   data={bookingData}
                   onChange={(details: any) => setBookingData({ ...bookingData, details })}
-                  onConfirm={() => setIsConfirmed(true)}
+                  onConfirm={() => { clearCart(); setIsConfirmed(true); }}
                   onBack={prevStep}
                 />
               )}

@@ -4,8 +4,10 @@ import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Phone, Menu, X, Scissors } from "lucide-react";
+import { Phone, Menu, X, Scissors, ShoppingCart } from "lucide-react";
 import { track } from "@vercel/analytics";
+import { useCart } from "@/lib/CartContext";
+import CartDrawer from "@/components/Cart/CartDrawer";
 
 const NAV_LINKS = [
   { name: "Services", href: "/services" },
@@ -19,6 +21,7 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const { cartCount, openCart } = useCart();
 
   const handleScroll = useCallback(() => {
     setIsScrolled(window.scrollY > 60);
@@ -103,8 +106,8 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* Desktop Right: Phone + CTA */}
-          <div className="hidden lg:flex items-center gap-5 flex-shrink-0">
+          {/* Desktop Right: Phone + Cart + CTA */}
+          <div className="hidden lg:flex items-center gap-4 flex-shrink-0">
             <a
               href="tel:+14039297321"
               className="flex items-center gap-2 text-warm-white/70 hover:text-gold transition-colors duration-300 min-h-[44px]"
@@ -113,6 +116,19 @@ export default function Navbar() {
               <Phone size={14} className="text-gold flex-shrink-0" aria-hidden="true" />
               <span className="text-xs font-mono tracking-wider whitespace-nowrap">+1 403 929 7321</span>
             </a>
+            {/* Cart icon */}
+            <button
+              onClick={openCart}
+              aria-label={`View cart (${cartCount} item${cartCount !== 1 ? "s" : ""})`}
+              className="relative flex items-center justify-center w-11 h-11 rounded-full border border-white/10 text-warm-white/70 hover:border-gold/40 hover:text-gold transition-colors"
+            >
+              <ShoppingCart size={18} aria-hidden="true" />
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-gold text-black text-[10px] font-bold flex items-center justify-center">
+                  {cartCount}
+                </span>
+              )}
+            </button>
             <Link
               href="/book"
               onClick={() => track("book_now_click", { location: "navbar_desktop" })}
@@ -122,26 +138,42 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Mobile right: Phone icon + Hamburger */}
-          <div className="flex lg:hidden items-center gap-3">
+          {/* Mobile right: Phone icon + Cart + Hamburger */}
+          <div className="flex lg:hidden items-center gap-2">
             <a
               href="tel:+14039297321"
               aria-label="Call us"
-              className="flex items-center justify-center w-11 h-11 rounded-full border border-white/10 text-gold hover:border-gold/40 transition-colors"
+              className="flex items-center justify-center w-10 h-10 rounded-full border border-white/10 text-gold hover:border-gold/40 transition-colors"
             >
-              <Phone size={16} aria-hidden="true" />
+              <Phone size={15} aria-hidden="true" />
             </a>
+            {/* Mobile cart icon */}
+            <button
+              onClick={openCart}
+              aria-label={`View cart (${cartCount} item${cartCount !== 1 ? "s" : ""})`}
+              className="relative flex items-center justify-center w-10 h-10 rounded-full border border-white/10 text-warm-white/70 hover:border-gold/40 hover:text-gold transition-colors"
+            >
+              <ShoppingCart size={16} aria-hidden="true" />
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-gold text-black text-[9px] font-bold flex items-center justify-center">
+                  {cartCount}
+                </span>
+              )}
+            </button>
             <button
               onClick={() => setIsMobileMenuOpen(true)}
               aria-label="Open navigation menu"
               aria-expanded={isMobileMenuOpen}
-              className="flex items-center justify-center w-11 h-11 rounded-full border border-white/10 text-warm-white hover:border-gold/40 hover:text-gold transition-colors"
+              className="flex items-center justify-center w-10 h-10 rounded-full border border-white/10 text-warm-white hover:border-gold/40 hover:text-gold transition-colors"
             >
-              <Menu size={20} aria-hidden="true" />
+              <Menu size={18} aria-hidden="true" />
             </button>
           </div>
         </div>
       </nav>
+
+      {/* ─── Global Cart Drawer ─── */}
+      <CartDrawer />
 
       {/* ─── Mobile Full-Screen Menu ─── */}
       <AnimatePresence>

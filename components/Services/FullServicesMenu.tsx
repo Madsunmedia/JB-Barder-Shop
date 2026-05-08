@@ -4,7 +4,8 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { SERVICES_DATA } from "@/lib/services-data";
 import BookingDrawer from "../Booking/BookingDrawer";
-import { Clock, ArrowRight } from "lucide-react";
+import { Clock, ArrowRight, ShoppingCart, Check } from "lucide-react";
+import { useCart } from "@/lib/CartContext";
 
 // Group services by category for the full menu
 const CATEGORY_GROUPS = [
@@ -38,10 +39,20 @@ const CATEGORY_GROUPS = [
 export default function FullServicesMenu() {
   const [selectedService, setSelectedService] = useState<any>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const { addToCart, removeFromCart, isInCart, openCart } = useCart();
 
   const handleBook = (service: any) => {
     setSelectedService(service);
     setIsDrawerOpen(true);
+  };
+
+  const handleCartToggle = (service: any) => {
+    if (isInCart(service.id)) {
+      removeFromCart(service.id);
+    } else {
+      addToCart(service);
+      openCart();
+    }
   };
 
   return (
@@ -94,20 +105,39 @@ export default function FullServicesMenu() {
                     </p>
                   </div>
 
-                  {/* Right: Price & CTA */}
-                  <div className="flex sm:flex-col items-center justify-between sm:items-end gap-4 sm:gap-3 shrink-0 pt-4 sm:pt-0 border-t sm:border-t-0 border-white/5">
+                  {/* Right: Price & CTAs */}
+                  <div className="flex sm:flex-col items-center justify-between sm:items-end gap-3 sm:gap-3 shrink-0 pt-4 sm:pt-0 border-t sm:border-t-0 border-white/5">
                     <div className="flex items-baseline gap-1">
                       <span className="text-gold text-sm font-accent">$</span>
                       <span className="text-warm-white text-3xl font-accent">
                         {service.price}
                       </span>
                     </div>
-                    <button
-                      onClick={() => handleBook(service)}
-                      className="flex items-center gap-2 min-h-[40px] px-5 py-2 bg-gold/10 border border-gold/30 text-gold text-xs font-accent uppercase tracking-widest rounded-full hover:bg-gold hover:text-black active:scale-95 transition-all duration-300"
-                    >
-                      Book <ArrowRight size={14} aria-hidden="true" />
-                    </button>
+                    <div className="flex items-center gap-2">
+                      {/* Add to Cart */}
+                      <button
+                        onClick={() => handleCartToggle(service)}
+                        className={`flex items-center gap-1.5 min-h-[40px] px-4 py-2 border text-xs font-accent uppercase tracking-widest rounded-full transition-all duration-300 active:scale-95 ${
+                          isInCart(service.id)
+                            ? "bg-gold border-gold text-black"
+                            : "bg-gold/10 border-gold/30 text-gold hover:bg-gold hover:text-black"
+                        }`}
+                        aria-label={isInCart(service.id) ? `Remove ${service.name} from cart` : `Add ${service.name} to cart`}
+                      >
+                        {isInCart(service.id) ? (
+                          <><Check size={13} strokeWidth={3} /> Added</>
+                        ) : (
+                          <><ShoppingCart size={13} /> Cart</>
+                        )}
+                      </button>
+                      {/* Book Now */}
+                      <button
+                        onClick={() => handleBook(service)}
+                        className="flex items-center gap-1.5 min-h-[40px] px-4 py-2 bg-white/5 border border-white/10 text-warm-white/70 text-xs font-accent uppercase tracking-widest rounded-full hover:border-gold/40 hover:text-gold active:scale-95 transition-all duration-300"
+                      >
+                        Book <ArrowRight size={13} aria-hidden="true" />
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))}
